@@ -1,0 +1,1 @@
+export const getDummyArray = (size: number) => new Array(size).fill(0);
