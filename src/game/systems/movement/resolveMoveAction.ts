@@ -5,6 +5,7 @@ import type { GameState } from "../../state/state";
 import type { ActionResolution, Direction } from "../turn";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 import { PositionComponent } from "../../model/components/PositionComponent";
+import { addLog } from "../log/addLog";
 
 export function resolveMoveAction(
     state: GameState,
@@ -28,6 +29,10 @@ export function resolveMoveAction(
     });
 
     if (nextPosition === null) {
+        defaultActionResolution.nextState = addLog(state, {
+            message: "Cannot move in that direction.",
+            turn: state.turn
+        });
         return defaultActionResolution;
     }
 
@@ -37,11 +42,16 @@ export function resolveMoveAction(
         nextPositionComponent.position = nextPosition;
     }
 
+    const nextState = addLog({
+        ...state,
+        player: nextPlayerEntity,
+    }, {
+        message: "Player moved.",
+        turn: state.turn
+    });
+
     return {
-        nextState: {
-            ...state,
-            player: nextPlayerEntity,
-        },
+        nextState,
         consumesTurn: true,
     };
 }

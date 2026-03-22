@@ -4,12 +4,14 @@ import { FloorEntity } from "../model/entities/FloorEntity";
 import { ItemEntity } from "../model/entities/items/ItemEntity";
 import { SwordEntity } from "../model/entities/items/Sword";
 import { PlayerEntity } from "../model/entities/PlayerEntity";
+import type { LogEntry } from "../systems/log";
 
 export type GameState = {
     tiles: FloorEntity[];
     player: PlayerEntity;
     turn: number;
-    items: ItemEntity[]
+    items: ItemEntity[];
+    log: LogEntry[];
 }
 
 export const getInitialState = (): GameState => ({
@@ -17,4 +19,5 @@ export const getInitialState = (): GameState => ({
     player: new PlayerEntity({ position: INITIAL_PLAYER_POSITION }),
     turn: 0,
     items: [new SwordEntity({ position: 3 })],
+    log: []
 })

@@ -1,16 +1,17 @@
 import React from 'react';
-import Tile from './Tile';
-import { useRenderedMap } from '../game/hooks/useRenderedMap';
 import { useKeyboardControls } from '../game/hooks/useKeyboardControls';
+import { Log } from './Log';
+import { Map } from './Map';
 
 
 export const Game: React.FC = () => {
     useKeyboardControls();
-    const renderedMap = useRenderedMap();
 
-    return <div style={{ display: 'flex', flexDirection: 'row' }}>
-        {renderedMap.map((tile) => (
-            <Tile renderedTile={tile} key={tile.id} />
-        ))}
-    </div >
+    return <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <Map />
+        </div >
+        <Log />
+    </div>
+
 };

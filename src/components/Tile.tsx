@@ -1,5 +1,5 @@
 import React from 'react';
-import type { RenderedTile } from '../game/model/base/RenderedTile';
+import type { RenderedTile } from '../game/systems/render';
 
 type TileProps = {
     renderedTile: RenderedTile;

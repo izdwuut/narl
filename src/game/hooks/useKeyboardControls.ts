@@ -14,10 +14,10 @@ export function useKeyboardControls() {
                 event.preventDefault();
                 setGameState((prevState) => dispatchGameAction(prevState, action));
             }
+            console.log('    a')
         }
 
         window.addEventListener("keydown", handleKeyDown);
-
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
