@@ -16,7 +16,7 @@ export function resolveMoveAction(
         consumesTurn: false,
     };
 
-    const playerRenderableComponent = getComponentByType(state.player, PositionComponent);
+    const playerRenderableComponent = getComponentByType(state.world.player, PositionComponent);
     if (!playerRenderableComponent) {
         return defaultActionResolution
     }
@@ -25,7 +25,7 @@ export function resolveMoveAction(
     const nextPosition = getNextPlayerPosition({
         currentPosition,
         direction,
-        tilesCount: state.tiles.length,
+        tilesCount: state.world.tiles.length,
     });
 
     if (nextPosition === null) {
@@ -36,7 +36,7 @@ export function resolveMoveAction(
         return defaultActionResolution;
     }
 
-    const nextPlayerEntity = cloneDeep(state.player);
+    const nextPlayerEntity = cloneDeep(state.world.player);
     const nextPositionComponent = getComponentByType(nextPlayerEntity, PositionComponent);
     if (nextPositionComponent) {
         nextPositionComponent.position = nextPosition;
@@ -44,7 +44,10 @@ export function resolveMoveAction(
 
     const nextState = addLog({
         ...state,
-        player: nextPlayerEntity,
+        world: {
+            ...state.world,
+            player: nextPlayerEntity,
+        },
     }, {
         message: "Player moved.",
         turn: state.turn

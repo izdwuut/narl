@@ -12,9 +12,11 @@ export function useKeyboardControls() {
 
             if (action) {
                 event.preventDefault();
-                setGameState((prevState) => dispatchGameAction(prevState, action));
+                setGameState((state) => {
+                    console.log(dispatchGameAction(action)(state));
+                    return dispatchGameAction(action)(state);
+                });
             }
-            console.log('    a')
         }
 
         window.addEventListener("keydown", handleKeyDown);

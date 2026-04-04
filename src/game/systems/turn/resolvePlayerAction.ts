@@ -1,19 +1,21 @@
 import type { GameState } from "../../state/state";
 import { resolveMoveAction } from "../movement";
-import type { ActionResolution, GameAction } from "./types";
+import { resolvePickUpAction } from "../pickUp/resolvePickUpAction";
+import { GameActionType, type ActionResolution, type GameAction } from "./types";
 
 export function resolvePlayerAction(
     state: GameState,
     action: GameAction
 ): ActionResolution<GameState> {
     switch (action.type) {
-        case "move":
+        case GameActionType.MOVE:
             return resolveMoveAction(state, action.direction);
-        default: {
+        case GameActionType.PICK_UP:
+            return resolvePickUpAction(state);
+        default:
             return {
                 nextState: state,
                 consumesTurn: false,
             };
-        }
     }
 }

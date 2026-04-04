@@ -6,7 +6,7 @@ import type { LogEntry } from "./types";
 
 export const addLog = (gameState: GameState, logEntry: LogEntry): GameState => {
   const next = [...gameState.log, logEntry].slice(-MAX_VISIBLE_LOG);
-console.log(logEntry)
+
   return {
     ...gameState,
     log: next,

@@ -3,10 +3,9 @@ import type { GameAction } from "./types";
 import { resolvePlayerAction } from "./resolvePlayerAction";
 import { runWorldTurn } from "./runWorldTurn";
 
-export function dispatchGameAction(
-    state: GameState,
+export const dispatchGameAction = (
     action: GameAction
-): GameState {
+) => (state: GameState) => {
     const resolution = resolvePlayerAction(state, action);
 
     if (!resolution.consumesTurn) {

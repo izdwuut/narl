@@ -12,17 +12,17 @@ const resolveGlyph = (itemGlyph: GlyphComponent | undefined, floorGlyph: GlyphCo
 }
 
 export const getRenderedMap = (gameState: GameState) => {
-    const playerGlyph = getComponentByType(gameState.player, GlyphComponent);
-    const playerPosition = getComponentByType(gameState.player, PositionComponent);
+    const playerGlyph = getComponentByType(gameState.world.player, GlyphComponent);
+    const playerPosition = getComponentByType(gameState.world.player, PositionComponent);
 
-    const renderedMap: RenderedTile[] = gameState.tiles.map((floor, index) => {
+    const renderedMap: RenderedTile[] = gameState.world.tiles.map((floor, index) => {
         const floorGlyph = getComponentByType(floor, GlyphComponent);
         const floorAppearance = getComponentByType(floor, ApperanceComponent);
         if (playerGlyph && index === playerPosition?.position) {
             return new RenderedTile({ char: playerGlyph.glyph ?? '', background: floorAppearance?.background ?? MISSING_COLOR });
         }
 
-        const items = gameState.items;
+        const items = gameState.world.items;
         const lastItem = last(items);
 
         if (lastItem && floorAppearance && floorGlyph) {
