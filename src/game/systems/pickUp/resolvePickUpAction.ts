@@ -1,11 +1,12 @@
 import {
-    addEntity,
-    replaceEntityById,
+  addEntity,
+  patchEntityById,
+  replaceEntityById,
 } from "../../../core/ecs/queries/entities";
 import type { GameState, WorldState } from "../../state/state";
 import { fulfillAction, rejectAction } from "../log/action";
 import type { ActionResolution } from "../turn";
-import { getBackpack, isBackpackFull } from "./backpack";
+import { addItemToEntityBackpack, getBackpack, isBackpackFull } from "./backpack";
 
 export const resolvePickUpAction = (
   state: GameState,
@@ -36,18 +37,17 @@ export const resolvePickUpAction = (
       return tile;
     }
 
-    //TODO: use patchEntityById
-    const nextBackpack = addEntity(backpack, itemToPickUp);
-    const nextPlayerEntity = replaceEntityById(
+    const nextPlayer = addItemToEntityBackpack(
       tile.player,
+      itemToPickUp,
       backpack.id,
-      nextBackpack,
     );
+
     actionResolution = fulfillAction(state, "Player picked up a Sword.", true); // TODO: Add NameComponent
 
     return {
       floor: tile.floor,
-      player: nextPlayerEntity,
+      player: nextPlayer,
       items: tile.items.slice(0, -1),
     };
   });

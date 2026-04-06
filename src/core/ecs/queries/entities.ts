@@ -67,6 +67,26 @@ export const replaceEntityById = (
   return nextEntity;
 };
 
+export const patchEntityById = (
+  entity: Entity,
+  childEntityId: string,
+  patcher: (child: Entity) => Entity,
+): Entity => {
+  let changed = false;
+  const nextEntities = entity.entities.map((child) => {
+    if (child.id !== childEntityId) return child;
+    changed = true;
+
+    return patcher(child);
+  });
+  if (!changed) return entity;
+
+  const nextEntity = clone(entity);
+  nextEntity.entities = nextEntities;
+
+  return nextEntity;
+};
+
 // export const upsertEntityById = (
 //   entity: Entity,
 //   nextChild: Entity
@@ -76,25 +96,4 @@ export const replaceEntityById = (
 //   return exists
 //     ? replaceEntityById(entity, nextChild.id, nextChild)
 //     : addEntity(entity, nextChild);
-// };
-
-// export const patchEntityById = (
-//   entity: Entity,
-//   childEntityId: string,
-//   patcher: (child: Entity) => Entity
-// ): Entity => {
-//   let changed = false;
-
-//   const nextEntities = entity.entities.map((child) => {
-//     if (child.id !== childEntityId) return child;
-//     changed = true;
-//     return patcher(child);
-//   });
-
-//   return changed
-//     ? {
-//         ...entity,
-//         entities: nextEntities,
-//       }
-//     : entity;
 // };
