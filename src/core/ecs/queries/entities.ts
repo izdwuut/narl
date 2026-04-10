@@ -9,18 +9,24 @@ export const getEntityById = (
   entity.entities.find((child) => child.id === childEntityId);
 
 export const getEntityByType = <T extends Entity>(
-  entity: Entity,
+  entity: Entity | undefined,
   entityClass: Constructor<T>,
-): T | undefined =>
-  entity.entities.find((entity): entity is T => entity instanceof entityClass);
-
-export const getEntitiesByType = <T extends Entity>(
-  entity: Entity,
-  entityClass: Constructor<T>,
-): T[] =>
-  entity.entities.filter(
+): T | undefined => {
+  return entity?.entities.find(
     (entity): entity is T => entity instanceof entityClass,
   );
+};
+
+export const getEntitiesByType = <T extends Entity>(
+  entity: Entity | undefined,
+  entityClass: Constructor<T>,
+): T[] => {
+  return (
+    entity?.entities.filter(
+      (entity): entity is T => entity instanceof entityClass,
+    ) ?? []
+  );
+};
 
 export const hasEntityById = (entity: Entity, childEntityId: string): boolean =>
   entity.entities.some((child) => child.id === childEntityId);

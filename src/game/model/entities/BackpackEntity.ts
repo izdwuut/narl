@@ -1,6 +1,6 @@
 import { Entity, type EntityProps } from "../../../core/ecs/Entity";
 import { DEFAULT_BACKPACK_SIZE } from "../../../utils/constants";
-import { SizeComponent } from "../components/CapacityComponent";
+import { SizeComponent } from "../components/SizeComponent";
 
 export type BackpackEntityProps = {
     size?: number;

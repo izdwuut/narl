@@ -6,7 +6,7 @@ import {
   getEntityByType,
   patchEntityById,
 } from "../../../core/ecs/queries/entities";
-import { SizeComponent } from "../../model/components/CapacityComponent";
+import { SizeComponent } from "../../model/components/SizeComponent";
 import { BackpackEntity } from "../../model/entities/BackpackEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
 

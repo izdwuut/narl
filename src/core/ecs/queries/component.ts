@@ -2,33 +2,46 @@ import type { Component } from "../Component";
 import type { Constructor } from "../Constructor";
 import type { Entity } from "../Entity";
 
+// TODO: refactor usages to pass undefined entity
 export const getComponentByType = <T extends Component>(
-  entity: Entity,
-  componentClass: Constructor<T>
-): T | undefined =>
-  entity.components.find((component): component is T => component instanceof componentClass);
+  entity: Entity | undefined,
+  componentClass: Constructor<T>,
+): T | undefined => {
+  if (!entity) return undefined;
+
+  return entity.components.find(
+    (component): component is T => component instanceof componentClass,
+  );
+};
 
 export const getComponentsByType = <T extends Component>(
-  entity: Entity,
-  componentClass: Constructor<T>
-): T[] =>
-  entity.components.filter((component): component is T => component instanceof componentClass);
+  entity: Entity | undefined,
+  componentClass: Constructor<T>,
+): T[] => {
+  if (!entity) return [];
+
+  return entity.components.filter(
+    (component): component is T => component instanceof componentClass,
+  );
+};
 
 export const getComponentById = <T extends Component = Component>(
   entity: Entity,
-  componentId: string
+  componentId: string,
 ): T | undefined =>
-  entity.components.find((component): component is T => component.id === componentId);
+  entity.components.find(
+    (component): component is T => component.id === componentId,
+  );
 
 export const hasComponentByType = <T extends Component>(
   entity: Entity,
-  componentClass: Constructor<T>
+  componentClass: Constructor<T>,
 ): boolean =>
   entity.components.some((component) => component instanceof componentClass);
 
 export const hasComponentById = (
   entity: Entity,
-  componentId: string
+  componentId: string,
 ): boolean =>
   entity.components.some((component) => component.id === componentId);
 
@@ -171,4 +184,3 @@ export const hasComponentById = (
 //     }
 //     : entity;
 // };
-
