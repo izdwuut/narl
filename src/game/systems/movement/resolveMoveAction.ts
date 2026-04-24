@@ -1,14 +1,30 @@
-import type { GameState, Tile, WorldState } from "../../state/state";
+import { upsertComponent } from "../../../core/ecs/queries/component";
+import { VisitedComponent } from "../../model/components/VisitedComponent";
+import type { GameState, Tile } from "../../state/state";
+import { addExplorationExp } from "../exp/addExp";
 import { fulfillAction, rejectAction } from "../log/action";
 import type { ActionResolution, Direction } from "../turn";
+import { isInitialTurn } from "../turn/isInitialTurn";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
+
+const markAsVisited = (state: GameState, position: number): GameState => {
+  const nextState = { ...state, world: [...state.world] };
+
+  nextState.world[position].floor = upsertComponent(
+    nextState.world[position].floor,
+    new VisitedComponent(),
+  );
+
+  return nextState;
+};
 
 const getNextState = (
   state: GameState,
   currentPlayerPosition: number,
   nextPlayerPosition: number,
 ): GameState => {
-  const nextWorld: WorldState = [...state.world];
+  let nextState: GameState = { ...state, world: [...state.world] };
+  const nextWorld = nextState.world;
   const player = nextWorld[currentPlayerPosition].player;
   const oldPlayerTile: Tile = {
     floor: nextWorld[currentPlayerPosition].floor,
@@ -18,12 +34,16 @@ const getNextState = (
   const newPlayerTile: Tile = {
     floor: nextWorld[nextPlayerPosition].floor,
     items: nextWorld[nextPlayerPosition].items,
-    player: player,
+    player: addExplorationExp(
+      nextWorld[nextPlayerPosition].floor,
+      player,
+    ),
   };
   nextWorld[currentPlayerPosition] = oldPlayerTile;
   nextWorld[nextPlayerPosition] = newPlayerTile;
+  nextState = markAsVisited(nextState, nextPlayerPosition);
 
-  return { ...state, world: nextWorld };
+  return nextState;
 };
 
 export function resolveMoveAction(

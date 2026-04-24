@@ -1,8 +1,10 @@
 export const MAP_SIZE = 8 as const;
 export const INITIAL_PLAYER_POSITION = MAP_SIZE / MAP_SIZE - 1;
-export const PLAYER_SIGN = '@' as const;
-export const MISSING_COLOR = 'pink' as const;
-export const MISSING_GLYPH = '#' as const;
+export const PLAYER_SIGN = "@" as const;
+export const MISSING_COLOR = "pink" as const;
+export const MISSING_GLYPH = "#" as const;
 export const MAX_LOG = 50 as const;
 export const MAX_VISIBLE_LOG = 5 as const;
 export const DEFAULT_BACKPACK_SIZE = 9 as const;
+export const INITIAL_TURN = 0 as const;
+export const INITIAL_PLAYER_EXP = 0 as const;

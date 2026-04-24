@@ -1,3 +1,4 @@
+import { INITIAL_TURN } from "../../utils/constants";
 import { FloorEntity } from "../model/entities/FloorEntity";
 import { ItemEntity } from "../model/entities/items/ItemEntity";
 import { PlayerEntity } from "../model/entities/PlayerEntity";
@@ -20,6 +21,6 @@ export type GameState = {
 
 export const getInitialState = (): GameState => ({
     world: initWorld(),
-    turn: 0,
+    turn: INITIAL_TURN,
     log: []
 })

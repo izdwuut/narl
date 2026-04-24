@@ -3,6 +3,7 @@ import { useKeyboardControls } from "../game/hooks/useKeyboardControls";
 import { Log } from "./Log";
 import { Map } from "./Map";
 import { Inventory } from "./inventory/Inventory";
+import { Exp } from "./Exp";
 
 export const Game: React.FC = () => {
   useKeyboardControls();
@@ -10,6 +11,7 @@ export const Game: React.FC = () => {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <div style={{ display: "flex", flexDirection: "row" }}>
+        <Exp />
         <Map />
       </div>
       <Log />

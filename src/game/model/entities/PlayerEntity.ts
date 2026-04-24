@@ -1,5 +1,6 @@
 import { Entity, type EntityProps } from "../../../core/ecs/Entity";
 import { PLAYER_SIGN } from "../../../utils/constants";
+import { ExpComponent } from "../components/ExpComponent";
 import { GlyphComponent } from "../components/GlyphComponent";
 import { BackpackEntity } from "./BackpackEntity";
 
@@ -11,8 +12,9 @@ export class PlayerEntity extends Entity {
       glyph: PLAYER_SIGN as string,
     });
     const backpack = new BackpackEntity();
+    const exp = new ExpComponent();
     super({
-      components: [...(props?.components ?? []), glyph],
+      components: [...(props?.components ?? []), glyph, exp],
       entities: [...(props?.entities ?? []), backpack],
     });
   }

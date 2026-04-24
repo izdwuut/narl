@@ -1,6 +1,12 @@
 import type { Component } from "../Component";
 import type { Constructor } from "../Constructor";
 import type { Entity } from "../Entity";
+import { clone } from "./clone";
+
+export const isComponentType = <T extends Component>(
+  component: Component,
+  componentClass: Constructor<T>,
+): component is T => component instanceof componentClass;
 
 // TODO: refactor usages to pass undefined entity
 export const getComponentByType = <T extends Component>(
@@ -9,8 +15,8 @@ export const getComponentByType = <T extends Component>(
 ): T | undefined => {
   if (!entity) return undefined;
 
-  return entity.components.find(
-    (component): component is T => component instanceof componentClass,
+  return entity.components.find((component) =>
+    isComponentType(component, componentClass),
   );
 };
 
@@ -20,8 +26,8 @@ export const getComponentsByType = <T extends Component>(
 ): T[] => {
   if (!entity) return [];
 
-  return entity.components.filter(
-    (component): component is T => component instanceof componentClass,
+  return entity.components.filter((component) =>
+    isComponentType(component, componentClass),
   );
 };
 
@@ -37,7 +43,9 @@ export const hasComponentByType = <T extends Component>(
   entity: Entity,
   componentClass: Constructor<T>,
 ): boolean =>
-  entity.components.some((component) => component instanceof componentClass);
+  entity.components.some((component) =>
+    isComponentType(component, componentClass),
+  );
 
 export const hasComponentById = (
   entity: Entity,
@@ -45,13 +53,62 @@ export const hasComponentById = (
 ): boolean =>
   entity.components.some((component) => component.id === componentId);
 
-// export const addComponent = <T extends Component>(
-//   entity: Entity,
-//   component: T
-// ): Entity => ({
-//   ...entity,
-//   components: [...entity.components, component],
-// });
+export const upsertComponent = <T extends Component>(
+  entity: Entity,
+  nextComponent: T,
+): Entity => {
+  let replaced = false;
+
+  const nextComponents = entity.components.map((component) => {
+    if (replaced || !(component instanceof nextComponent.constructor))
+      return component;
+    replaced = true;
+    return nextComponent;
+  });
+
+  const nextEntity = clone(entity);
+  if (replaced) {
+    nextEntity.components = nextComponents;
+  } else {
+    nextEntity.components = [...entity.components, nextComponent];
+  }
+
+  return nextEntity;
+};
+
+export const patchComponentByType = <T extends Component>(
+  entity: Entity,
+  componentClass: Constructor<T>,
+  patcher: (child: T) => Component,
+  immutable = true,
+): Entity => {
+  let changed = false;
+  const nextComponents = entity.components.map((child) => {
+    if (!isComponentType(child, componentClass)) return child;
+    changed = true;
+
+    if (immutable) {
+      const nextChild = clone(child);
+      return patcher(nextChild);
+    }
+    return patcher(child);
+  });
+  if (!changed) return entity;
+
+  const nextEntity = clone(entity);
+  nextEntity.components = nextComponents;
+
+  return nextEntity;
+};
+
+export const addComponent = <T extends Component>(
+  entity: Entity,
+  component: T,
+): Entity => {
+  const nextEntity = clone(entity);
+  nextEntity.components = [...entity.components, component];
+  return nextEntity;
+};
 
 // export const removeComponentById = (
 //   entity: Entity,
@@ -117,30 +174,6 @@ export const hasComponentById = (
 //   return exists
 //     ? replaceComponentById(entity, nextComponent.id, nextComponent)
 //     : addComponent(entity, nextComponent);
-// };
-
-// export const upsertComponentByType = <T extends Component>(
-//   entity: Entity,
-//   componentClass: Constructor<T>,
-//   nextComponent: T
-// ): Entity => {
-//   let replaced = false;
-
-//   const nextComponents = entity.components.map((component) => {
-//     if (replaced || !(component instanceof componentClass)) return component;
-//     replaced = true;
-//     return nextComponent;
-//   });
-
-//   return replaced
-//     ? {
-//       ...entity,
-//       components: nextComponents,
-//     }
-//     : {
-//       ...entity,
-//       components: [...entity.components, nextComponent],
-//     };
 // };
 
 // export const patchComponentById = <T extends Component>(
