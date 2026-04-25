@@ -1,8 +1,6 @@
 import React from 'react';
-import Tile from './Tile';
 import { useRenderedMap } from '../game/hooks/useRenderedMap';
-import { useKeyboardControls } from '../game/hooks/useKeyboardControls';
-
+import Tile from './Tile';
 
 export const Map: React.FC = () => {
     const renderedMap = useRenderedMap();
