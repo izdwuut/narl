@@ -3,8 +3,8 @@ import { getDummyArray } from "../../../utils/getDummyArray";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
 import { FloorEntity } from "../../model/entities/FloorEntity";
 import { SwordEntity } from "../../model/entities/items/Sword";
-import { PlayerEntity } from "../../model/entities/PlayerEntity";
 import type { WorldState } from "../../state/state";
+import { initPlayer } from "./initPlayer";
 
 export const initWorld = (): WorldState => {
   const world: WorldState = getDummyArray(MAP_SIZE).map(() => ({
@@ -12,7 +12,7 @@ export const initWorld = (): WorldState => {
     player: undefined,
     items: [],
   }));
-  world[INITIAL_PLAYER_POSITION].player = new PlayerEntity();
+  world[INITIAL_PLAYER_POSITION].player = initPlayer();
   world[3].items.push(new SwordEntity());
   world[0].floor.components.push(new VisitedComponent());
 

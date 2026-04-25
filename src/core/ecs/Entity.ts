@@ -7,7 +7,7 @@ export type EntityProps = {
     entities?: Entity[];
 };
 
-export class Entity implements Unique {
+export abstract class Entity implements Unique {
     id = '';
     components: Component[] = [];
     entities: Entity[] = [];

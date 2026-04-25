@@ -6,3 +6,4 @@ export * from "./render";
 export * from "./turn";
 export * from "./log";
 export * from "./pickUp";
+export * from "./eq";
