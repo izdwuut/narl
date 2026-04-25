@@ -6,6 +6,7 @@ import {
   getBackpack,
   isBackpackFull,
 } from "./backpack";
+import { pickUpItem } from "./pickUp";
 
 export const resolvePickUpAction = (
   state: GameState,
@@ -31,7 +32,7 @@ export const resolvePickUpAction = (
       );
       return tile;
     }
-    const itemToPickUp = tile.items.at(-1);
+    const itemToPickUp = pickUpItem(tile.items);
     if (!itemToPickUp) {
       return tile;
     }
