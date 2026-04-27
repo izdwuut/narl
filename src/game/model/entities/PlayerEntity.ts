@@ -3,7 +3,7 @@ import { PLAYER_SIGN } from "../../../utils/constants";
 import { ExpComponent } from "../components/ExpComponent";
 import { GlyphComponent } from "../components/GlyphComponent";
 import { BackpackEntity } from "./BackpackEntity";
-import { EquipmentEntity } from "./eq/EquipmentEntity";
+import { EqEntity } from "./eq/EqEntity";
 
 export type PlayerEntityProps = EntityProps;
 
@@ -14,7 +14,7 @@ export class PlayerEntity extends Entity {
     });
     const backpack = new BackpackEntity();
     const exp = new ExpComponent();
-    const eq = new EquipmentEntity();
+    const eq = new EqEntity();
     super({
       components: [...(props?.components ?? []), glyph, exp],
       entities: [...(props?.entities ?? []), backpack, eq],

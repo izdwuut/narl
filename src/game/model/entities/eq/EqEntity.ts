@@ -1,12 +1,12 @@
-import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
 import { MainHandSlotEntity } from ".";
+import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
 
-export type EquipmentEntityProps = {
+export type EqEntityProps = {
   items?: Entity[];
 } & EntityProps;
 
-export class EquipmentEntity extends Entity {
-  constructor(props?: EquipmentEntityProps) {
+export class EqEntity extends Entity {
+  constructor(props?: EqEntityProps) {
     const mainHandSlot = new MainHandSlotEntity();
 
     super({

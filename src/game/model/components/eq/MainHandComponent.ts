@@ -1,6 +1,6 @@
-import { Component } from "../../../../core/ecs";
+import { ItemSlotComponent } from "./ItemSlotComponent";
 
-export class MainHandComponent extends Component {
+export class MainHandComponent extends ItemSlotComponent {
     constructor() {
         super();
     }

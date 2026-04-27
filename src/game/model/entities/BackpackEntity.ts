@@ -8,6 +8,7 @@ export type BackpackEntityProps = {
 
 // in the future it may be needed to make it extend some generic ContainerComponent
 export class BackpackEntity extends Entity {
+    static name = "BackpackEntity";
     constructor(props: BackpackEntityProps = {}) {
         const size = new SizeComponent({
             size: props.size ?? DEFAULT_BACKPACK_SIZE,

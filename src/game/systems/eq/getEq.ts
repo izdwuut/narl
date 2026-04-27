@@ -4,10 +4,10 @@ import {
     getEntityByType
 } from "../../../core/ecs";
 import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
-import { EquipmentEntity } from "../../model/entities/eq/EquipmentEntity";
+import { EqEntity } from "../../model/entities/eq/EqEntity";
 
-const getEq = (entity: Entity): EquipmentEntity | undefined => {
-  return getEntityByType(entity, EquipmentEntity);
+export const getEq = (entity: Entity): EqEntity | undefined => {
+  return getEntityByType(entity, EqEntity);
 };
 
 export const getEqSlots = (entity: Entity) => {

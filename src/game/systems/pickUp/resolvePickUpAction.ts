@@ -5,7 +5,7 @@ import {
   addItemToEntityBackpack,
   getBackpack,
   isBackpackFull,
-} from "./backpack";
+} from "../inv/backpack";
 import { pickUpItem } from "./pickUp";
 
 export const resolvePickUpAction = (

@@ -9,6 +9,7 @@ import {
 import { SizeComponent } from "../../model/components/SizeComponent";
 import { BackpackEntity } from "../../model/entities/BackpackEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
+import type { InvSlot } from "../turn";
 
 export const getBackpack = (entity: ItemEntity): BackpackEntity | undefined => {
   return getEntityByType(entity, BackpackEntity);
@@ -31,4 +32,11 @@ export const addItemToEntityBackpack = (
   return patchEntityById(entity, backpackId, (backpack) =>
     addEntity(backpack, item),
   );
+};
+
+export const getBackpackItem = (
+  backpack: BackpackEntity,
+  slot: InvSlot,
+): ItemEntity | undefined => {
+  return backpack.entities[slot - 1];
 };

@@ -1,7 +1,9 @@
-import { Entity } from "../../../../core/ecs";
+import { Entity, type EntityProps } from "../../../../core/ecs";
+
+type EqSlotEntityProps = EntityProps;
 
 export abstract class EqSlotEntity extends Entity {
-    constructor() {
-        super({});
-    }
+  constructor(props: EqSlotEntityProps) {
+    super(props);
+  }
 }

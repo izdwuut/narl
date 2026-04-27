@@ -38,21 +38,18 @@ export const addEntity = (entity: Entity, child: Entity): Entity => {
   return nextEntity;
 };
 
-// export const removeEntityById = (
-//   entity: Entity,
-//   childEntityId: string
-// ): Entity => {
-//   const nextEntities = entity.entities.filter(
-//     (child) => child.id !== childEntityId
-//   );
-
-//   return nextEntities.length === entity.entities.length
-//     ? entity
-//     : {
-//         ...entity,
-//         entities: nextEntities,
-//       };
-// };
+export const removeEntityById = (
+  entity: Entity,
+  childEntityId: string,
+): Entity => {
+  const nextEntities = entity.entities.filter(
+    (child) => child.id !== childEntityId,
+  );
+  if (nextEntities.length === entity.entities.length) return entity;
+  const nextEntity = clone(entity);
+  nextEntity.entities = nextEntities;
+  return nextEntity;
+};
 
 export const replaceEntityById = (
   entity: Entity,

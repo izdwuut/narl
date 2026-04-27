@@ -8,6 +8,14 @@ export const isComponentType = <T extends Component>(
   componentClass: Constructor<T>,
 ): component is T => component instanceof componentClass;
 
+export const areComponentTypesEqual = (...components: Component[]): boolean => {
+  if (components.length <= 1) return true;
+  const targetPrototype = Object.getPrototypeOf(components[0]);
+  return components.every(
+    (component) => Object.getPrototypeOf(component) === targetPrototype,
+  );
+};
+
 // TODO: refactor usages to pass undefined entity
 export const getComponentByType = <T extends Component>(
   entity: Entity | undefined,
