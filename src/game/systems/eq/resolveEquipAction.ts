@@ -4,11 +4,11 @@ import type { ItemSlotComponent } from "../../model/components/eq/ItemSlotCompon
 import { getPlayer } from "../../state";
 import type { GameState } from "../../state/state";
 import { getItemSlots } from "../inv/getItemSlots";
-import { getBackpack, getBackpackItem } from "../pickUp";
 import type { ActionResolution, EqSlot, InvSlot } from "../turn";
 
 import { Action } from "../log";
 import { getEq, getEqSlots } from "./eq";
+import { getBackpack, getBackpackItem } from "../inv";
 
 const canBeEquipped = (
   itemSlots: ItemSlotComponent[],

@@ -6,8 +6,8 @@ import type { BackpackEntity } from "../model/entities/BackpackEntity";
 import type { PlayerEntity } from "../model/entities/PlayerEntity";
 import { GameContext } from "../state/context";
 import { getPlayer } from "../state/selectors";
-import { getBackpack } from "../systems/pickUp";
 import { useEq, type Eq } from "./useEq";
+import { getBackpack } from "../systems/inv";
 
 type Player = {
   player: PlayerEntity;
