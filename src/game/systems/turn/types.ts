@@ -1,12 +1,15 @@
+import type { Action } from "../log";
+
 export enum Direction {
   LEFT,
   RIGHT,
 }
 
 export enum GameActionType {
-  MOVE = "move",
-  PICK_UP = "pick_up",
-  EQUIP_ITEM = "equip_item",
+  MOVE,
+  PICK_UP,
+  EQUIP_ITEM,
+  ATTACK,
 }
 
 export type InvSlot = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
@@ -19,9 +22,12 @@ export type GameAction =
       type: GameActionType.EQUIP_ITEM;
       invSlot: InvSlot;
       eqSlot: EqSlot;
-    };
+    }
+  | { type: GameActionType.ATTACK; targetPosition: number };
 
 export type ActionResolution<TGameState> = {
   nextState: TGameState;
   consumesTurn: boolean;
+  pendingActions: GameAction[];
+  action?: Action
 };

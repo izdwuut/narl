@@ -2,9 +2,10 @@ import { produce } from "immer";
 import { upsertComponent } from "../../../core/ecs/queries/component";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
 import type { GameState, Tile } from "../../state/state";
+import { hasMobs } from "../combat";
 import { addExplorationExp } from "../exp";
 import { Action } from "../log";
-import type { ActionResolution, Direction } from "../turn";
+import { GameActionType, type ActionResolution, type Direction } from "../turn";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 
 const markAsVisited = (state: GameState, position: number): void => {
@@ -22,11 +23,13 @@ const getNextState = (
     floor: world[currentPlayerPosition].floor,
     items: world[currentPlayerPosition].items,
     player: undefined,
+    mobs: world[currentPlayerPosition].mobs,
   };
   const newPlayerTile: Tile = {
     floor: world[nextPlayerPosition].floor,
     items: world[nextPlayerPosition].items,
     player: addExplorationExp(world[nextPlayerPosition].floor, player),
+    mobs: world[nextPlayerPosition].mobs,
   };
   world[currentPlayerPosition] = oldPlayerTile;
   world[nextPlayerPosition] = newPlayerTile;
@@ -39,7 +42,7 @@ export const resolveMoveAction = (
 ): ActionResolution<GameState> => {
   const action = new Action();
   const nextState = produce(state, (draft) => {
-    const currentPlayerPosition = state.world.findIndex((tile) => tile.player); // TODO: getPlayerPosition util
+    const currentPlayerPosition = draft.world.findIndex((tile) => tile.player); // TODO: getPlayerPosition util
     const nextPlayerPosition = getNextPlayerPosition({
       currentPosition: currentPlayerPosition,
       direction,
@@ -47,6 +50,12 @@ export const resolveMoveAction = (
 
     if (nextPlayerPosition === null) {
       return action.reject("Cannot move in that direction.");
+    }
+    if (hasMobs(draft.world[nextPlayerPosition])) {
+      return action.addPending({
+        type: GameActionType.ATTACK,
+        targetPosition: nextPlayerPosition,
+      });
     }
 
     getNextState(draft, currentPlayerPosition, nextPlayerPosition);

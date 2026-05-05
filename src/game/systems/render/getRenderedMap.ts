@@ -15,8 +15,13 @@ const resolveGlyph = (tile: Tile) => {
   const itemGlyph = lastItem
     ? getComponentByType(lastItem, GlyphComponent)?.glyph
     : undefined;
+  const mobs = tile.mobs;
+  const lastMob = mobs.at(-1);
+  const mobGlyph = lastMob
+    ? getComponentByType(lastMob, GlyphComponent)?.glyph
+    : undefined;
 
-  return playerGlyph ?? itemGlyph ?? floorGlyph ?? MISSING_GLYPH;
+  return playerGlyph ?? mobGlyph ?? itemGlyph ?? floorGlyph ?? MISSING_GLYPH;
 };
 
 export const getRenderedMap = (gameState: GameState) => {

@@ -1,1 +1,1 @@
-export * from "./getEq";
+export * from "./eq";

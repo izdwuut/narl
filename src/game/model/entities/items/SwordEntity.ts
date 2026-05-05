@@ -1,6 +1,7 @@
 import type { EntityProps } from "../../../../core/ecs/Entity";
 import { MainHandComponent } from "../../components";
 import { NameComponent } from "../../components/AppearanceComponent copy";
+import { DmgComponent } from "../../components/DmgComponent";
 import { GlyphComponent } from "../../components/GlyphComponent";
 import { ItemEntity } from "./ItemEntity";
 
@@ -13,10 +14,10 @@ export class SwordEntity extends ItemEntity {
     });
     const mainHand = new MainHandComponent();
     const name = new NameComponent({ name: "Sword" });
-
+    const dmg = new DmgComponent({ dmg: 5 });
     super({
       ...props,
-      components: [...(props?.components ?? []), glyph, mainHand, name],
+      components: [...(props?.components ?? []), glyph, mainHand, name, dmg],
     });
   }
 }

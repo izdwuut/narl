@@ -1,24 +1,42 @@
 import type { GameState } from "../../state/state";
-import type { ActionResolution } from "../turn";
-import { addLog } from "./addLog";
+import type { ActionResolution, GameAction } from "../turn";
+import { addLogImmutable } from "./addLog";
 
 export class Action {
   public consumesTurn = false;
-  private message = "";
+  private pendingLogs: string[] = [];
+  private pendingActions: GameAction[] = [];
 
   reject = (message: string): void => {
-    this.message = message;
+    this.pendingLogs.push(message);
   };
 
   fulfill = (message: string): void => {
-    this.message = message;
+    this.pendingLogs.push(message);
     this.consumesTurn = true;
   };
 
   resolve = (nextState: GameState): ActionResolution<GameState> => {
     return {
-      nextState: addLog(nextState, this.message, this.consumesTurn),
+      nextState,
       consumesTurn: this.consumesTurn,
+      pendingActions: this.pendingActions,
+      action: this
     };
   };
+
+  addPending = (pendingAction: GameAction): void => {
+    this.pendingActions.push(pendingAction);
+  };
+
+  log(message: string) {
+    this.pendingLogs.push(message);
+  }
+
+  flushLogs(state: GameState): GameState {
+    return this.pendingLogs.reduce(
+      (next, msg) => addLogImmutable(next, msg),
+      state,
+    );
+  }
 }

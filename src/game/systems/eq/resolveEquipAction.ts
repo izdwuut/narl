@@ -7,8 +7,8 @@ import { getItemSlots } from "../inv/getItemSlots";
 import { getBackpack, getBackpackItem } from "../pickUp";
 import type { ActionResolution, EqSlot, InvSlot } from "../turn";
 
-import { getEq, getEqSlots } from "./getEq";
 import { Action } from "../log";
+import { getEq, getEqSlots } from "./eq";
 
 const canBeEquipped = (
   itemSlots: ItemSlotComponent[],

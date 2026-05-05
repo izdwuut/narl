@@ -2,7 +2,8 @@ import { INITIAL_PLAYER_POSITION, MAP_SIZE } from "../../../utils/constants";
 import { getDummyArray } from "../../../utils/getDummyArray";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
 import { FloorEntity } from "../../model/entities/FloorEntity";
-import { SwordEntity } from "../../model/entities/items/Sword";
+import { SwordEntity } from "../../model/entities/items/SwordEntity";
+import { RageBaitEntity } from "../../model/entities/mobs/RageBait";
 import type { WorldState } from "../../state/state";
 import { initPlayer } from "./initPlayer";
 
@@ -11,10 +12,12 @@ export const initWorld = (): WorldState => {
     floor: new FloorEntity(),
     player: undefined,
     items: [],
+    mobs: [],
   }));
   world[INITIAL_PLAYER_POSITION].player = initPlayer();
   world[3].items.push(new SwordEntity());
   world[0].floor.components.push(new VisitedComponent());
+  world[6].mobs.push(new RageBaitEntity());
 
   return world;
 };

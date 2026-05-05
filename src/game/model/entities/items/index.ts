@@ -1,2 +1,2 @@
 export * from "./ItemEntity";
-export * from "./Sword";
+export * from "./SwordEntity";
