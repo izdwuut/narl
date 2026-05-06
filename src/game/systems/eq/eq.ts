@@ -19,7 +19,7 @@ export const getEqSlots = (entity: Entity) => {
   return getEntitiesByType(eq, EqSlotEntity);
 };
 
-export const getEquippedWeapon = (entity: Entity) => {
+export const getEquippedWeapon = (entity: Entity): ItemEntity | undefined => {
   const eq = getEq(entity);
   const slot = getEntitiesByType(eq, EqSlotEntity)[0];
   const weapon = getEntitiesByType(slot, ItemEntity)[0];
@@ -28,9 +28,6 @@ export const getEquippedWeapon = (entity: Entity) => {
 
 export const getEquippedWeaponDamage = (weapon: ItemEntity) => {
   const dmg = getComponentByType(weapon, DmgComponent)?.dmg;
-  if (dmg === undefined) {
-    throw new Error(`Equiped weapon does not have a DmgComponent`);
-  }
   return dmg;
 };
 

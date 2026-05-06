@@ -26,6 +26,12 @@ type AttackContext =
       mobName: string;
     }
   | {
+      ok: true;
+      targetPosition: number;
+      mobExp: number;
+      mobName: string;
+    }
+  | {
       ok: false;
       message: string;
     };
@@ -48,11 +54,8 @@ export const prepareAttack = (
   const player = getPlayer(state);
 
   const weapon = getEquippedWeapon(player);
-  if (!weapon) {
-    return { ok: false, message: "No weapon equipped." };
-  }
 
-  const dmg = getEquippedWeaponDamage(weapon);
+  const dmg = weapon ? getEquippedWeaponDamage(weapon) : undefined;
   const mobName = getComponentByType(mob, NameComponent)?.name ?? "mob";
   const mobExp = getComponentByType(mob, ExpComponent)?.exp ?? 0;
 
@@ -80,17 +83,18 @@ export const resolveAttackAction = (
       return action.reject("No mobs to attack in that direction.");
     }
     const mob = getMob(target);
+    const mobName = ctx.mobName;
     if (!mob) {
       return action.reject("No mobs to attack in that direction.");
     }
-    const weapon = ctx.weapon;
-    if (!weapon) {
-      action.reject("No weapon.");
+    const weapon = "weapon" in ctx ? ctx.weapon : undefined;
+    const dmg = "dmg" in ctx ? ctx.dmg : undefined;
+    if (!weapon || !dmg) {
+      // TODO: Handle hostile mobs
+      return action.fulfill(`Poked ${mobName}`);
     }
-    const dmg = ctx.dmg;
     const mobHp = getHp(mob);
     const nextHp = mobHp?.hp - dmg;
-    const mobName = ctx.mobName;
 
     if (nextHp <= 0) {
       const player = getPlayer(draft);
