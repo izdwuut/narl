@@ -20,6 +20,7 @@ const Tile: React.FC<TileProps> = ({ renderedTile, index }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          marginBottom: 4
         }}
       >
         {renderedTile.char ?? " "}

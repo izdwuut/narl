@@ -10,7 +10,6 @@ export const TileIndex: React.FC<TileIndexProps> = ({ index }) => {
       style={{
         width: 48,
         display: "flex",
-
         alignItems: "center",
         justifyContent: "center",
         color: 'gray'
