@@ -28,6 +28,7 @@ export const mapKeyboardEventToAction = (
   if (buffer.current.length) {
     if (event.key === "Escape") {
       buffer.current = [];
+      setGameState(addLogImmutable(gameState, "Action canceled"));
     }
     if (buffer.current[0] === "e") {
       if (!["1", "2", "3", "4", "5", "6", "7", "8", "9"].includes(event.key)) {
