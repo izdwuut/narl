@@ -19,6 +19,9 @@ export const Slot = ({ item, index }: SlotProps) => {
         border: "1px solid white",
         color: color,
         position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <SlotIndex index={index} />

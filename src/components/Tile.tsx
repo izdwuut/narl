@@ -17,6 +17,9 @@ const Tile: React.FC<TileProps> = ({ renderedTile, index }) => {
           width: "48px",
           border: "1px solid white",
           color: renderedTile.color,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         {renderedTile.char ?? " "}

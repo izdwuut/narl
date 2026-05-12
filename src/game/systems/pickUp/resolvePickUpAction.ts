@@ -49,7 +49,7 @@ export const resolvePickUpAction = (state: GameState): ActionResolution => {
       removeById(tile.items, itemToPickUp.id);
 
       action.fulfill(
-        `Player picked up a ${isCursed(itemToPickUp) ? "Cursed " : ""}${itemName}.`,
+        `Picked up ${isCursed(itemToPickUp) ? "Cursed " : ""}${itemName}.`,
       );
     });
   });
