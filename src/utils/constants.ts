@@ -11,3 +11,4 @@ export const INITIAL_PLAYER_EXP = 0 as const;
 export const MAX_CURSED_CONTAINER_DEPTH = 2;
 export const INV_SLOTS_PER_ROW = 3;
 export const CURSED_PREFIX = "Cursed";
+export const FLOOR_ITEM_COLOR = 'yellow'

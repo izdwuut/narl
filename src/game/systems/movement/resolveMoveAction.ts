@@ -2,7 +2,7 @@ import { produce } from "immer";
 import { upsertComponent } from "../../../core/ecs/queries/component";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
 import type { GameState, Tile } from "../../state/state";
-import { hasMobs } from "../combat";
+import { hasMobs } from "../attack";
 import { addExplorationExp } from "../exp";
 import { Action } from "../log";
 import {

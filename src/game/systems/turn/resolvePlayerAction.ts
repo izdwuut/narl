@@ -2,7 +2,7 @@ import type { GameState } from "../../state/state";
 import {
   prepareAttack,
   resolveAttackAction,
-} from "../combat/resolveAttackAction";
+} from "../attack/resolveAttackAction";
 import { resolveEquipAction } from "../eq/resolveEquipAction";
 import { resolveUnequipAction } from "../eq/resolveUnequipAction";
 import { addLogImmutable } from "../log";
