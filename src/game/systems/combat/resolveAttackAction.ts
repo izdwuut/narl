@@ -9,7 +9,7 @@ import {
 
 import { getComponentByType } from "../../../core/ecs";
 import { ExpComponent, ItemEntity } from "../../model";
-import { NameComponent } from "../../model/components/AppearanceComponent copy";
+import { NameComponent } from "../../model/components/NameComponent";
 import { getEquippedWeapon, getEquippedWeaponDamage } from "../eq";
 import { getBackpack } from "../inv";
 import { Action } from "../log";

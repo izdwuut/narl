@@ -1,7 +1,7 @@
 import { type EntityProps } from "../../../../core/ecs/Entity";
 import { DEFAULT_BACKPACK_SIZE } from "../../../../utils/constants";
 import { GlyphComponent, MainHandComponent } from "../../components";
-import { NameComponent } from "../../components/AppearanceComponent copy";
+import { NameComponent } from "../../components/NameComponent";
 import { ContainerComponent } from "../../components/ContainerComponent";
 import { DmgComponent } from "../../components/DmgComponent";
 import { EquippableComponent } from "../../components/EquippableComponent";

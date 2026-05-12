@@ -3,23 +3,20 @@ import {
   addEntity,
   getComponentByType,
   getEntitiesByType,
-  hasComponentByType,
-  removeEntityById,
+  removeEntityById
 } from "../../../core/ecs";
 import { ItemEntity } from "../../model";
-import { NameComponent } from "../../model/components/AppearanceComponent copy";
-import { ContainerComponent } from "../../model/components/ContainerComponent";
+import { CursedComponent } from "../../model/components/CursedComponent";
 import type { GameState } from "../../state/state";
 import {
-  addItemToEntityBackpack,
   getBackpack,
-  isContainerFull,
   isContainer,
+  isContainerFull
 } from "../inv/containers";
+import { getItemName } from "../inv/items";
 import { Action } from "../log/action";
 import { PlayerActionType, type ActionResolution } from "../turn";
 import { pickUpItem } from "./pickUp";
-import { CursedComponent } from "../../model/components/CursedComponent";
 
 export const resolvePickUpUnpack = (state: GameState): ActionResolution => {
   const action = new Action();
@@ -57,11 +54,7 @@ export const resolvePickUpUnpack = (state: GameState): ActionResolution => {
           if (nextItem) {
             addEntity(backpack, nextItem);
             removeEntityById(itemToPickUp, nextItem.id);
-            const nextItemName = getComponentByType(
-              nextItem,
-              NameComponent,
-            )?.name;
-            action.fulfill(`Picked up ${nextItemName}`);
+            action.fulfill(`Picked up ${getItemName(nextItem)}`);
           }
         }
         return;

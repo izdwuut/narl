@@ -1,5 +1,5 @@
 import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
-import { NameComponent } from "../../components/AppearanceComponent copy";
+import { NameComponent } from "../../components/NameComponent";
 import { ColorComponent } from "../../components/ColorComponent";
 import { GlyphComponent } from "../../components/GlyphComponent";
 import { PeacefulComponent } from "../../components/mobs/PeacefulComponent";

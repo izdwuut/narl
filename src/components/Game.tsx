@@ -20,7 +20,7 @@ export const Game: React.FC = () => {
       }}
     >
       <EQ />
-      <div style={{ display: "flex", flexDirection: "row", marginTop: 16 }}>
+      <div style={{ display: "flex", flexDirection: "row", marginTop: 16, marginRight: 16 }}>
         <div
           style={{
             display: "flex",

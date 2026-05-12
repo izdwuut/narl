@@ -9,6 +9,7 @@ import {
 } from "../turn";
 
 import { addItemToEntityBackpack, getBackpack, isContainerFull } from "../inv";
+import { getItemName } from "../inv/items";
 import { Action } from "../log";
 import { unequipWeapon } from "./eq";
 
@@ -47,7 +48,9 @@ export const resolveUnequipAction = (
     }
 
     addItemToEntityBackpack(player, equippedWeapon, backpack.id);
-    action.fulfill(`Unequipped item from slot ${eqSlotIndex}`);
+    action.fulfill(
+      `Unequipped ${getItemName(equippedWeapon)} from slot ${eqSlotIndex}`,
+    );
   });
 
   return action.resolve(nextState);

@@ -7,6 +7,7 @@ import { Entity, getEntityById, removeEntityById } from "../../../core/ecs";
 import { getMobById } from "../combat";
 import { Action } from "../log";
 import { getBackpack } from "../inv";
+import { getItemName } from "../inv/items";
 
 // TODO: split into resolvePlayerDropAction and resolveMobDropAction
 export const resolveDropAction = (
@@ -42,7 +43,7 @@ export const resolveDropAction = (
     tile.items.push(itemToDrop);
     removeEntityById(entity, itemToDrop.id);
 
-    return action.fulfill(`Dropped an item.`);
+    return action.fulfill(`Dropped ${getItemName(itemToDrop)}`);
   });
 
   return action.resolve(nextState);

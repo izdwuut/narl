@@ -3,7 +3,7 @@ import type { GameState } from "../../state/state";
 import { WorldActionEntityType, type ActionResolution } from "../turn";
 
 import { getComponentByType } from "../../../core/ecs";
-import { NameComponent } from "../../model/components/AppearanceComponent copy";
+import { NameComponent } from "../../model/components/NameComponent";
 import { getMobById, killMobById } from "../combat";
 import { Action } from "../log";
 

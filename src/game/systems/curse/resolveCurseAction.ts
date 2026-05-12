@@ -5,18 +5,16 @@ import { type ActionResolution } from "../turn";
 
 import {
   addComponents,
-  getComponentByType,
   getEntityById,
-  hasComponentByType,
-  upsertComponent,
+  upsertComponent
 } from "../../../core/ecs";
 import { COLORS } from "../../../utils/colors";
-import { NameComponent } from "../../model/components/AppearanceComponent copy";
 import { ColorComponent } from "../../model/components/ColorComponent";
 import { CursedComponent } from "../../model/components/CursedComponent";
 import { getBackpack } from "../inv";
+import { getItemName } from "../inv/items";
 import { Action } from "../log";
-import { isCursed } from "./cursed";
+import { isCursed } from "./curse";
 
 export const resolveCurseAction = (
   state: GameState,
@@ -37,12 +35,10 @@ export const resolveCurseAction = (
       return;
     }
 
+    const logMsg = `${getItemName(itemToCurse)} got cursed`;
     addComponents(itemToCurse, new CursedComponent());
     upsertComponent(itemToCurse, new ColorComponent({ color: COLORS.CURSED }));
-
-    const itemName = getComponentByType(itemToCurse, NameComponent)?.name;
-
-    return action.fulfill(`${itemName} got cursed`);
+    return action.fulfill(logMsg);
   });
 
   return action.resolve(nextState, false);

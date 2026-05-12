@@ -1,16 +1,13 @@
 import { produce } from "immer";
-import { getComponentByType, hasComponentByType } from "../../../core/ecs";
 import { removeById } from "../../../utils/removeById";
-import { NameComponent } from "../../model/components/AppearanceComponent copy";
-import { ContainerComponent } from "../../model/components/ContainerComponent";
 import type { GameState } from "../../state/state";
-import { isCursed } from "../curse/cursed";
 import {
   addItemToEntityBackpack,
   getBackpack,
-  isContainerFull,
   isContainer,
+  isContainerFull,
 } from "../inv/containers";
+import { getItemName } from "../inv/items";
 import { Action } from "../log/action";
 import { WorldActionType, type ActionResolution } from "../turn";
 import { isPickupable, pickUpItem } from "./pickUp";
@@ -27,17 +24,19 @@ export const resolvePickUpAction = (state: GameState): ActionResolution => {
       if (!backpack) {
         return;
       }
-      if (isContainerFull(backpack)) {
-        return action.reject("Can't pick up item. Backpack is full.");
-      }
       const itemToPickUp = pickUpItem(tile);
-
       if (!itemToPickUp) {
         return action.reject("Nothing to pick up");
       }
-      const itemName = getComponentByType(itemToPickUp, NameComponent)?.name;
+
+      if (isContainerFull(backpack)) {
+        return action.reject(
+          `Can't pick up ${getItemName(itemToPickUp)}. Backpack is full.`,
+        );
+      }
+
       if (!isPickupable(itemToPickUp)) {
-        return action.reject(`${itemName} is not pickupable`);
+        return action.reject(`${getItemName(itemToPickUp)} is not pickupable`);
       }
       if (isContainer(itemToPickUp)) {
         action.addPending({
@@ -48,9 +47,7 @@ export const resolvePickUpAction = (state: GameState): ActionResolution => {
       addItemToEntityBackpack(tile.player, itemToPickUp, backpack.id);
       removeById(tile.items, itemToPickUp.id);
 
-      action.fulfill(
-        `Picked up ${isCursed(itemToPickUp) ? "Cursed " : ""}${itemName}.`,
-      );
+      action.fulfill(`Picked up ${getItemName(itemToPickUp)}.`);
     });
   });
 
