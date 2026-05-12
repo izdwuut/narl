@@ -2,8 +2,8 @@ import type { GameState } from "../../state";
 import type { Action } from "../log";
 
 export enum Direction {
-  LEFT,
-  RIGHT,
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
 }
 
 export enum PlayerActionType {

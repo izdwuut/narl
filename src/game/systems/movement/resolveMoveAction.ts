@@ -5,7 +5,11 @@ import type { GameState, Tile } from "../../state/state";
 import { hasMobs } from "../combat";
 import { addExplorationExp } from "../exp";
 import { Action } from "../log";
-import { PlayerActionType, type ActionResolution, type Direction } from "../turn";
+import {
+  PlayerActionType,
+  type ActionResolution,
+  type Direction,
+} from "../turn";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 import { getPlayerPosition } from "../../state";
 
@@ -50,7 +54,7 @@ export const resolveMoveAction = (
     });
 
     if (nextPlayerPosition === null) {
-      return action.reject("Cannot move in that direction.");
+      return action.reject(`Cannot move ${direction.toLowerCase()}`);
     }
     if (hasMobs(draft.world[nextPlayerPosition])) {
       return action.addPending({
@@ -60,7 +64,7 @@ export const resolveMoveAction = (
     }
 
     getNextState(draft, currentPlayerPosition, nextPlayerPosition);
-    action.fulfill("Player moved.");
+    action.fulfill(`Moved ${direction.toLowerCase()}`);
   });
 
   return action.resolve(nextState);
