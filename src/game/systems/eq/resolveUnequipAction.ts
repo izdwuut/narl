@@ -6,17 +6,16 @@ import {
   WorldActionEntityType,
   WorldActionType,
   type ActionResolution,
-  
+  type PlayerUnequipItemAction,
 } from "../turn";
 
 import { addItemToEntityBackpack, getBackpack, isContainerFull } from "../inv";
 import { getItemName } from "../inv/items";
 import { unequipWeapon } from "./eq";
-import type { EqSlot } from "./types";
 
 export const resolveUnequipAction = (
   state: GameState,
-  eqSlotIndex: EqSlot,
+  { eqSlot: eqSlotIndex }: PlayerUnequipItemAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {

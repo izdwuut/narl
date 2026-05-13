@@ -1,6 +1,6 @@
 import type { GameState } from "../../state";
 import { resolveDropAction } from "../drop/resolveDropAction";
-import { resolveCurseAction } from "../curse/resolveCurseAction";
+import { resolveCurseItemAction } from "../curse/resolveCurseItemAction";
 import {
   increaseTurn,
   WorldActionType,
@@ -17,9 +17,7 @@ export const resolveWorldAction = (
     case WorldActionType.REMOVE_ENTITY: {
       const actionResolution = resolveRemoveEntityAction(
         state,
-        action.entityId,
-        action.entityType,
-        action.position,
+        action
       );
       let nextState = actionResolution.nextState;
       if (actionResolution.consumesTurn) {
@@ -33,10 +31,7 @@ export const resolveWorldAction = (
     case WorldActionType.DROP_ITEM: {
       const actionResolution = resolveDropAction(
         state,
-        action.targetPosition,
-        action.entityType,
-        action.entityId,
-        action.itemId,
+        action
       );
       let nextState = actionResolution.nextState;
       if (actionResolution.consumesTurn) {
@@ -48,7 +43,7 @@ export const resolveWorldAction = (
       };
     }
     case WorldActionType.CURSE_ITEM: {
-      const actionResolution = resolveCurseAction(state, action.itemId);
+      const actionResolution = resolveCurseItemAction(state, action);
       let nextState = actionResolution.nextState;
       if (actionResolution.consumesTurn) {
         nextState = increaseTurn(nextState);

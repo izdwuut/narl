@@ -1,6 +1,11 @@
 import { produce } from "immer";
 import type { GameState } from "../../state/state";
-import { Action, WorldActionEntityType, type ActionResolution } from "../turn";
+import {
+  Action,
+  WorldActionEntityType,
+  type ActionResolution,
+  type WorldRemoveEntityAction,
+} from "../turn";
 
 import { getComponentByType } from "../../../core/ecs";
 import { NameComponent } from "../../model/components/NameComponent";
@@ -8,9 +13,7 @@ import { getMobById, killMobById } from "../attack";
 
 export const resolveRemoveEntityAction = (
   state: GameState,
-  entityId: string | undefined,
-  entityType: WorldActionEntityType,
-  position: number,
+  { entityId, entityType, position }: WorldRemoveEntityAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {

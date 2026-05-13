@@ -25,7 +25,7 @@ export type PlayerEquipItemAction = {
   invSlot: InvSlot;
   eqSlot: EqSlot;
 };
-export type PlayeerUnequipItemAction = {
+export type PlayerUnequipItemAction = {
   type: PlayerActionType.UNEQUIP_ITEM;
   eqSlot: EqSlot;
 };
@@ -44,6 +44,6 @@ export type PlayerAction =
   | PlayerPickUpAction
   | PlayerPickUpUnpackAction
   | PlayerEquipItemAction
-  | PlayeerUnequipItemAction
+  | PlayerUnequipItemAction
   | PlayerAttackAction
   | PlayerMoveItemAction;

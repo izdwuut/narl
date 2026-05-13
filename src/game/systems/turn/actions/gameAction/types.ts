@@ -10,21 +10,22 @@ export enum WorldActionEntityType {
   OBJECT = "OBJECT",
 }
 
-export type WorldDropItemAction = {
-  type: WorldActionType.DROP_ITEM;
-  targetPosition: number;
-  entityType: WorldActionEntityType.PLAYER;
-  entityId: undefined;
-  itemId: string | undefined;
-};
-export type WorldActionDropItem = {
-  type: WorldActionType.DROP_ITEM;
-  targetPosition: number;
-  entityType: WorldActionEntityType.MOB;
-  entityId: string;
-  itemId: string;
-};
-export type WorldActionRemoveEntity =
+export type WorldDropItemAction =
+  | {
+      type: WorldActionType.DROP_ITEM;
+      targetPosition: number;
+      entityType: WorldActionEntityType.PLAYER;
+      entityId: undefined;
+      itemId: string | undefined;
+    }
+  | {
+      type: WorldActionType.DROP_ITEM;
+      targetPosition: number;
+      entityType: WorldActionEntityType.MOB;
+      entityId: string;
+      itemId: string;
+    };
+export type WorldRemoveEntityAction =
   | {
       type: WorldActionType.REMOVE_ENTITY;
       entityId: string;
@@ -37,13 +38,12 @@ export type WorldActionRemoveEntity =
       entityType: WorldActionEntityType.PLAYER;
       position: number;
     };
-export type WorldActionCurseItem = {
+export type WorldCurseItemAction = {
   type: WorldActionType.CURSE_ITEM;
   itemId: string;
 };
 
 export type WorldAction =
   | WorldDropItemAction
-  | WorldActionDropItem
-  | WorldActionRemoveEntity
-  | WorldActionCurseItem;
+  | WorldRemoveEntityAction
+  | WorldCurseItemAction;

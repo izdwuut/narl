@@ -6,6 +6,7 @@ import {
   WorldActionEntityType,
   WorldActionType,
   type ActionResolution,
+  type PlayerAttackAction,
 } from "../turn";
 
 import { getComponentByType } from "../../../core/ecs";
@@ -38,7 +39,7 @@ type AttackContext =
 
 export const prepareAttack = (
   state: GameState,
-  targetPosition: number,
+  { targetPosition }: PlayerAttackAction,
 ): AttackContext => {
   const target = state.world[targetPosition];
 

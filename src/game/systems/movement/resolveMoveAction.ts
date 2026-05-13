@@ -1,6 +1,7 @@
 import { produce } from "immer";
 import { upsertComponent } from "../../../core/ecs/queries/component";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
+import { getPlayerPosition } from "../../state";
 import type { GameState, Tile } from "../../state/state";
 import { hasMobs } from "../attack";
 import { addExplorationExp } from "../exp";
@@ -8,10 +9,9 @@ import {
   Action,
   PlayerActionType,
   type ActionResolution,
-  type Direction,
+  type PlayerMoveAction
 } from "../turn";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
-import { getPlayerPosition } from "../../state";
 
 const markAsVisited = (state: GameState, position: number): void => {
   upsertComponent(state.world[position].floor, new VisitedComponent());
@@ -43,7 +43,7 @@ const getNextState = (
 
 export const resolveMoveAction = (
   state: GameState,
-  direction: Direction,
+  { direction }: PlayerMoveAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {

@@ -1,12 +1,16 @@
 import { produce } from "immer";
 import { getPlayer } from "../../state";
 import type { GameState } from "../../state/state";
-import { Action, type ActionResolution } from "../turn";
+import {
+  Action,
+  type ActionResolution,
+  type WorldCurseItemAction,
+} from "../turn";
 
 import {
   addComponents,
   getEntityById,
-  upsertComponent
+  upsertComponent,
 } from "../../../core/ecs";
 import { COLORS } from "../../../utils/colors";
 import { ColorComponent } from "../../model/components/ColorComponent";
@@ -15,9 +19,9 @@ import { getBackpack } from "../inv";
 import { getItemName } from "../inv/items";
 import { isCursed } from "./curse";
 
-export const resolveCurseAction = (
+export const resolveCurseItemAction = (
   state: GameState,
-  itemId: string,
+  { itemId }: WorldCurseItemAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {

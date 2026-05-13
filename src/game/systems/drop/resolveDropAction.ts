@@ -1,7 +1,12 @@
 import { produce } from "immer";
 import { getPlayer } from "../../state";
 import type { GameState } from "../../state/state";
-import { Action, WorldActionEntityType, type ActionResolution } from "../turn";
+import {
+  Action,
+  WorldActionEntityType,
+  type ActionResolution,
+  type WorldDropItemAction,
+} from "../turn";
 
 import { Entity, getEntityById, removeEntityById } from "../../../core/ecs";
 import { getMobById } from "../attack";
@@ -11,10 +16,7 @@ import { getItemName } from "../inv/items";
 // TODO: split into resolvePlayerDropAction and resolveMobDropAction
 export const resolveDropAction = (
   state: GameState,
-  targetPosition: number,
-  entityType: WorldActionEntityType,
-  entityId: string | undefined,
-  itemId?: string,
+  { entityId, entityType, targetPosition, itemId }: WorldDropItemAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {

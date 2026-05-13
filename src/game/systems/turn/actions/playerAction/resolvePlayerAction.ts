@@ -17,7 +17,7 @@ export const resolvePlayerAction = (
 ): ActionResolution => {
   switch (action.type) {
     case PlayerActionType.MOVE: {
-      const actionResolution = resolveMoveAction(state, action.direction);
+      const actionResolution = resolveMoveAction(state, action);
       let nextState = actionResolution.nextState;
 
       if (actionResolution.consumesTurn) {
@@ -54,8 +54,7 @@ export const resolvePlayerAction = (
     case PlayerActionType.EQUIP_ITEM: {
       const actionResolution = resolveEquipAction(
         state,
-        action.invSlot,
-        action.eqSlot,
+        action
       );
       let nextState = actionResolution.nextState;
 
@@ -68,7 +67,7 @@ export const resolvePlayerAction = (
       };
     }
     case PlayerActionType.UNEQUIP_ITEM: {
-      const actionResolution = resolveUnequipAction(state, action.eqSlot);
+      const actionResolution = resolveUnequipAction(state, action);
       let nextState = actionResolution.nextState;
 
       if (actionResolution.consumesTurn) {
@@ -80,7 +79,7 @@ export const resolvePlayerAction = (
       };
     }
     case PlayerActionType.ATTACK: {
-      const ctx = prepareAttack(state, action.targetPosition);
+      const ctx = prepareAttack(state, action);
       if (!ctx.ok) {
         return {
           nextState: addLogImmutable(state, ctx.message),
@@ -99,8 +98,7 @@ export const resolvePlayerAction = (
     case PlayerActionType.MOVE_ITEM: {
       const actionResolution = resolveMoveItemAction(
         state,
-        action.fromSlot,
-        action.toSlot,
+        action
       );
       let nextState = actionResolution.nextState;
 

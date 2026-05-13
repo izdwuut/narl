@@ -1,10 +1,18 @@
 import { produce } from "immer";
 import { addEntity, Entity, removeEntityById } from "../../../core/ecs";
-import { getPlayer, type GameState } from "../../state";
-import { getBackpack, isContainer, isContainerFull, type InvSlot } from "../inv";
-import { getInvItemAt } from "../inv/inv";
-import { Action, type ActionResolution } from "../turn";
 import { MAX_CURSED_CONTAINER_DEPTH } from "../../../utils";
+import { getPlayer, type GameState } from "../../state";
+import {
+  getBackpack,
+  isContainer,
+  isContainerFull
+} from "../inv";
+import { getInvItemAt } from "../inv/inv";
+import {
+  Action,
+  type ActionResolution,
+  type PlayerMoveItemAction,
+} from "../turn";
 
 const getNestDepth = (entity: Entity): number => {
   if (!isContainer(entity)) {
@@ -23,8 +31,7 @@ const getNestDepth = (entity: Entity): number => {
 // TODO: add swap (new resolver)
 export const resolveMoveItemAction = (
   state: GameState,
-  fromSlot: InvSlot,
-  toSlot: InvSlot,
+  { fromSlot, toSlot }: PlayerMoveItemAction,
 ): ActionResolution => {
   const action = new Action();
   const nextState = produce(state, (draft) => {
