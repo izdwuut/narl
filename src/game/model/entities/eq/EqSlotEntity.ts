@@ -1,4 +1,4 @@
-import { Entity, type EntityProps } from "../../../../core/ecs";
+import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
 
 type EqSlotEntityProps = EntityProps;
 

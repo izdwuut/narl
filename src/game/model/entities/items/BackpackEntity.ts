@@ -1,12 +1,13 @@
 import { type EntityProps } from "../../../../core/ecs/Entity";
 import { DEFAULT_BACKPACK_SIZE } from "../../../../utils/constants";
-import { GlyphComponent, MainHandComponent } from "../../components";
 import { NameComponent } from "../../components/NameComponent";
 import { ContainerComponent } from "../../components/ContainerComponent";
 import { DmgComponent } from "../../components/DmgComponent";
 import { EquippableComponent } from "../../components/EquippableComponent";
 import { SizeComponent } from "../../components/SizeComponent";
 import { ItemEntity } from "./ItemEntity";
+import { GlyphComponent } from "../../components/GlyphComponent";
+import { MainHandComponent } from "../../components/eq/MainHandComponent";
 
 export type BackpackEntityProps = {
   size?: number;

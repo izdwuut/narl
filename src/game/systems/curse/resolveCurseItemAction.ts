@@ -1,23 +1,20 @@
 import { produce } from "immer";
-import { getPlayer } from "../../state";
 import type { GameState } from "../../state/state";
-import {
-  Action,
-  type ActionResolution,
-  type WorldCurseItemAction,
-} from "../turn";
-
+import { Action } from "../actions/action";
+import type { WorldCurseItemAction } from "../actions/gameAction/types";
+import type { ActionResolution } from "../actions/types";
+import { getPlayer } from "../../state/selectors/player";
+import { getBackpack } from "../inv/containers";
+import { getEntityById } from "../../../core/ecs/queries/entities";
+import { isCursed } from "./curse";
+import { getItemName } from "../inv/items";
+import { CursedComponent } from "../../model/components/CursedComponent";
 import {
   addComponents,
-  getEntityById,
   upsertComponent,
-} from "../../../core/ecs";
-import { COLORS } from "../../../utils/colors";
+} from "../../../core/ecs/queries/component";
 import { ColorComponent } from "../../model/components/ColorComponent";
-import { CursedComponent } from "../../model/components/CursedComponent";
-import { getBackpack } from "../inv";
-import { getItemName } from "../inv/items";
-import { isCursed } from "./curse";
+import { COLORS } from "../../../utils/colors";
 
 export const resolveCurseItemAction = (
   state: GameState,

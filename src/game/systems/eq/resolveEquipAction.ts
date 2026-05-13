@@ -1,17 +1,14 @@
 import { produce } from "immer";
-import { addEntity, removeEntityById } from "../../../core/ecs";
+import { addEntity, removeEntityById } from "../../../core/ecs/queries/entities";
 import type { ItemSlotComponent } from "../../model/components/eq/ItemSlotComponent";
-import { getPlayer } from "../../state";
+import { getPlayer } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
+import { Action } from "../actions/action";
+import type { ActionResolution } from "../actions/types";
+import { getBackpack, getBackpackItem } from "../inv/containers";
 import { getItemSlots } from "../inv/getItemSlots";
-import {
-  Action,
-  type ActionResolution,
-  type PlayerEquipItemAction,
-} from "../turn";
-
-import { getBackpack, getBackpackItem } from "../inv";
 import { getItemName } from "../inv/items";
+import type { PlayerEquipItemAction } from "../player/types";
 import { getEq, getEqSlots, getEquippedWeapon } from "./eq";
 
 const canBeEquipped = (

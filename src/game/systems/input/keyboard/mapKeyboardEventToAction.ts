@@ -1,24 +1,15 @@
-// game/systems/input/mapKeyboardEventToAction.ts
 import type { RefObject } from "react";
-import { getPlayer, getPlayerPosition, type GameState } from "../../../state";
-import { getEqSlots } from "../../eq";
-import { getBackpack, getBackpackItem, getContainerSize } from "../../inv";
-import { addLogImmutable } from "../../log";
-import {
-  Direction,
-  PlayerActionType,
-  WorldActionEntityType,
-  WorldActionType,
-  type GameAction,
-  type InvSlot,
-  type PlayerAction,
-} from "../../turn";
+import { getPlayer, getPlayerPosition } from "../../../state/selectors/player";
+import type { GameState } from "../../../state/state";
+import { WorldActionEntityType, WorldActionType } from "../../actions/gameAction/types";
+import type { GameAction } from "../../actions/types";
+import { getEqSlots } from "../../eq/eq";
+import { getBackpack, getBackpackItem, getContainerSize } from "../../inv/containers";
+import type { InvSlot } from "../../inv/types";
+import { addLogImmutable } from "../../log/log";
+import { PlayerActionType, type PlayerAction } from "../../player/types";
+import { Direction } from "../../turn/types";
 
-export const clearBuffer = (buffer: RefObject<string[]>): void => {
-  if (buffer.current[0] === "Shift") {
-    buffer.current = [];
-  }
-};
 export const mapKeyboardEventToAction = (
   event: KeyboardEvent,
   buffer: RefObject<string[]>,

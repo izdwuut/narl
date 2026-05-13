@@ -1,7 +1,9 @@
-import { Entity, getEntityByType } from "../../core/ecs";
-import { ItemEntity } from "../model";
-import type { EqSlotEntity } from "../model/entities/eq/EqSlotEntity";
-import { getEqSlots } from "../systems";
+import { Entity } from "../../core/ecs/Entity";
+import { getEntityByType } from "../../core/ecs/queries/entities";
+import  { EqSlotEntity } from "../model/entities/eq/EqSlotEntity";
+import { ItemEntity } from "../model/entities/items/ItemEntity";
+import { getEqSlots } from "../systems/eq/eq";
+
 
 export type Eq = {
   eqSlots: EqSlotEntity[];

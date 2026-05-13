@@ -1,17 +1,13 @@
 import { produce } from "immer";
-import { getPlayer, getPlayerPosition } from "../../state";
 import type { GameState } from "../../state/state";
-import {
-  Action,
-  WorldActionEntityType,
-  WorldActionType,
-  type ActionResolution,
-  type PlayerUnequipItemAction,
-} from "../turn";
-
-import { addItemToEntityBackpack, getBackpack, isContainerFull } from "../inv";
-import { getItemName } from "../inv/items";
+import { Action } from "../actions/action";
+import type { ActionResolution } from "../actions/types";
+import type { PlayerUnequipItemAction } from "../player/types";
+import { getPlayer, getPlayerPosition } from "../../state/selectors/player";
+import { addItemToEntityBackpack, getBackpack, isContainerFull } from "../inv/containers";
 import { unequipWeapon } from "./eq";
+import { WorldActionEntityType, WorldActionType } from "../actions/gameAction/types";
+import { getItemName } from "../inv/items";
 
 export const resolveUnequipAction = (
   state: GameState,

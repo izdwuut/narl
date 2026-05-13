@@ -1,5 +1,5 @@
-import type { GameState } from "../../../../state";
-import { runWorldTurn } from "../../runWorldTurn";
+import type { GameState } from "../../../state/state";
+import { runWorldTurn } from "../../turn/runWorldTurn";
 import type { GameAction } from "../types";
 import { resolveGameAction } from "./resolveGameAction";
 

@@ -1,16 +1,13 @@
 import { produce } from "immer";
 import { upsertComponent } from "../../../core/ecs/queries/component";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
-import { getPlayerPosition } from "../../state";
+import { getPlayerPosition } from "../../state/selectors/player";
 import type { GameState, Tile } from "../../state/state";
-import { hasMobs } from "../attack";
-import { addExplorationExp } from "../exp";
-import {
-  Action,
-  PlayerActionType,
-  type ActionResolution,
-  type PlayerMoveAction
-} from "../turn";
+import { Action } from "../actions/action";
+import type { ActionResolution } from "../actions/types";
+import { hasMobs } from "../attack/mobs";
+import { addExplorationExp } from "../exp/exp";
+import { PlayerActionType, type PlayerMoveAction } from "../player/types";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 
 const markAsVisited = (state: GameState, position: number): void => {

@@ -3,8 +3,8 @@ import { FloorEntity } from "../model/entities/FloorEntity";
 import { ItemEntity } from "../model/entities/items/ItemEntity";
 import type { MobEntity } from "../model/entities/mobs/MobEntity";
 import { PlayerEntity } from "../model/entities/PlayerEntity";
-import { initWorld } from "../systems/init";
-import type { LogEntry } from "../systems/log";
+import { initWorld } from "../systems/init/initWorld";
+import type { LogEntry } from "../systems/log/types";
 
 export type Tile = {
   floor: FloorEntity;

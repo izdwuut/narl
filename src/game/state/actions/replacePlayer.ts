@@ -1,5 +1,5 @@
-import type { GameState } from "..";
-import type { PlayerEntity } from "../..";
+import type { PlayerEntity } from "../../model/entities/PlayerEntity";
+import type { GameState } from "../state";
 
 export const replacePlayer = (
   state: GameState,

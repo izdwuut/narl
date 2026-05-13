@@ -1,4 +1,6 @@
-import { getComponentByType, type Entity } from "../../../core/ecs";
+
+import type { Entity } from "../../../core/ecs/Entity";
+import { getComponentByType } from "../../../core/ecs/queries/component";
 import { HpComponent } from "../../model/components/HpComponent";
 
 export const getHp = (entity: Entity): HpComponent => {

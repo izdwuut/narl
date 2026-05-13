@@ -1,4 +1,6 @@
-import { Entity, getComponentsByType } from "../../../core/ecs";
+
+import type { Entity } from "../../../core/ecs/Entity";
+import { getComponentsByType } from "../../../core/ecs/queries/component";
 import { ItemSlotComponent } from "../../model/components/eq/ItemSlotComponent";
 
 export const getItemSlots = (entity: Entity): ItemSlotComponent[] => {

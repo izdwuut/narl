@@ -1,8 +1,9 @@
-import { ExpComponent } from "../../components";
+
+import { ExpComponent } from "../../components/ExpComponent";
 import { HpComponent } from "../../components/HpComponent";
 import { PickupableComponent } from "../../components/PickupableComponent";
-import { SwordEntity } from "../items";
 import { BackpackEntity } from "../items/BackpackEntity";
+import { SwordEntity } from "../items/SwordEntity";
 import { MobEntity } from "./MobEntity";
 
 export class RageBaitEntity extends MobEntity {

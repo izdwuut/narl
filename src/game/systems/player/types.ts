@@ -1,6 +1,7 @@
-import type { EqSlot } from "../../../eq/types";
-import type { InvSlot } from "../../../inv/types";
-import type { Direction } from "../../types";
+import type { EqSlot } from "../eq/types";
+import type { InvSlot } from "../inv/types";
+import type { Direction } from "../turn/types";
+
 
 export enum PlayerActionType {
   MOVE = "MOVE",

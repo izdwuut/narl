@@ -1,4 +1,5 @@
-import { Entity, hasComponentByType } from "../../../core/ecs";
+import type { Entity } from "../../../core/ecs/Entity";
+import { hasComponentByType } from "../../../core/ecs/queries/component";
 import { CursedComponent } from "../../model/components/CursedComponent";
 
 export const isCursed = (entity: Entity) => {

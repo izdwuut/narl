@@ -1,4 +1,4 @@
-import type { GameState } from "../../state";
+import type { GameState } from "../../state/state";
 
 export const increaseTurn = (state: GameState): GameState => {
   return {

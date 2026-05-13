@@ -1,5 +1,6 @@
-import { MAP_SIZE } from "../../../utils/constants";
-import { Direction } from "../turn";
+import { MAP_SIZE } from "../../../utils";
+import { Direction } from "../turn/types";
+
 
 type GetNextPlayerPositionParams = {
     currentPosition: number;

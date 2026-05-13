@@ -1,16 +1,13 @@
 import { produce } from "immer";
-import { getPlayer } from "../../state";
 import type { GameState } from "../../state/state";
-import {
-  Action,
-  WorldActionEntityType,
-  type ActionResolution,
-  type WorldDropItemAction,
-} from "../turn";
-
-import { Entity, getEntityById, removeEntityById } from "../../../core/ecs";
-import { getMobById } from "../attack";
-import { getBackpack } from "../inv";
+import { Action } from "../actions/action";
+import { WorldActionEntityType, type WorldDropItemAction } from "../actions/gameAction/types";
+import type { ActionResolution } from "../actions/types";
+import type { Entity } from "../../../core/ecs/Entity";
+import { getBackpack } from "../inv/containers";
+import { getPlayer } from "../../state/selectors/player";
+import { getMobById } from "../attack/mobs";
+import { getEntityById, removeEntityById } from "../../../core/ecs/queries/entities";
 import { getItemName } from "../inv/items";
 
 // TODO: split into resolvePlayerDropAction and resolveMobDropAction

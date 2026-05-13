@@ -1,6 +1,6 @@
 import { useContext, useMemo } from "react";
 import { GameContext } from "../state/context";
-import { getRenderedMap } from "../systems/render";
+import { getRenderedMap } from "../systems/render/getRenderedMap";
 
 export const useRenderedMap = () => {
     const { gameState } = useContext(GameContext);

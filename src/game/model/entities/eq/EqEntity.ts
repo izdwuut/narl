@@ -1,5 +1,5 @@
-import { MainHandSlotEntity } from ".";
 import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
+import { MainHandSlotEntity } from "./MainHandSlotEntity";
 
 export type EqEntityProps = {
   items?: Entity[];

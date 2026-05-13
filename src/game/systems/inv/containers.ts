@@ -1,7 +1,6 @@
 import type { Entity } from "../../../core/ecs/Entity";
 import {
   getComponentByType,
-  getComponentByType as getEntityByTypwe,
   hasComponentByType,
 } from "../../../core/ecs/queries/component";
 import {
@@ -14,7 +13,7 @@ import { ContainerComponent } from "../../model/components/ContainerComponent";
 import { SizeComponent } from "../../model/components/SizeComponent";
 import { BackpackEntity } from "../../model/entities/items/BackpackEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
-import type { InvSlot } from "../turn";
+import type { InvSlot } from "./types";
 
 export const getBackpack = (entity: Entity): BackpackEntity | undefined => {
   return getEntityByType(entity, BackpackEntity);

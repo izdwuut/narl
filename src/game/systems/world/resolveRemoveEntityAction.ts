@@ -1,15 +1,12 @@
 import { produce } from "immer";
 import type { GameState } from "../../state/state";
-import {
-  Action,
-  WorldActionEntityType,
-  type ActionResolution,
-  type WorldRemoveEntityAction,
-} from "../turn";
-
-import { getComponentByType } from "../../../core/ecs";
+import { WorldActionEntityType, type WorldRemoveEntityAction } from "../actions/gameAction/types";
+import type { ActionResolution } from "../actions/types";
+import { Action } from "../actions/action";
+import { getMobById, killMobById } from "../attack/mobs";
+import { getComponentByType } from "../../../core/ecs/queries/component";
 import { NameComponent } from "../../model/components/NameComponent";
-import { getMobById, killMobById } from "../attack";
+
 
 export const resolveRemoveEntityAction = (
   state: GameState,

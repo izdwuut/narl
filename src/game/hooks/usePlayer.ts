@@ -5,18 +5,18 @@ import { ExpComponent } from "../model/components/ExpComponent";
 import type { BackpackEntity } from "../model/entities/items/BackpackEntity";
 import type { PlayerEntity } from "../model/entities/PlayerEntity";
 import { GameContext } from "../state/context";
-import { getPlayer } from "../state/selectors";
 import { useEq, type Eq } from "./useEq";
-import { getBackpack, getContainerSize } from "../systems/inv";
-import { ItemEntity, SizeComponent } from "../model";
-import { getEntitiesByType } from "../../core/ecs";
+import { ItemEntity } from "../model/entities/items/ItemEntity";
+import { getPlayer } from "../state/selectors/player";
+import { getBackpack, getContainerSize } from "../systems/inv/containers";
+import { getEntitiesByType } from "../../core/ecs/queries/entities";
 
 type Player = {
   player: PlayerEntity;
   backpack: BackpackEntity | undefined;
   exp: number;
   eq: Eq;
-  backpackSize: number;
+  backpackSize: number | undefined;
   items: ItemEntity[];
 };
 

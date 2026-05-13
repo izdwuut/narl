@@ -1,22 +1,15 @@
 import { produce } from "immer";
-import {
-  addEntity,
-  getComponentByType,
-  getEntitiesByType,
-  removeEntityById
-} from "../../../core/ecs";
-import { ItemEntity } from "../../model";
-import { CursedComponent } from "../../model/components/CursedComponent";
 import type { GameState } from "../../state/state";
-import {
-  getBackpack,
-  isContainer,
-  isContainerFull
-} from "../inv/containers";
-import { getItemName } from "../inv/items";
-import { Action } from "../turn/actions/action";
-import { PlayerActionType, type ActionResolution } from "../turn";
+import { Action } from "../actions/action";
+import type { ActionResolution } from "../actions/types";
+import { getBackpack, isContainer, isContainerFull } from "../inv/containers";
 import { pickUpItem } from "./pickUp";
+import { ItemEntity } from "../../model/entities/items/ItemEntity";
+import { CursedComponent } from "../../model/components/CursedComponent";
+import { addEntity, getEntitiesByType, removeEntityById } from "../../../core/ecs/queries/entities";
+import { getComponentByType } from "../../../core/ecs/queries/component";
+import { PlayerActionType } from "../player/types";
+import { getItemName } from "../inv/items";
 
 export const resolvePickUpUnpack = (state: GameState): ActionResolution => {
   const action = new Action();

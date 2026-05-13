@@ -1,21 +1,18 @@
 import { produce } from "immer";
-import { getPlayer } from "../../state";
-import type { GameState } from "../../state/state";
-import {
-  Action,
-  WorldActionEntityType,
-  WorldActionType,
-  type ActionResolution,
-  type PlayerAttackAction,
-} from "../turn";
-
-import { getComponentByType } from "../../../core/ecs";
-import { ExpComponent, ItemEntity } from "../../model";
+import { getComponentByType } from "../../../core/ecs/queries/component";
+import { ExpComponent } from "../../model/components/ExpComponent";
 import { NameComponent } from "../../model/components/NameComponent";
-import { getEquippedWeapon, getEquippedWeaponDamage } from "../eq";
-import { getBackpack } from "../inv";
-import { getHp } from "./hp";
+import type { ItemEntity } from "../../model/entities/items/ItemEntity";
+import { getPlayer } from "../../state/selectors/player";
+import type { GameState } from "../../state/state";
+import { Action } from "../actions/action";
+import type { ActionResolution } from "../actions/types";
+import { getEquippedWeapon, getEquippedWeaponDamage } from "../eq/eq";
+import type { PlayerAttackAction } from "../player/types";
 import { getMob, hasMobs } from "./mobs";
+import { getHp } from "./hp";
+import { getBackpack } from "../inv/containers";
+import { WorldActionEntityType, WorldActionType } from "../actions/gameAction/types";
 
 type AttackContext =
   | {
@@ -72,9 +69,10 @@ export const prepareAttack = (
 
 export const resolveAttackAction = (
   state: GameState,
-  ctx: AttackContext,
+  playerAction: PlayerAttackAction,
 ): ActionResolution => {
   const action = new Action();
+  const ctx = prepareAttack(state, playerAction);
   const nextState = produce(state, (draft) => {
     if (!ctx.ok) {
       return;

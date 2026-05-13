@@ -1,6 +1,6 @@
 import React from "react";
-import type { RenderedTile } from "../game/systems/render";
 import { TileIndex } from "./TileIndex";
+import type { RenderedTile } from "../game/systems/render/types";
 
 type TileProps = {
   renderedTile: RenderedTile;

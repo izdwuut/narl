@@ -1,10 +1,10 @@
 import type { EntityProps } from "../../../../core/ecs/Entity";
-import { MainHandComponent } from "../../components";
 import { NameComponent } from "../../components/NameComponent";
 import { DmgComponent } from "../../components/DmgComponent";
 import { GlyphComponent } from "../../components/GlyphComponent";
 import { PickupableComponent } from "../../components/PickupableComponent";
 import { ItemEntity } from "./ItemEntity";
+import { MainHandComponent } from "../../components/eq/MainHandComponent";
 
 export type SwordEntityProps = EntityProps;
 

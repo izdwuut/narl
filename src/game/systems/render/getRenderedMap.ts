@@ -5,7 +5,7 @@ import { AppearanceComponent } from "../../model/components/AppearanceComponent"
 import { ColorComponent } from "../../model/components/ColorComponent";
 import { GlyphComponent } from "../../model/components/GlyphComponent";
 import type { GameState, Tile } from "../../state/state";
-import { pickUpItem } from "../pickUp";
+import { pickUpItem } from "../pickUp/pickUp";
 import { RenderedTile } from "./types";
 
 const resolveGlyph = (tile: Tile) => {

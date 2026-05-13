@@ -1,7 +1,7 @@
-import { getComponentByType } from "../../../core/ecs";
+import { getComponentByType } from "../../../core/ecs/queries/component";
 import { CURSED_PREFIX } from "../../../utils";
-import type { ItemEntity } from "../../model";
 import { NameComponent } from "../../model/components/NameComponent";
+import type { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { isCursed } from "../curse/curse";
 
 const getItemPrefix = (item: ItemEntity) => {

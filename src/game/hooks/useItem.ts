@@ -1,6 +1,7 @@
 import { getComponentByType } from "../../core/ecs/queries/component";
-import { GlyphComponent, ItemEntity } from "../model";
 import { ColorComponent } from "../model/components/ColorComponent";
+import { GlyphComponent } from "../model/components/GlyphComponent";
+import type { ItemEntity } from "../model/entities/items/ItemEntity";
 
 type Item = {
   glyph: string | undefined;

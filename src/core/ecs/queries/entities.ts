@@ -1,6 +1,5 @@
 import type { Constructor } from "../Constructor";
 import type { Entity } from "../Entity";
-import { clone } from "./clone";
 
 export const getEntityById = (
   entity: Entity,

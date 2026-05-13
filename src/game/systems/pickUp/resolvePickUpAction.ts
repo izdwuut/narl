@@ -8,9 +8,10 @@ import {
   isContainerFull,
 } from "../inv/containers";
 import { getItemName } from "../inv/items";
-import { Action } from "../turn/actions/action";
-import { WorldActionType, type ActionResolution } from "../turn";
 import { isPickupable, pickUpItem } from "./pickUp";
+import type { ActionResolution } from "../actions/types";
+import { Action } from "../actions/action";
+import { WorldActionType } from "../actions/gameAction/types";
 
 export const resolvePickUpAction = (state: GameState): ActionResolution => {
   const action = new Action();

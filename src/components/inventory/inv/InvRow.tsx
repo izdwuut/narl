@@ -1,4 +1,4 @@
-import type { ItemEntity } from "../../../game";
+import type { ItemEntity } from "../../../game/model/entities/items/ItemEntity";
 import { getDummyArray } from "../../../utils/getDummyArray";
 import { Slot } from "../Slot";
 

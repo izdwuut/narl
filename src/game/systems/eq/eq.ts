@@ -1,14 +1,10 @@
-import {
-  Entity,
-  getComponentByType,
-  getEntitiesByType,
-  getEntityByType,
-  removeEntityById,
-} from "../../../core/ecs";
-import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
-import { EqEntity } from "../../model/entities/eq/EqEntity";
-import { ItemEntity } from "../../model";
+import type { Entity } from "../../../core/ecs/Entity";
+import { getComponentByType } from "../../../core/ecs/queries/component";
+import { getEntitiesByType, getEntityByType, removeEntityById } from "../../../core/ecs/queries/entities";
 import { DmgComponent } from "../../model/components/DmgComponent";
+import { EqEntity } from "../../model/entities/eq/EqEntity";
+import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
+import { ItemEntity } from "../../model/entities/items/ItemEntity";
 
 export const getEq = (entity: Entity): EqEntity | undefined => {
   return getEntityByType(entity, EqEntity);

@@ -1,4 +1,5 @@
-import { MainHandComponent } from "../../components";
+
+import { MainHandComponent } from "../../components/eq/MainHandComponent";
 import { EqSlotEntity } from "./EqSlotEntity";
 
 export class MainHandSlotEntity extends EqSlotEntity {
