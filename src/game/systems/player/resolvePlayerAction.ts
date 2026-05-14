@@ -21,7 +21,21 @@ export const resolvePlayerAction = (
           pendingActions: [],
         };
       }
-      return playerActionResolvers[action.type](increaseTurn(state), action);
+      const actionResolution = (
+        playerActionResolvers[action.type] as (
+          state: GameState,
+          playerAction: typeof action,
+        ) => ActionResolution
+      )(state, action);
+       let nextState = actionResolution.nextState;
+
+      if (actionResolution.consumesTurn) {
+        nextState = increaseTurn(nextState);
+      }
+      return {
+        ...actionResolution,
+        nextState: actionResolution.action?.flushLogs(nextState) ?? nextState,
+      };
     }
     default: {
       const actionResolution = (

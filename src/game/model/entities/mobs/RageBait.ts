@@ -12,6 +12,7 @@ export class RageBaitEntity extends MobEntity {
     const exp = new ExpComponent({ exp: 20 });
     const container = new BackpackEntity({
       dmg: 1,
+      size: 3,
       components: [new PickupableComponent()],
       entities: [new SwordEntity()],
     });

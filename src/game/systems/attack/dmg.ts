@@ -1,0 +1,27 @@
+import type { Entity } from "../../../core/ecs/Entity";
+import { getComponentByType } from "../../../core/ecs/queries/component";
+import { DmgComponent } from "../../model/components/DmgComponent";
+import { DmgModComponent } from "../../model/components/DmgModComponent";
+import { isContainer } from "../inv/containers";
+
+const getOwnDmg = (entity: Entity): number => {
+  return getComponentByType(entity, DmgComponent)?.dmg ?? 0;
+};
+
+const getDmgMod = (entity: Entity): number => {
+  return getComponentByType(entity, DmgModComponent)?.dmgMod ?? 1;
+};
+
+export const getWeaponDmg = (entity: Entity): number => {
+  const ownDmg = getOwnDmg(entity);
+
+  if (!isContainer(entity)) {
+    return ownDmg;
+  }
+
+  const childrenDmg = entity.entities.reduce((acc, child) => {
+    return acc + getWeaponDmg(child);
+  }, 0);
+  const totalDmg = (ownDmg + childrenDmg) * getDmgMod(entity);
+  return Math.ceil(totalDmg);
+};

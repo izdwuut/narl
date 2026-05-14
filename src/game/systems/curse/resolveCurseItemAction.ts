@@ -4,7 +4,7 @@ import { Action } from "../actions/action";
 import type { WorldCurseItemAction } from "../actions/gameAction/types";
 import type { ActionResolution } from "../actions/types";
 import { getPlayer } from "../../state/selectors/player";
-import { getBackpack } from "../inv/containers";
+import { getBackpack, isContainer } from "../inv/containers";
 import { getEntityById } from "../../../core/ecs/queries/entities";
 import { isCursed } from "./curse";
 import { getItemName } from "../inv/items";
@@ -15,6 +15,17 @@ import {
 } from "../../../core/ecs/queries/component";
 import { ColorComponent } from "../../model/components/ColorComponent";
 import { COLORS } from "../../../utils/colors";
+import type { Entity } from "../../../core/ecs/Entity";
+import { DmgModComponent } from "../../model/components/DmgModComponent";
+
+const curseItem = (item: Entity) => {
+  const components = [new CursedComponent()];
+  upsertComponent(item, new ColorComponent({ color: COLORS.CURSED }));
+  if (isContainer(item)) {
+    components.push(new DmgModComponent({ dmgMod: 0.5 }));
+  }
+  addComponents(item, ...components);
+};
 
 export const resolveCurseItemAction = (
   state: GameState,
@@ -36,8 +47,7 @@ export const resolveCurseItemAction = (
     }
 
     const logMsg = `${getItemName(itemToCurse)} got cursed`;
-    addComponents(itemToCurse, new CursedComponent());
-    upsertComponent(itemToCurse, new ColorComponent({ color: COLORS.CURSED }));
+    curseItem(itemToCurse);
     return action.fulfill(logMsg);
   });
 
