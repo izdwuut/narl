@@ -21,12 +21,12 @@ export const resolveRemoveEntityAction = (
     }
 
     if (!entityId) {
-      throw new Error("No entity id to drop item.");
+      throw new Error("No entity id to drop item");
     }
     const mob = getMobById(tile, entityId);
     const mobName = getComponentByType(mob, NameComponent)?.name;
     killMobById(tile, entityId);
-    return action.success(`${mobName} died.`);
+    return action.success(`${mobName} died`);
   });
 
   return action.resolve(nextState);

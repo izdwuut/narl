@@ -32,7 +32,7 @@ export const resolvePickUpAction = (state: GameState): ActionResolution => {
 
       if (isContainerFull(backpack)) {
         return action.fail(
-          `Can't pick up ${getItemName(itemToPickUp)}. Backpack is full.`,
+          `Can't pick up ${getItemName(itemToPickUp)}. Backpack is full`,
         );
       }
 
@@ -48,7 +48,7 @@ export const resolvePickUpAction = (state: GameState): ActionResolution => {
       addItemToEntityBackpack(tile.player, itemToPickUp, backpack.id);
       removeById(tile.items, itemToPickUp.id);
 
-      action.success(`Picked up ${getItemName(itemToPickUp)}.`);
+      action.success(`Picked up ${getItemName(itemToPickUp)}`);
     });
   });
 

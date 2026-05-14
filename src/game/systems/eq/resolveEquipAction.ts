@@ -36,7 +36,7 @@ export const resolveEquipAction = (
 
     const itemToEquip = getBackpackItem(backpack, invSlotIndex);
     if (!itemToEquip) {
-      return action.fail(`No item in slot ${invSlotIndex} to equip.`);
+      return action.fail(`No item in slot ${invSlotIndex} to equip`);
     }
 
     const eqSlot = getEqSlots(player)[eqSlotIndex - 1];
@@ -45,12 +45,12 @@ export const resolveEquipAction = (
     const equippedWeapon = getEquippedWeapon(player);
     if (equippedWeapon) {
       return action.fail(
-        `Can't equip. ${getItemName(equippedWeapon)} in slot ${eqSlotIndex}.`,
+        `Can't equip. ${getItemName(equippedWeapon)} in slot ${eqSlotIndex}`,
       );
     }
     if (!canBeEquipped(itemSlots, eqItemSlots)) {
       return action.fail(
-        `${getItemName(itemToEquip)} in ${invSlotIndex} can't be equipped in eq slot ${eqSlotIndex}.`,
+        `${getItemName(itemToEquip)} in ${invSlotIndex} can't be equipped in eq slot ${eqSlotIndex}`,
       );
     }
 
@@ -63,7 +63,7 @@ export const resolveEquipAction = (
     addEntity(eqSlot, itemToEquip);
 
     action.success(
-      `Equipped item from slot ${invSlotIndex} to eq slot ${eqSlotIndex}.`,
+      `Equipped item from slot ${invSlotIndex} to eq slot ${eqSlotIndex}`,
     );
   });
 

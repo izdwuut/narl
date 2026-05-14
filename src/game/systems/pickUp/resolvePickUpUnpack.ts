@@ -24,7 +24,7 @@ export const resolvePickUpUnpack = (state: GameState): ActionResolution => {
         return;
       }
       if (isContainerFull(backpack)) {
-        return action.fail("Can't pick up item. Backpack is full.");
+        return action.fail("Can't pick up item. Backpack is full");
       }
       const itemToPickUp = pickUpItem(tile);
       if (!itemToPickUp) {

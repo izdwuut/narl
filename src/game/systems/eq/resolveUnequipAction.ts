@@ -24,7 +24,7 @@ export const resolveUnequipAction = (
     const isFull = isContainerFull(backpack);
     const equippedWeapon = unequipWeapon(player, eqSlotIndex - 1);
     if (!equippedWeapon) {
-      return action.fail(`No item in slot ${eqSlotIndex} to unequip.`);
+      return action.fail(`No item in slot ${eqSlotIndex} to unequip`);
     }
 
     if (isFull) {
