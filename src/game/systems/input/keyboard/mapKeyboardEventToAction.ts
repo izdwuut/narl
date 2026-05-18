@@ -24,7 +24,6 @@ const keyToInvSlot = (key: string): InvSlot => {
   return Number(key) as InvSlot;
 };
 
-// TODO: dispatchGameAction + resolveInternalAction instead of using Action object
 export const mapKeyboardEventToAction = (
   event: KeyboardEvent,
   buffer: RefObject<string[]>,

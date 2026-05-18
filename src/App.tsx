@@ -1,7 +1,7 @@
-import "./App.css";
-import { Game } from "./components/Game";
-import { GameProvider } from "./game/state/provider";
 import { enableArrayMethods, enableMapSet } from "immer";
+import "./App.css";
+import { Main } from "./components/Main";
+import { GameProvider } from "./game/state/provider";
 
 enableMapSet();
 enableArrayMethods();
@@ -9,7 +9,7 @@ enableArrayMethods();
 const App = () => {
   return (
     <GameProvider>
-      <Game />
+      <Main />
     </GameProvider>
   );
 };
