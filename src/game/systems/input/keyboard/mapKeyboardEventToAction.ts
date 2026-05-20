@@ -106,7 +106,7 @@ export const mapKeyboardEventToAction = (
         buffer.current.push(event.key);
         return {
           type: InternalActionType.LOG,
-          message: `Select target slot to move (1-${backpackSize})`,
+          message: `Select target slot (1-${backpackSize})`,
         };
       }
 
