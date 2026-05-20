@@ -16,6 +16,7 @@ import {
 } from "../inv/containers";
 import { getInvItemAt } from "../inv/inv";
 import type { PlayerMoveItemAction } from "../player/types";
+import { getItemName } from "../inv/items";
 
 // TODO: add swap (new resolver)
 export const resolveMoveItemAction = (
@@ -57,7 +58,7 @@ export const resolveMoveItemAction = (
     addEntity(toItem, fromItem);
 
     action.success(
-      `Moved item from inv slot ${fromSlot} to container at slot ${toSlot}`,
+      `Moved ${getItemName(fromItem)} from inv slot ${fromSlot} to ${getItemName(toItem)} at slot ${toSlot}`,
     );
   });
 
