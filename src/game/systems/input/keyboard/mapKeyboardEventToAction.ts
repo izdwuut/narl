@@ -1,5 +1,5 @@
 import type { RefObject } from "react";
-import { getPlayer, getPlayerPosition } from "../../../state/selectors/player";
+import { getPlayerEntity, getPlayerPosition } from "../../../state/selectors/player";
 import type { GameState } from "../../../state/state";
 import type { GameAction } from "../../actions/types";
 import { getEqSlots } from "../../eq/eq";
@@ -75,7 +75,7 @@ export const mapKeyboardEventToAction = (
       }
 
       buffer.current = [];
-      const backpack = getBackpack(getPlayer(gameState));
+      const backpack = getBackpack(getPlayerEntity(gameState));
       if (!backpack) {
         throw new Error("No Backpack");
       }
@@ -90,7 +90,7 @@ export const mapKeyboardEventToAction = (
       };
     }
     if (buffer.current[0] === "m") {
-      const backpack = getBackpack(getPlayer(gameState));
+      const backpack = getBackpack(getPlayerEntity(gameState));
       if (!backpack) {
         throw new Error("No Backpack");
       }
@@ -139,7 +139,7 @@ export const mapKeyboardEventToAction = (
     case "e":
     case "E": {
       buffer.current.push("e");
-      const backpack = getBackpack(getPlayer(gameState));
+      const backpack = getBackpack(getPlayerEntity(gameState));
       const backpackSize = backpack ? getContainerSize(backpack) : undefined;
       return {
         type: InternalActionType.LOG,
@@ -148,7 +148,7 @@ export const mapKeyboardEventToAction = (
     }
     case "u":
     case "U": {
-      const eqSlots = getEqSlots(getPlayer(gameState)).length;
+      const eqSlots = getEqSlots(getPlayerEntity(gameState)).length;
       buffer.current.push("u");
       return {
         type: InternalActionType.LOG,
@@ -158,7 +158,7 @@ export const mapKeyboardEventToAction = (
     case "d":
     case "D": {
       buffer.current.push("d");
-      const backpack = getBackpack(getPlayer(gameState));
+      const backpack = getBackpack(getPlayerEntity(gameState));
       const backpackSize = backpack ? getContainerSize(backpack) : undefined;
       return {
         type: InternalActionType.LOG,
@@ -168,7 +168,7 @@ export const mapKeyboardEventToAction = (
     case "m":
     case "M": {
       buffer.current.push("m");
-      const backpack = getBackpack(getPlayer(gameState));
+      const backpack = getBackpack(getPlayerEntity(gameState));
       const backpackSize = backpack ? getContainerSize(backpack) : undefined;
       return {
         type: InternalActionType.LOG,

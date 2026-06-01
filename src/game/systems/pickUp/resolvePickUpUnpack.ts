@@ -17,6 +17,8 @@ import {
   type PlayerPickUpUnpackAction,
 } from "../player/types";
 import { getItemName } from "../inv/items";
+import { getPlayer } from "../../state/selectors/player";
+import { getVisibleTiles } from "../render/getVisibleTiles";
 
 export const resolvePickUpUnpack = (
   state: GameState,
@@ -24,12 +26,13 @@ export const resolvePickUpUnpack = (
 ): ActionResolution => {
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    draft.world.forEach((tile) => {
-      if (!tile.player) {
+    const {player, position: playerPosition} = getPlayer(draft);
+    getVisibleTiles(draft).forEach((tile) => {
+      if (playerPosition !== tile.position) {
         return;
       }
 
-      const backpack = getBackpack(tile.player);
+      const backpack = getBackpack(player);
       if (!backpack) {
         return;
       }

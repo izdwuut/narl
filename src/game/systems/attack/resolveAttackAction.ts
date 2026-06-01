@@ -3,7 +3,7 @@ import { getComponentByType } from "../../../core/ecs/queries/component";
 import { ExpComponent } from "../../model/components/ExpComponent";
 import { NameComponent } from "../../model/components/NameComponent";
 import type { ItemEntity } from "../../model/entities/items/ItemEntity";
-import { getPlayer } from "../../state/selectors/player";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
@@ -49,7 +49,7 @@ export const prepareAttack = (
     return { ok: false, message: "No mobs to attack in that direction." };
   }
 
-  const player = getPlayer(state);
+  const player = getPlayerEntity(state);
 
   const weapon = getEquippedWeapon(player);
 
@@ -96,7 +96,7 @@ export const resolveAttackAction = (
     const nextHp = mobHp?.hp - dmg;
 
     if (nextHp <= 0) {
-      const player = getPlayer(draft);
+      const player = getPlayerEntity(draft);
       action.info(`Dealt ${dmg} dmg to ${mobName}`);
       const mobExp = ctx.mobExp;
       const playerExp = getComponentByType(player, ExpComponent);

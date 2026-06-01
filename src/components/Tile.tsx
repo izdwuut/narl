@@ -4,10 +4,9 @@ import type { RenderedTile } from "../game/systems/render/types";
 
 type TileProps = {
   renderedTile: RenderedTile;
-  index: number;
 };
 
-const Tile: React.FC<TileProps> = ({ renderedTile, index }) => {
+const Tile: React.FC<TileProps> = ({ renderedTile }) => {
   return (
     <div>
       <div
@@ -25,7 +24,7 @@ const Tile: React.FC<TileProps> = ({ renderedTile, index }) => {
       >
         {renderedTile.char ?? " "}
       </div>
-      <TileIndex index={index + 1} />
+      <TileIndex index={renderedTile.position + 1} />
     </div>
   );
 };

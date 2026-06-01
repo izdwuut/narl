@@ -4,7 +4,7 @@ import {
   removeEntityById,
 } from "../../../core/ecs/queries/entities";
 import type { ItemSlotComponent } from "../../model/components/eq/ItemSlotComponent";
-import { getPlayer } from "../../state/selectors/player";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
@@ -32,7 +32,7 @@ export const resolveEquipAction = (
   const { invSlot: invSlotIndex, eqSlot: eqSlotIndex } = gameAction;
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    const player = getPlayer(draft);
+    const player = getPlayerEntity(draft);
     const backpack = getBackpack(player);
     if (!backpack) {
       throw new Error("Player has no backpack");

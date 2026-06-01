@@ -6,15 +6,16 @@ import { Action } from "../actions/action";
 import { getMobById, killMobById } from "../attack/mobs";
 import { getComponentByType } from "../../../core/ecs/queries/component";
 import { NameComponent } from "../../model/components/NameComponent";
-
+import { getTile } from "./getTile";
 
 export const resolveRemoveEntityAction = (
   state: GameState,
-  { entityId, entityType, position }: WorldRemoveEntityAction,
+  gameAction: WorldRemoveEntityAction,
 ): ActionResolution => {
-  const action = new Action();
+  const action = new Action(gameAction);
+  const { entityId, entityType, position } = gameAction;
   const nextState = produce(state, (draft) => {
-    const tile = draft.world[position];
+    const tile = getTile(draft, position);
 
     if (entityType === WorldActionEntityType.PLAYER) {
       throw new Error("Can't remove player");

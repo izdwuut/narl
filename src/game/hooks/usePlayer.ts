@@ -7,7 +7,7 @@ import type { PlayerEntity } from "../model/entities/PlayerEntity";
 import { GameContext } from "../state/context";
 import { useEq, type Eq } from "./useEq";
 import { ItemEntity } from "../model/entities/items/ItemEntity";
-import { getPlayer } from "../state/selectors/player";
+import { getPlayerEntity } from "../state/selectors/player";
 import { getBackpack, getContainerSize } from "../systems/inv/containers";
 import { getEntitiesByType } from "../../core/ecs/queries/entities";
 
@@ -23,7 +23,7 @@ type Player = {
 // TODO: add useBackpack
 export const usePlayer = (): Player => {
   const { gameState } = useContext(GameContext);
-  const player = getPlayer(gameState);
+  const player = getPlayerEntity(gameState);
   const backpack = getBackpack(player);
   const eq = useEq(player);
   const backpackSize = backpack ? getContainerSize(backpack) : undefined;

@@ -1,5 +1,6 @@
 import { produce } from "immer";
 import { removeById } from "../../../utils/removeById";
+import { getPlayer } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
@@ -13,6 +14,7 @@ import { getItemName } from "../inv/items";
 import type { PlayerPickUpAction } from "../player/types";
 import { WorldActionType } from "../world/types";
 import { isPickupable, pickUpItem } from "./pickUp";
+import { getVisibleTiles } from "../render/getVisibleTiles";
 
 export const resolvePickUpAction = (
   state: GameState,
@@ -20,12 +22,13 @@ export const resolvePickUpAction = (
 ): ActionResolution => {
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    draft.world.forEach((tile) => {
-      if (!tile.player) {
+    const {player, position: playerPosition} = getPlayer(draft);
+    getVisibleTiles(draft).forEach((tile) => {
+      if (playerPosition !== tile.position) {
         return;
       }
 
-      const backpack = getBackpack(tile.player);
+      const backpack = getBackpack(player);
       if (!backpack) {
         return;
       }
@@ -49,7 +52,7 @@ export const resolvePickUpAction = (
           itemId: itemToPickUp.id,
         });
       }
-      addItemToEntityBackpack(tile.player, itemToPickUp, backpack.id);
+      addItemToEntityBackpack(player, itemToPickUp, backpack.id);
       removeById(tile.items, itemToPickUp.id);
 
       action.success(`Picked up ${getItemName(itemToPickUp)}`);

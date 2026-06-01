@@ -6,6 +6,7 @@ export type RenderedTileProps = {
   char?: string;
   background?: string;
   color?: string;
+  position: number;
 };
 
 export class RenderedTile {
@@ -13,6 +14,7 @@ export class RenderedTile {
   char: string | undefined;
   background: string | undefined;
   color: string = COLORS.DEFAULT;
+  position = 0;
 
   constructor(props: RenderedTileProps) {
     Object.assign(this, props);

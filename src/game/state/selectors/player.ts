@@ -1,12 +1,23 @@
 import type { PlayerEntity } from "../../model/entities/PlayerEntity";
-import type { GameState } from "../state";
+import type { GameState, PlayerState } from "../state";
 
-export const getPlayer = (state: GameState): PlayerEntity => {
-  const player = state.world.find((tile) => tile.player)?.player;
-  if (!player) throw new Error("Player not found");
-  return player;
+export const getPlayer = (state: GameState): PlayerState => {
+  if (!state.player) {
+    throw new Error("Player state is not initialized");
+  }
+  return state.player;
+};
+
+export const getPlayerEntity = (state: GameState): PlayerEntity => {
+  if (!state.player) {
+    throw new Error("Player state is not initialized");
+  }
+  return state.player.player;
 };
 
 export const getPlayerPosition = (state: GameState): number => {
-  return state.world.findIndex((tile) => tile.player);
+  if (!state.player) {
+    throw new Error("Player state is not initialized");
+  }
+  return state.player.position;
 };

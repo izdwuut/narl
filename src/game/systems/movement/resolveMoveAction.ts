@@ -1,40 +1,30 @@
 import { produce } from "immer";
 import { upsertComponent } from "../../../core/ecs/queries/component";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
-import { getPlayerPosition } from "../../state/selectors/player";
-import type { GameState, Tile } from "../../state/state";
+import {
+  getPlayerEntity,
+  getPlayerPosition,
+} from "../../state/selectors/player";
+import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { hasMobs } from "../attack/mobs";
 import { addExplorationExp } from "../exp/exp";
 import { PlayerActionType, type PlayerMoveAction } from "../player/types";
+import { discoverTiles, getTile } from "../world/getTile";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 
 const markAsVisited = (state: GameState, position: number): void => {
   upsertComponent(state.world[position].floor, new VisitedComponent());
 };
 
-const getNextState = (
-  state: GameState,
-  currentPlayerPosition: number,
-  nextPlayerPosition: number,
-): void => {
+const getNextState = (state: GameState, nextPlayerPosition: number): void => {
   const world = state.world;
-  const player = world[currentPlayerPosition].player;
-  const oldPlayerTile: Tile = {
-    floor: world[currentPlayerPosition].floor,
-    items: world[currentPlayerPosition].items,
-    player: undefined,
-    mobs: world[currentPlayerPosition].mobs,
-  };
-  const newPlayerTile: Tile = {
-    floor: world[nextPlayerPosition].floor,
-    items: world[nextPlayerPosition].items,
+  const player = getPlayerEntity(state);
+  state.player = {
     player: addExplorationExp(world[nextPlayerPosition].floor, player),
-    mobs: world[nextPlayerPosition].mobs,
+    position: nextPlayerPosition,
   };
-  world[currentPlayerPosition] = oldPlayerTile;
-  world[nextPlayerPosition] = newPlayerTile;
   markAsVisited(state, nextPlayerPosition);
 };
 
@@ -54,14 +44,16 @@ export const resolveMoveAction = (
     if (nextPlayerPosition === null) {
       return action.fail(`Cannot move ${direction.toLowerCase()}`);
     }
-    if (hasMobs(draft.world[nextPlayerPosition])) {
+    discoverTiles(draft, nextPlayerPosition);
+    const nextTile = getTile(draft, nextPlayerPosition);
+    if (hasMobs(nextTile)) {
       return action.addPending({
         type: PlayerActionType.ATTACK,
         targetPosition: nextPlayerPosition,
       });
     }
 
-    getNextState(draft, currentPlayerPosition, nextPlayerPosition);
+    getNextState(draft, nextPlayerPosition);
     action.success(`Moved ${direction.toLowerCase()}`);
   });
 

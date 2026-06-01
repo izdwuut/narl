@@ -1,4 +1,8 @@
 export const MAP_SIZE = 9 as const;
+export const MAX_WORLD_SIZE = 2137 as const;
+export const MIN_WORLD_POSITION = 0 as const;
+export const MAX_WORLD_POSITION = MAX_WORLD_SIZE - 1;
+    
 export const INITIAL_PLAYER_POSITION = MAP_SIZE / MAP_SIZE - 1;
 export const PLAYER_SIGN = "@" as const;
 export const MISSING_COLOR = "pink" as const;

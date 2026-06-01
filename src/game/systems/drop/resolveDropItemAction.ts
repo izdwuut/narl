@@ -6,17 +6,18 @@ import {
   removeEntityById,
 } from "../../../core/ecs/queries/entities";
 import { NameComponent } from "../../model/components/NameComponent";
-import { getPlayer } from "../../state/selectors/player";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
-import {
-  WorldActionEntityType,
-  type WorldDropItemAction,
-} from "../world/types";
 import type { ActionResolution } from "../actions/types";
 import { getMobById } from "../attack/mobs";
 import { getBackpack } from "../inv/containers";
 import { getItemName } from "../inv/items";
+import { getTile } from "../world/getTile";
+import {
+  WorldActionEntityType,
+  type WorldDropItemAction,
+} from "../world/types";
 
 // TODO: split into resolvePlayerDropAction and resolveMobDropAction
 export const resolveDropItemAction = (
@@ -28,9 +29,9 @@ export const resolveDropItemAction = (
   const nextState = produce(state, (draft) => {
     let source: Entity | undefined = undefined;
     let sourceEntityName: string | undefined;
-    const tile = draft.world[targetPosition];
+    const tile = getTile(draft, targetPosition);
     if (entityType === WorldActionEntityType.PLAYER) {
-      source = getBackpack(getPlayer(draft));
+      source = getBackpack(getPlayerEntity(draft));
     } else if (entityType === WorldActionEntityType.MOB) {
       if (!entityId) {
         throw new Error("No mob id");

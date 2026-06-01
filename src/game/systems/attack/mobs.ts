@@ -1,5 +1,5 @@
 import type { MobEntity } from "../../model/entities/mobs/MobEntity";
-import type { Tile } from "../../state";
+import type { Tile } from "../../state/state";
 
 export const hasMobs = (tile: Tile) => {
   return tile.mobs.length > 0;

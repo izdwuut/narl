@@ -3,7 +3,7 @@ import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { WorldCurseItemAction } from "../world/types";
 import type { ActionResolution } from "../actions/types";
-import { getPlayer } from "../../state/selectors/player";
+import { getPlayerEntity } from "../../state/selectors/player";
 import { getBackpack, isContainer } from "../inv/containers";
 import { getEntityById } from "../../../core/ecs/queries/entities";
 import { isCursed } from "./curse";
@@ -34,7 +34,7 @@ export const resolveCurseItemAction = (
   const { itemId } = gameAction;
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    const player = getPlayer(draft);
+    const player = getPlayerEntity(draft);
     const backpack = getBackpack(player);
     if (!backpack) {
       throw new Error("No player backpack");

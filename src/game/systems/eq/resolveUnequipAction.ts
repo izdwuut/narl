@@ -3,7 +3,7 @@ import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import type { PlayerUnequipItemAction } from "../player/types";
-import { getPlayer, getPlayerPosition } from "../../state/selectors/player";
+import { getPlayerEntity, getPlayerPosition } from "../../state/selectors/player";
 import {
   addItemToEntityBackpack,
   getBackpack,
@@ -12,6 +12,7 @@ import {
 import { unequipWeapon } from "./eq";
 import { WorldActionEntityType, WorldActionType } from "../world/types";
 import { getItemName } from "../inv/items";
+import { getTile } from "../world/getTile";
 
 export const resolveUnequipAction = (
   state: GameState,
@@ -20,7 +21,7 @@ export const resolveUnequipAction = (
   const { eqSlot: eqSlotIndex } = gameAction;
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    const player = getPlayer(draft);
+    const player = getPlayerEntity(draft);
     const backpack = getBackpack(player);
     if (!backpack) {
       throw new Error("Player has no backpack");
@@ -33,7 +34,7 @@ export const resolveUnequipAction = (
     }
 
     if (isFull) {
-      const playerTile = draft.world.find((tile) => tile.player);
+      const playerTile = getTile(draft, getPlayerPosition(draft));
       if (!playerTile) {
         throw new Error("Player has no tile");
       }

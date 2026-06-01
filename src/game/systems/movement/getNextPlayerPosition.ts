@@ -1,4 +1,4 @@
-import { MAP_SIZE } from "../../../utils";
+import { MAX_WORLD_SIZE } from "../../../utils";
 import { Direction } from "../turn/types";
 
 
@@ -14,7 +14,7 @@ export const getNextPlayerPosition = ({
     const delta = direction === Direction.LEFT ? -1 : 1;
     const nextPosition = currentPosition + delta;
 
-    if (nextPosition < 0 || nextPosition >= MAP_SIZE) {
+    if (nextPosition < 0 || nextPosition >= MAX_WORLD_SIZE) {
         return null;
     }
 

@@ -5,13 +5,14 @@ import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { type InternalInitAction } from "../internal/type";
 import { initWorld } from "./initWorld";
+import { initPlayer } from "./initPlayer";
 
 export const resolveInternalInitAction = (
   state: GameState,
   gameAction: InternalInitAction,
 ): ActionResolution => {
   const action = new Action(gameAction);
-  
+
   if (state.initialized) {
     return action.resolve(state);
   }
@@ -21,6 +22,7 @@ export const resolveInternalInitAction = (
     draft.turn = INITIAL_TURN;
     draft.log = [];
     draft.initialized = true;
+    draft.player = initPlayer();
     action.info("You'd rather stay dead");
   });
 
