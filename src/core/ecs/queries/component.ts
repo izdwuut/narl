@@ -60,23 +60,30 @@ export const hasComponentById = (
 ): boolean =>
   entity.components.some((component) => component.id === componentId);
 
-export const upsertComponent = <T extends Component>(
+export const upsertComponents = (
   entity: Entity,
-  nextComponent: T,
+  ...nextComponents: Component[]
 ): void => {
-  let replaced = false;
+  for (const nextComponent of nextComponents) {
+    let replaced = false;
 
-  const nextComponents = entity.components.map((component) => {
-    if (replaced || !(component instanceof nextComponent.constructor))
-      return component;
-    replaced = true;
-    return nextComponent;
-  });
+    const nextEntityComponents = entity.components.map((component) => {
+      if (
+        replaced ||
+        !(component instanceof nextComponent.constructor)
+      ) {
+        return component;
+      }
 
-  if (replaced) {
-    entity.components = nextComponents;
-  } else {
-    entity.components.push(nextComponent);
+      replaced = true;
+      return nextComponent;
+    });
+
+    if (replaced) {
+      entity.components = nextEntityComponents;
+    } else {
+      entity.components.push(nextComponent);
+    }
   }
 };
 

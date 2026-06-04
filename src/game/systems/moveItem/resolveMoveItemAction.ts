@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import {
-  addEntity,
+  addEntities,
   removeEntityById,
 } from "../../../core/ecs/queries/entities";
 import { getPlayerEntity } from "../../state/selectors/player";
@@ -55,7 +55,7 @@ export const resolveMoveItemAction = (
     }
 
     removeEntityById(backpack, fromItem.id);
-    addEntity(toItem, fromItem);
+    addEntities(toItem, fromItem);
 
     action.success(
       `Moved ${getItemName(fromItem)} from inv slot ${fromSlot} to ${getItemName(toItem)} at slot ${toSlot}`,

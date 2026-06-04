@@ -4,7 +4,7 @@ import {
   hasComponentByType,
 } from "../../../core/ecs/queries/component";
 import {
-  addEntity,
+  addEntities,
   getEntitiesByType,
   getEntityByType,
   patchEntityById,
@@ -35,7 +35,7 @@ export const addItemToEntityBackpack = (
   item: ItemEntity,
   backpackId: string,
 ): void => {
-  patchEntityById(entity, backpackId, (backpack) => addEntity(backpack, item));
+  patchEntityById(entity, backpackId, (backpack) => addEntities(backpack, item));
 };
 
 export const getBackpackItem = (

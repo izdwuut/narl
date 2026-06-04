@@ -6,7 +6,7 @@ import { mapKeyboardEventToAction } from "../systems/input/keyboard/mapKeyboardE
 export const useKeyboardControls = () => {
   const { gameState, setGameState } = useContext(GameContext);
   const buffer = useRef<string[]>([]);
-
+  console.log(gameState)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       const action = mapKeyboardEventToAction(

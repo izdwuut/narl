@@ -1,14 +1,14 @@
-import type { ConcreteConstructor } from "../../../core/ecs/Constructor";
+import type { Factory } from "../../../core/ecs/Factory";
 import type { MobEntity } from "../../model/entities/mobs/MobEntity";
 import {
-    RAGE_BAIT_NAME,
-    RageBaitEntity,
+  RAGE_BAIT_NAME,
+  RageBaitEntityFactory
 } from "../../model/entities/mobs/RageBait";
 
-export const getMobClass = (mobName: string): ConcreteConstructor<MobEntity> => {
+export const getMobFactory = (mobName: string): Factory<MobEntity> => {
   switch (mobName) {
     case RAGE_BAIT_NAME:
-      return RageBaitEntity;
+      return RageBaitEntityFactory;
     default:
       throw new Error(`Unknown mob name`);
   }

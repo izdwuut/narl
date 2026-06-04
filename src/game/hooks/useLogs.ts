@@ -15,6 +15,6 @@ export const useLogs = (): Logs => {
       logs.push(log);
       return logs;
     }, []);
-console.log(visibleLogs)
+
   return { visibleLogs };
 };

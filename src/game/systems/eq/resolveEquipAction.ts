@@ -1,6 +1,6 @@
 import { produce } from "immer";
 import {
-  addEntity,
+  addEntities,
   removeEntityById,
 } from "../../../core/ecs/queries/entities";
 import type { ItemSlotComponent } from "../../model/components/eq/ItemSlotComponent";
@@ -64,7 +64,7 @@ export const resolveEquipAction = (
     }
 
     removeEntityById(backpack, itemToEquip.id);
-    addEntity(eqSlot, itemToEquip);
+    addEntities(eqSlot, itemToEquip);
 
     action.success(
       `Equipped ${getItemName(itemToEquip)} from slot ${invSlotIndex} to EQ slot ${eqSlotIndex}`,

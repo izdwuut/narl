@@ -1,9 +1,5 @@
-import {
-  DEFAULT_SEED,
-  MOBS_NAMESPACE_SEPARATOR,
-  NAMESPACE_SEPARATOR,
-} from "../../../utils";
 import seedrandom from "seedrandom";
+import { NAMESPACE_SEPARATOR, RANDOM_TOTAL_CHANCE } from "../../../utils";
 
 export type RandomContext = {
   namespace: string;
@@ -28,17 +24,14 @@ export class Random {
   }
 
   chance(percent: number): boolean {
-    return this.random() <= percent;
+    return this.random() * RANDOM_TOTAL_CHANCE <= percent;
+  }
+
+  range(min: number, max: number): number {
+    return Math.ceil(this.random() * (max - min + 1));
+  }
+
+  roll(): number {
+    return this.range(1, 100)
   }
 }
-
-export type RNGMap = {
-  mobs: Random;
-};
-
-export const RNG: RNGMap = {
-  mobs: new Random({
-    seed: DEFAULT_SEED,
-    namespace: MOBS_NAMESPACE_SEPARATOR,
-  }),
-};

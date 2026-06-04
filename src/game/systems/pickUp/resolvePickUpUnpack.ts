@@ -7,7 +7,7 @@ import { pickUpItem } from "./pickUp";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { CursedComponent } from "../../model/components/CursedComponent";
 import {
-  addEntity,
+  addEntities,
   getEntitiesByType,
   removeEntityById,
 } from "../../../core/ecs/queries/entities";
@@ -58,7 +58,7 @@ export const resolvePickUpUnpack = (
           }
           const nextItem = itemsInContainer.pop();
           if (nextItem) {
-            addEntity(backpack, nextItem);
+            addEntities(backpack, nextItem);
             removeEntityById(itemToPickUp, nextItem.id);
             action.success(`Picked up ${getItemName(nextItem)}`);
           }

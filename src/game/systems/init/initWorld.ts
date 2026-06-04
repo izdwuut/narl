@@ -2,8 +2,10 @@ import { MAP_SIZE } from "../../../utils/constants";
 import { getDummyArray } from "../../../utils/getDummyArray";
 import { VisitedComponent } from "../../model/components/VisitedComponent";
 import { FloorEntity } from "../../model/entities/FloorEntity";
-import { SwordEntity } from "../../model/entities/items/SwordEntity";
-import { RageBaitEntity } from "../../model/entities/mobs/RageBait";
+import {
+  SwordEntityFactory
+} from "../../model/entities/items/SwordEntity";
+import { RageBaitEntityFactory } from "../../model/entities/mobs/RageBait";
 import type { WorldState } from "../../state/state";
 
 export const initWorld = (): WorldState => {
@@ -14,10 +16,11 @@ export const initWorld = (): WorldState => {
     mobs: [],
     position,
   }));
-  world[3].items.push(new SwordEntity());
+  world[3].items.push(SwordEntityFactory.getDefault());
   world[0].floor.components.push(new VisitedComponent());
-  world[5].mobs.push(new RageBaitEntity());
-  world[6].mobs.push(new RageBaitEntity());
-  world[7].mobs.push(new RageBaitEntity());
+  world[5].mobs.push(RageBaitEntityFactory.getDefault());
+  world[6].mobs.push(RageBaitEntityFactory.getDefault());
+  world[7].mobs.push(RageBaitEntityFactory.getDefault());
+  
   return world;
 };

@@ -30,8 +30,8 @@ export const getEntitiesByType = <T extends Entity>(
 export const hasEntityById = (entity: Entity, childEntityId: string): boolean =>
   entity.entities.some((child) => child.id === childEntityId);
 
-export const addEntity = (entity: Entity, child: Entity): Entity => {
-  entity.entities.push(child);
+export const addEntities = (entity: Entity, ...children: Entity[]): Entity => {
+  entity.entities.push(...children);
   return entity;
 };
 

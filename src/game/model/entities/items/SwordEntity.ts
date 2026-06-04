@@ -5,6 +5,9 @@ import { GlyphComponent } from "../../components/GlyphComponent";
 import { PickupableComponent } from "../../components/PickupableComponent";
 import { ItemEntity } from "./ItemEntity";
 import { MainHandComponent } from "../../components/eq/MainHandComponent";
+import { addComponents } from "../../../../core/ecs/queries/component";
+import type { Component } from "../../../../core/ecs/Component";
+import { RNG } from "../../../systems/rng/rng";
 
 export type SwordEntityProps = EntityProps;
 
@@ -13,21 +16,34 @@ export class SwordEntity extends ItemEntity {
     const glyph = new GlyphComponent({
       glyph: "/" as string,
     });
-    const mainHand = new MainHandComponent();
     const name = new NameComponent({ name: "Sword" });
-    const dmg = new DmgComponent({ dmg: 5 });
-    const pickupable = new PickupableComponent();
 
     super({
       ...props,
       components: [
         ...(props?.components ?? []),
         glyph,
-        mainHand,
         name,
-        dmg,
-        pickupable,
       ],
     });
+  }
+}
+
+export class SwordEntityFactory {
+  private static getBase(): SwordEntity {
+    const sword = new SwordEntity();
+
+    return sword;
+  }
+
+  static getDefault(): SwordEntity {
+    const sword = this.getBase();
+
+    const mainHand = new MainHandComponent();
+    const dmg = new DmgComponent({ dmg: RNG.items.range(5, 8) });
+    const pickupable = new PickupableComponent();
+    addComponents(sword, ...([mainHand, dmg, pickupable] as Component[]));
+
+    return sword;
   }
 }

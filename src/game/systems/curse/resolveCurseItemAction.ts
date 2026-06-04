@@ -1,30 +1,35 @@
 import { produce } from "immer";
+import type { Entity } from "../../../core/ecs/Entity";
+import {
+  upsertComponents
+} from "../../../core/ecs/queries/component";
+import { getEntityById } from "../../../core/ecs/queries/entities";
+import { COLORS } from "../../../utils/colors";
+import { ColorComponent } from "../../model/components/ColorComponent";
+import { CursedComponent } from "../../model/components/CursedComponent";
+import { DmgComponent } from "../../model/components/DmgComponent";
+import { DmgModComponent } from "../../model/components/DmgModComponent";
+import { EquippableComponent } from "../../model/components/EquippableComponent";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
-import type { WorldCurseItemAction } from "../world/types";
 import type { ActionResolution } from "../actions/types";
-import { getPlayerEntity } from "../../state/selectors/player";
 import { getBackpack, isContainer } from "../inv/containers";
-import { getEntityById } from "../../../core/ecs/queries/entities";
-import { isCursed } from "./curse";
 import { getItemName } from "../inv/items";
-import { CursedComponent } from "../../model/components/CursedComponent";
-import {
-  addComponents,
-  upsertComponent,
-} from "../../../core/ecs/queries/component";
-import { ColorComponent } from "../../model/components/ColorComponent";
-import { COLORS } from "../../../utils/colors";
-import type { Entity } from "../../../core/ecs/Entity";
-import { DmgModComponent } from "../../model/components/DmgModComponent";
+import { RNG } from "../rng/rng";
+import type { WorldCurseItemAction } from "../world/types";
+import { isCursed } from "./curse";
 
 const curseItem = (item: Entity) => {
-  const components = [new CursedComponent()];
-  upsertComponent(item, new ColorComponent({ color: COLORS.CURSED }));
+  const components = [new CursedComponent(), new ColorComponent({ color: COLORS.CURSED })];
   if (isContainer(item)) {
-    components.push(new DmgModComponent({ dmgMod: 0.5 }));
+    components.push(
+      new DmgModComponent({ dmgMod: 0.5 }),
+      new EquippableComponent(),
+      new DmgComponent({ dmg: RNG.items.range(1, 3) })
+    );
   }
-  addComponents(item, ...components);
+  upsertComponents(item, ...components);
 };
 
 export const resolveCurseItemAction = (
