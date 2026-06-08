@@ -4,8 +4,9 @@ import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { type InternalInitAction } from "../internal/type";
-import { initWorld } from "./initWorld";
+import { validateSpawnTables } from "../rng/spawnTable";
 import { initPlayer } from "./initPlayer";
+import { initWorld } from "./initWorld";
 
 export const resolveInternalInitAction = (
   state: GameState,
@@ -17,6 +18,8 @@ export const resolveInternalInitAction = (
     return action.resolve(state);
   }
 
+  validateSpawnTables();
+  
   const nextState = produce(state, (draft) => {
     draft.world = initWorld();
     draft.turn = INITIAL_TURN;
