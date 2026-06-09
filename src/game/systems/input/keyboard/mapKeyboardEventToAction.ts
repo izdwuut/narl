@@ -85,11 +85,9 @@ export const mapKeyboardEventToAction = (
       if (!backpack) {
         throw new Error("No Backpack");
       }
-      const item = getContainerItemAt(backpack, keyToInvSlot(event.key));
-
       return {
         type: PlayerActionType.DROP_ITEM,
-        itemId: item?.id,
+        invSlot: keyToInvSlot(event.key),
         targetPosition: getPlayerPosition(gameState),
         reason: PlayerDropItemActionReason.MANUAL,
         eqSlot: undefined,

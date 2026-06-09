@@ -21,7 +21,7 @@ export enum PlayerDropItemActionReason {
 export type PlayerDropItemAction = {
   type: PlayerActionType.DROP_ITEM;
   targetPosition: number;
-  itemId: string | undefined;
+  invSlot: InvSlot | undefined;
   eqSlot: EqSlot | undefined;
   reason: PlayerDropItemActionReason;
 };

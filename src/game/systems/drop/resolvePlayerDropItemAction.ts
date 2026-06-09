@@ -1,4 +1,5 @@
 import { produce } from "immer";
+import type { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
@@ -7,7 +8,7 @@ import { getEqSlotAt } from "../eq/eq";
 import {
   clearContainerItemById,
   getBackpack,
-  getContainerItemById,
+  getContainerItemAt,
 } from "../inv/containers";
 import { getItemName } from "../inv/items";
 import {
@@ -20,21 +21,32 @@ export const resolvePlayerDropItemAction = (
   state: GameState,
   gameAction: PlayerDropItemAction,
 ): ActionResolution => {
-  const { eqSlot, itemId, targetPosition, reason } = gameAction;
+  const { eqSlot, invSlot, targetPosition, reason } = gameAction;
   const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-
-    action.assertCondition(itemId, "Can't drop item without itemId");
+    const backpack = action.assert(
+      getBackpack(player),
+      "Player has no backpack",
+    );
     const source = action.assert(
-      eqSlot ? getEqSlotAt(player, eqSlot) : getBackpack(player),
-      "Can't drop item without source",
+      eqSlot ? getEqSlotAt(player, eqSlot) : invSlot ? backpack : undefined,
+      "No source to drop item",
     );
-    const itemToDrop = action.assert(
-      getContainerItemById(source, itemId),
-      "Can't drop item. Item not found",
-    );
+    let itemToDrop: ItemEntity | undefined = undefined;
 
+    if (eqSlot !== undefined) {
+      itemToDrop = getContainerItemAt(source, eqSlot);
+      if (!itemToDrop) {
+        return action.fail(`No item to drop at EQ slot ${eqSlot}`);
+      }
+    } else if (invSlot !== undefined) {
+      itemToDrop = getContainerItemAt(source, invSlot);
+      if (!itemToDrop) {
+        return action.fail(`No item to drop at INV slot ${invSlot}`);
+      }
+    }
+    action.assertCondition(itemToDrop, "No item to drop");
     const tile = getTile(draft, targetPosition);
     tile.items.push(itemToDrop);
 

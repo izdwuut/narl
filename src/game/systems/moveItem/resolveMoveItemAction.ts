@@ -7,12 +7,12 @@ import {
   addItemToContainer,
   clearContainerItemById,
   getBackpack,
+  getContainerItemAt,
   getMaxNestDepth,
   getNestDepth,
   isContainer,
   isContainerFull,
 } from "../inv/containers";
-import { getInvItemAt } from "../inv/inv";
 import { getItemName } from "../inv/items";
 import type { PlayerMoveItemAction } from "../player/types";
 
@@ -26,8 +26,8 @@ export const resolveMoveItemAction = (
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
     const backpack = action.assert(getBackpack(player), "No backpack");
-    const fromItem = getInvItemAt(backpack, fromSlot);
-    const toItem = getInvItemAt(backpack, toSlot);
+    const fromItem = getContainerItemAt(backpack, fromSlot);
+    const toItem = getContainerItemAt(backpack, toSlot);
 
     if (!fromItem || !toItem) {
       return action.fail("Invalid item selection");
@@ -49,7 +49,7 @@ export const resolveMoveItemAction = (
       }
     }
 
-    clearContainerItemById(backpack, fromItem.id)
+    clearContainerItemById(backpack, fromItem.id);
     addItemToContainer(toItem, fromItem);
 
     action.success(

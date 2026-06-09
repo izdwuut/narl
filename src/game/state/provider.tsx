@@ -5,7 +5,7 @@ import { getInitialState } from "./state";
 
 export const GameProvider: React.FC<PropsWithChildren> = ({ children }) => {
     const [gameState, setGameState] = useState(getInitialState());
-
+    console.log(gameState)
     return <GameContext.Provider value={{ gameState, setGameState }}>
         {children}
     </GameContext.Provider>

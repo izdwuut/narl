@@ -1,5 +1,4 @@
 import { produce } from "immer";
-import { removeEntityById } from "../../../core/ecs/queries/entities";
 import {
   getPlayerEntity,
   getPlayerPosition,
@@ -29,7 +28,10 @@ export const resolveUnequipAction = (
   const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    const backpack = action.assert(getBackpack(player), "Player has no backpack");
+    const backpack = action.assert(
+      getBackpack(player),
+      "Player has no backpack",
+    );
     const isFull = isContainerFull(backpack);
     const equippedWeapon = getEquippedWeapon(player);
     if (!equippedWeapon) {
@@ -39,15 +41,14 @@ export const resolveUnequipAction = (
     if (isFull) {
       action.addPending({
         type: PlayerActionType.DROP_ITEM,
-        itemId: equippedWeapon.id,
         targetPosition: getPlayerPosition(draft),
         eqSlot: eqSlotIndex,
+        invSlot: undefined,
         reason: PlayerDropItemActionReason.BACKPACK_FULL,
       });
       return;
     }
 
-    removeEntityById(getEqSlotAt(player, eqSlotIndex), equippedWeapon.id);
     addItemToEntityBackpack(player, equippedWeapon);
     clearContainerItemAt(getEqSlotAt(player, eqSlotIndex), 1);
     action.success(

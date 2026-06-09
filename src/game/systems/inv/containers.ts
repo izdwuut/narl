@@ -16,7 +16,8 @@ import { SizeComponent } from "../../model/components/SizeComponent";
 import { BackpackEntity } from "../../model/entities/items/BackpackEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { PlaceholderEntity } from "../../model/entities/items/PlaceholderItemEntity";
-import type { InvSlot } from "./types";
+
+export type ContainerSlot = number;
 
 export const getBackpack = (entity: Entity): BackpackEntity | undefined => {
   return getEntityByType(entity, BackpackEntity);
@@ -60,13 +61,15 @@ export const addItemToContainer = (
 
 export const getContainerItemAt = (
   container: Entity,
-  slot: InvSlot,
+  containerSlot: ContainerSlot,
 ): ItemEntity | undefined => {
   if (!isContainer(container)) {
     throw new Error("Entity is not a container");
   }
-  const item = container.entities[slot - 1];
-
+  const item = container.entities[containerSlot - 1];
+  if (!item) {
+    throw new Error(`No container item at slot ${containerSlot}`);
+  }
   if (isPlaceholderSlot(item)) {
     return undefined;
   }
@@ -94,8 +97,8 @@ export const getContainerItemById = (
 
 export const swapContainerItems = (
   container: Entity,
-  sourceSlot: InvSlot,
-  targetSlot: InvSlot,
+  sourceSlot: ContainerSlot,
+  targetSlot: ContainerSlot,
 ): void => {
   if (!isContainer(container)) {
     throw new Error("Entity is not a container");
@@ -104,6 +107,9 @@ export const swapContainerItems = (
   const targetItem = getContainerItemAt(container, targetSlot);
   if (!sourceItem) {
     throw new Error("No source item to swap");
+  }
+  if (!targetItem) {
+    throw new Error("No target item to swap");
   }
   setContainerItemAt(container, targetSlot, sourceItem);
   setContainerItemAt(
@@ -115,11 +121,14 @@ export const swapContainerItems = (
 
 export const setContainerItemAt = (
   container: Entity,
-  slot: InvSlot,
+  slot: ContainerSlot,
   entity: Entity,
 ): void => {
   if (!isContainer(container)) {
     throw new Error("Entity is not a container");
+  }
+  if (!container.entities[slot - 1]) {
+    throw new Error(`Container slot ${slot} doesn't exist`);
   }
   container.entities[slot - 1] = entity;
 };
@@ -137,7 +146,7 @@ export const setContainerItemById = (
 
 export const clearContainerItemAt = (
   container: Entity,
-  slot: InvSlot,
+  slot: ContainerSlot,
 ): void => {
   if (!isContainer(container)) {
     throw new Error("Entity is not a container");
@@ -158,7 +167,7 @@ export const isPlaceholderSlot = (entity: Entity): boolean => {
 
 export const getFirstEmptyContainerSlot = (
   container: Entity,
-): InvSlot | undefined => {
+): ContainerSlot | undefined => {
   if (!isContainer(container)) {
     throw new Error("Entity is not a container");
   }
@@ -168,7 +177,7 @@ export const getFirstEmptyContainerSlot = (
     return undefined;
   }
 
-  return (index + 1) as InvSlot;
+  return (index + 1) as ContainerSlot;
 };
 
 export const getFirstContainerItem = (
