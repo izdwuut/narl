@@ -25,7 +25,7 @@ export const resolvePickUpUnpack = (
   state: GameState,
   gameAction: PlayerPickUpUnpackAction,
 ): ActionResolution => {
-  const action = new Action(gameAction);
+  const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const { player, position: playerPosition } = getPlayer(draft);
     getVisibleTiles(draft).forEach((tile) => {
@@ -33,10 +33,11 @@ export const resolvePickUpUnpack = (
         return;
       }
 
-      const backpack = getBackpack(player);
-      if (!backpack) {
-        return;
-      }
+      const backpack = action.assert(
+        getBackpack(player),
+        "Player has no backpack.",
+      );
+
       const itemToPickUp = pickUpItem(tile);
       if (!itemToPickUp) {
         return action.fail("Nothing to pick up");

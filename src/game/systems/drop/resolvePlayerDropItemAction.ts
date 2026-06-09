@@ -1,7 +1,4 @@
 import { produce } from "immer";
-import {
-  getEntityById
-} from "../../../core/ecs/queries/entities";
 import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
@@ -10,7 +7,7 @@ import { getEqSlotAt } from "../eq/eq";
 import {
   clearContainerItemById,
   getBackpack,
-  getContainerItemById
+  getContainerItemById,
 } from "../inv/containers";
 import { getItemName } from "../inv/items";
 import {
@@ -24,31 +21,25 @@ export const resolvePlayerDropItemAction = (
   gameAction: PlayerDropItemAction,
 ): ActionResolution => {
   const { eqSlot, itemId, targetPosition, reason } = gameAction;
-  const action = new Action(gameAction);
-  console.log(getPlayerEntity(state), eqSlot, itemId);
+  const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    if (!itemId) {
-      throw new Error("Can't drop item without itemId");
-    }
-    const source = eqSlot ? getEqSlotAt(player, eqSlot) : getBackpack(player);
-    if (!source) {
-      throw new Error("Can't drop item without source");
-    }
-    const itemToDrop = eqSlot
-      ? getEntityById(source, itemId)
-      : getContainerItemById(source, itemId);
 
-    if (!itemToDrop) {
-      throw new Error("Can't drop item. Item not found");
-    }
+    action.assertCondition(itemId, "Can't drop item without itemId");
+    const source = action.assert(
+      eqSlot ? getEqSlotAt(player, eqSlot) : getBackpack(player),
+      "Can't drop item without source",
+    );
+    const itemToDrop = action.assert(
+      getContainerItemById(source, itemId),
+      "Can't drop item. Item not found",
+    );
 
     const tile = getTile(draft, targetPosition);
     tile.items.push(itemToDrop);
 
     clearContainerItemById(source, itemToDrop.id);
     if (reason === PlayerDropItemActionReason.MANUAL) {
-      
       return action.success(`Dropped ${getItemName(itemToDrop)}`);
     }
 

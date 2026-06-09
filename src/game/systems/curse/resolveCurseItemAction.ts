@@ -1,8 +1,6 @@
 import { produce } from "immer";
 import type { Entity } from "../../../core/ecs/Entity";
-import {
-  upsertComponents
-} from "../../../core/ecs/queries/component";
+import { upsertComponents } from "../../../core/ecs/queries/component";
 import { getEntityById } from "../../../core/ecs/queries/entities";
 import { COLORS } from "../../../utils/colors";
 import { ColorComponent } from "../../model/components/ColorComponent";
@@ -21,12 +19,15 @@ import type { WorldCurseItemAction } from "../world/types";
 import { isCursed } from "./curse";
 
 const curseItem = (item: Entity) => {
-  const components = [new CursedComponent(), new ColorComponent({ color: COLORS.CURSED })];
+  const components = [
+    new CursedComponent(),
+    new ColorComponent({ color: COLORS.CURSED }),
+  ];
   if (isContainer(item)) {
     components.push(
       new DmgModComponent({ dmgMod: 0.5 }),
       new EquippableComponent(),
-      new DmgComponent({ dmg: RNG.items.range(1, 3) })
+      new DmgComponent({ dmg: RNG.items.range(1, 3) }),
     );
   }
   upsertComponents(item, ...components);
@@ -37,17 +38,15 @@ export const resolveCurseItemAction = (
   gameAction: WorldCurseItemAction,
 ): ActionResolution => {
   const { itemId } = gameAction;
-  const action = new Action(gameAction);
+  const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    const backpack = getBackpack(player);
-    if (!backpack) {
-      throw new Error("No player backpack");
-    }
-    const itemToCurse = getEntityById(backpack, itemId);
-    if (!itemToCurse) {
-      throw new Error("No item to curse");
-    }
+    const backpack = action.assert(getBackpack(player), "No player backpack");
+    const itemToCurse = action.assert(
+      getEntityById(backpack, itemId),
+      "No item to curse",
+    );
+
     if (isCursed(itemToCurse)) {
       return;
     }

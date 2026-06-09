@@ -23,11 +23,8 @@ export const resolveMobDropItemAction = (
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const tile = getTile(draft, targetPosition);
-    const source = getMobById(tile, entityId);
+    const source = action.assert(getMobById(tile, entityId), "No mob")
     const sourceEntityName = getComponentByType(source, NameComponent)?.name;
-    if (!source) {
-      throw new Error("No mob");
-    }
 
     const itemToDrop = getEntityById(source, itemId);
     if (!itemToDrop) {

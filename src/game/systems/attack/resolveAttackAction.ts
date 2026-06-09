@@ -98,11 +98,12 @@ export const resolveAttackAction = (
     if (nextHp <= 0) {
       const player = getPlayerEntity(draft);
       action.info(`Dealt ${dmg} dmg to ${mobName}`);
-      const mobExp = ctx.mobExp;
-      const playerExp = getComponentByType(player, ExpComponent);
-      if (!mobExp || !playerExp) {
-        throw new Error("No exp component");
-      }
+      const mobExp = action.assert(ctx.mobExp, "No exp component");
+      const playerExp = action.assert(
+        getComponentByType(player, ExpComponent),
+        "No exp component",
+      );
+
       playerExp.exp += mobExp;
       const mobContainer = getBackpack(mob);
       // TODO: move death consequences to EntityDiedAction resolver

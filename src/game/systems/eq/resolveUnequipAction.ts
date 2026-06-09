@@ -26,14 +26,10 @@ export const resolveUnequipAction = (
   gameAction: PlayerUnequipItemAction,
 ): ActionResolution => {
   const { eqSlot: eqSlotIndex } = gameAction;
-  const action = new Action(gameAction);
+  const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    const backpack = getBackpack(player);
-    if (!backpack) {
-      throw new Error("Player has no backpack");
-    }
-
+    const backpack = action.assert(getBackpack(player), "Player has no backpack");
     const isFull = isContainerFull(backpack);
     const equippedWeapon = getEquippedWeapon(player);
     if (!equippedWeapon) {

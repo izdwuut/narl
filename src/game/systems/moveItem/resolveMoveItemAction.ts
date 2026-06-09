@@ -22,13 +22,10 @@ export const resolveMoveItemAction = (
   gameAction: PlayerMoveItemAction,
 ): ActionResolution => {
   const { fromSlot, toSlot } = gameAction;
-  const action = new Action(gameAction);
+  const action: Action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    const backpack = getBackpack(player);
-    if (!backpack) {
-      throw new Error("No backpack");
-    }
+    const backpack = action.assert(getBackpack(player), "No backpack");
     const fromItem = getInvItemAt(backpack, fromSlot);
     const toItem = getInvItemAt(backpack, toSlot);
 

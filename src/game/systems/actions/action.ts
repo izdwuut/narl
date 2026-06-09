@@ -8,7 +8,7 @@ export class Action {
   private pendingActions: GameAction[] = [];
   private gameAction: GameAction;
 
-  constructor(gameAction:GameAction) {
+  constructor(gameAction: GameAction) {
     this.gameAction = gameAction;
   }
 
@@ -40,5 +40,22 @@ export class Action {
 
   info(message: string) {
     this.pendingLogMessages.push(message);
+  }
+
+  assert<T>(value: T | null | undefined, message: string): T {
+    if (value === null || value === undefined) {
+      throw new Error(message);
+    }
+
+    return value;
+  }
+
+  assertCondition<T>(
+    condition: T,
+    message: string,
+  ): asserts condition is NonNullable<T> {
+    if (!condition) {
+      throw new Error(message);
+    }
   }
 }

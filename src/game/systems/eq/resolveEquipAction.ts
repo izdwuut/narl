@@ -13,7 +13,7 @@ import {
 import { getItemSlots } from "../inv/getItemSlots";
 import { getItemName } from "../inv/items";
 import type { PlayerEquipItemAction } from "../player/types";
-import { getEq, getEqSlotAt, getEquippedWeapon } from "./eq";
+import { getEqSlotAt, getEquippedWeapon } from "./eq";
 
 const canBeEquipped = (
   itemSlots: ItemSlotComponent[],
@@ -34,10 +34,10 @@ export const resolveEquipAction = (
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
     const player = getPlayerEntity(draft);
-    const backpack = getBackpack(player);
-    if (!backpack) {
-      throw new Error("Player has no backpack");
-    }
+    const backpack = action.assert(
+      getBackpack(player),
+      "Player has no backpack",
+    );
 
     const itemToEquip = getContainerItemAt(backpack, invSlotIndex);
     if (!itemToEquip) {
@@ -57,11 +57,6 @@ export const resolveEquipAction = (
       return action.fail(
         `${getItemName(itemToEquip)} in ${invSlotIndex} can't be equipped in eq slot ${eqSlotIndex}`,
       );
-    }
-
-    const eq = getEq(player);
-    if (!eq) {
-      throw new Error("Player has no equipment");
     }
 
     addItemToContainer(eqSlot, itemToEquip);

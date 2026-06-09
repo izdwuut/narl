@@ -12,18 +12,15 @@ export const resolveRemoveEntityAction = (
   state: GameState,
   gameAction: WorldRemoveEntityAction,
 ): ActionResolution => {
-  const action = new Action(gameAction);
+  const action: Action = new Action(gameAction);
   const { entityId, entityType, position } = gameAction;
   const nextState = produce(state, (draft) => {
     const tile = getTile(draft, position);
-
-    if (entityType === WorldActionEntityType.PLAYER) {
-      throw new Error("Can't remove player");
-    }
-
-    if (!entityId) {
-      throw new Error("No entity id to drop item");
-    }
+    action.assertCondition(
+      entityType !== WorldActionEntityType.PLAYER,
+      "Can't remove player",
+    );
+    action.assertCondition(entityId, "No entity id to drop item");
     const mob = getMobById(tile, entityId);
     const mobName = getComponentByType(mob, NameComponent)?.name;
     killMobById(tile, entityId);
