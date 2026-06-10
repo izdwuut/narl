@@ -38,12 +38,12 @@ export const resolvePlayerDropItemAction = (
     if (eqSlot !== undefined) {
       itemToDrop = getContainerItemAt(source, eqSlot);
       if (!itemToDrop) {
-        return action.fail(`No item to drop at EQ slot ${eqSlot}`);
+        throw new Error("No item in EQ slot to drop");
       }
     } else if (invSlot !== undefined) {
       itemToDrop = getContainerItemAt(source, invSlot);
       if (!itemToDrop) {
-        return action.fail(`No item to drop at INV slot ${invSlot}`);
+        return action.fail(`No item to drop at slot ${invSlot}`);
       }
     }
     action.assertCondition(itemToDrop, "No item to drop");
