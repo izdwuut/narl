@@ -7,7 +7,7 @@ import { EqEntity } from "../../model/entities/eq/EqEntity";
 import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { getWeaponDmg } from "../attack/dmg";
-import { getContainerItemAt } from "../inv/containers";
+import { getContainerItemAt, getContainerItems } from "../inv/containers";
 import type { EqSlot } from "./types";
 
 export const getEq = (entity: Entity): EqEntity | undefined => {
@@ -17,6 +17,12 @@ export const getEq = (entity: Entity): EqEntity | undefined => {
 export const getEqSlots = (entity: Entity) => {
   const eq = getEq(entity);
   return getEntitiesByType(eq, EqSlotEntity);
+};
+
+export const getEqItems = (entity: Entity) => {
+  const eq = getEqSlots(entity);
+  const items = eq.flatMap((item) => getContainerItems(item));
+  return items;
 };
 
 export const getEqSlotAt = (entity: Entity, slot: EqSlot) => {

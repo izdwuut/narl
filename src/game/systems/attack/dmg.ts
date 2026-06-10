@@ -4,12 +4,19 @@ import { DmgComponent } from "../../model/components/DmgComponent";
 import { DmgModComponent } from "../../model/components/DmgModComponent";
 import { isContainer } from "../inv/containers";
 
-const getOwnDmg = (entity: Entity): number => {
+export const getOwnDmg = (entity: Entity): number => {
   return getComponentByType(entity, DmgComponent)?.dmg ?? 0;
 };
 
-const getDmgMod = (entity: Entity): number => {
+export const getDmgMod = (entity: Entity): number => {
   return getComponentByType(entity, DmgModComponent)?.dmgMod ?? 1;
+};
+
+export const getChildrenDmg = (entity: Entity): number => {
+  const childrenDmg = entity.entities.reduce((acc, child) => {
+    return acc + getWeaponDmg(child);
+  }, 0);
+  return childrenDmg;
 };
 
 export const getWeaponDmg = (entity: Entity): number => {
@@ -19,9 +26,7 @@ export const getWeaponDmg = (entity: Entity): number => {
     return ownDmg;
   }
 
-  const childrenDmg = entity.entities.reduce((acc, child) => {
-    return acc + getWeaponDmg(child);
-  }, 0);
+  const childrenDmg = getChildrenDmg(entity);
   const totalDmg = (ownDmg + childrenDmg) * getDmgMod(entity);
   return Math.ceil(totalDmg);
 };

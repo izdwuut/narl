@@ -23,7 +23,7 @@ export type GameState = {
   world: WorldState;
   turn: number;
   log: LogEntry[];
-  player?: PlayerState;
+  player: PlayerState;
 };
 
 export const getInitialState = (): GameState =>

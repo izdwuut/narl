@@ -5,6 +5,7 @@ import { Map } from "./Map";
 import { Inv } from "./inventory/inv/Inv";
 import { Exp } from "./Exp";
 import { EQ } from "./inventory/Eq";
+import { EqStats } from "./EqStats";
 
 export const Game: React.FC = () => {
   useKeyboardControls();

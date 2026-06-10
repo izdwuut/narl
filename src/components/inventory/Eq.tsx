@@ -1,4 +1,5 @@
 import { usePlayer } from "../../game/hooks/usePlayer";
+import { EqStats } from "../EqStats";
 import { Slot } from "./Slot";
 
 export const EQ = () => {
@@ -14,6 +15,7 @@ export const EQ = () => {
           <Slot key={slot?.id ?? `empty-${index}`} item={item} index={index + 1} />
         );
       })}
+      <EqStats />
     </div>
   );
 };
