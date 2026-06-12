@@ -14,12 +14,12 @@ export const getDmgMod = (entity: Entity): number => {
 
 export const getChildrenDmg = (entity: Entity): number => {
   const childrenDmg = entity.entities.reduce((acc, child) => {
-    return acc + getWeaponDmg(child);
+    return acc + getDmg(child);
   }, 0);
   return childrenDmg;
 };
 
-export const getWeaponDmg = (entity: Entity): number => {
+export const getDmg = (entity: Entity): number => {
   const ownDmg = getOwnDmg(entity);
 
   if (!isContainer(entity)) {

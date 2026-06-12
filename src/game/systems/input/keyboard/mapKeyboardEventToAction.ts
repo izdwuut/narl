@@ -19,6 +19,7 @@ import {
   type PlayerAction,
 } from "../../player/types";
 import { Direction } from "../../turn/types";
+import type { EqSlot } from "../../eq/types";
 
 const INV_KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9"] as const;
 
@@ -29,6 +30,21 @@ const isInvKey = (key: string): key is `${InvSlot}` => {
 const keyToInvSlot = (key: string): InvSlot => {
   return Number(key) as InvSlot;
 };
+
+const EQ_KEYS = ["1"] as const;
+
+const isEqKey = (key: string): key is `${EqSlot}` => {
+  return EQ_KEYS.includes(key as any);
+};
+
+const keyToEqSlot = (key: string): EqSlot => {
+  return Number(key) as EqSlot;
+};
+
+enum InspectType {
+  INV = "1",
+  EQ = "2",
+}
 
 export const mapKeyboardEventToAction = (
   event: KeyboardEvent,
@@ -41,6 +57,51 @@ export const mapKeyboardEventToAction = (
       return {
         type: InternalActionType.LOG,
         message: "Action canceled",
+      };
+    }
+    if (buffer.current[0] === "i") {
+      if (!buffer.current[1]) {
+        if (event.key === InspectType.INV) {
+          buffer.current.push(event.key as InspectType);
+          const backpack = getBackpack(getPlayerEntity(gameState));
+          const backpackSize = backpack
+            ? getContainerSize(backpack)
+            : undefined;
+          return {
+            type: InternalActionType.LOG,
+            message: `Select INV item to inspect (1-${backpackSize})`,
+          };
+        }
+        if (event.key === InspectType.EQ) {
+          buffer.current.push(event.key as InspectType);
+          const eqSlots = getEqSlots(getPlayerEntity(gameState)).length;
+          return {
+            type: InternalActionType.LOG,
+            message: `Select EQ item to inspect (1-${eqSlots})`,
+          };
+        }
+      }
+      if (buffer.current[1] === InspectType.INV) {
+        if (isInvKey(event.key)) {
+          buffer.current = [];
+          return {
+            type: PlayerActionType.INSPECT_INV,
+            invSlot: keyToInvSlot(event.key),
+          };
+        }
+      }
+      if (buffer.current[1] === InspectType.EQ) {
+        if (isEqKey(event.key)) {
+          buffer.current = [];
+          return {
+            type: PlayerActionType.INSPECT_EQ,
+            eqSlot: keyToEqSlot(event.key),
+          };
+        }
+      }
+      return {
+        type: InternalActionType.LOG,
+        message: "Inspect action in progress",
       };
     }
     if (buffer.current[0] === "e") {
@@ -177,6 +238,14 @@ export const mapKeyboardEventToAction = (
       return {
         type: InternalActionType.LOG,
         message: `Select item to move (1-${backpackSize})`,
+      };
+    }
+    case "i":
+    case "I": {
+      buffer.current.push("i");
+      return {
+        type: InternalActionType.LOG,
+        message: `Press 1 to inspect INV, 2 to inspect EQ`,
       };
     }
     default:

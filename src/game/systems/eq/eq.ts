@@ -6,7 +6,7 @@ import {
 import { EqEntity } from "../../model/entities/eq/EqEntity";
 import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
 import { ItemEntity } from "../../model/entities/items/ItemEntity";
-import { getWeaponDmg } from "../attack/dmg";
+import { getDmg } from "../attack/dmg";
 import { getContainerItemAt, getContainerItems } from "../inv/containers";
 import type { EqSlot } from "./types";
 
@@ -30,7 +30,7 @@ export const getEqSlotAt = (entity: Entity, slot: EqSlot) => {
 };
 
 export const getEquippedWeaponDamage = (weapon: ItemEntity) => {
-  const dmg = getWeaponDmg(weapon);
+  const dmg = getDmg(weapon);
   return dmg;
 };
 

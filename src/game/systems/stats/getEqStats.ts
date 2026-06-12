@@ -1,5 +1,5 @@
 import type { Entity } from "../../../core/ecs/Entity";
-import { getChildrenDmg, getDmgMod, getOwnDmg, getWeaponDmg } from "../attack/dmg";
+import { getChildrenDmg, getDmgMod, getOwnDmg, getDmg } from "../attack/dmg";
 import { getEqItems } from "../eq/eq";
 
 enum EqStat {
@@ -18,7 +18,7 @@ export const getEqStats = (entity: Entity): EqStats => {
     [EqStat.DMG_MOD]: 0,
   };
   items.forEach((item) => {
-    stats[EqStat.TOTAL_DMG] += getWeaponDmg(item);
+    stats[EqStat.TOTAL_DMG] += getDmg(item);
     stats[EqStat.OWN_DMG] = getOwnDmg(item);
     stats[EqStat.CHILDREN_DMG] = getChildrenDmg(item);
     stats[EqStat.DMG_MOD] = getDmgMod(item);

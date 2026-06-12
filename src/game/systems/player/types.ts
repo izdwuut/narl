@@ -11,6 +11,8 @@ export enum PlayerActionType {
   ATTACK = "ATTACK",
   MOVE_ITEM = "MOVE_ITEM",
   DROP_ITEM = "PLAYER_DROP_ITEM",
+  INSPECT_INV = "INSPECT_INV",
+  INSPECT_EQ = "INSPECT_EQ",
 }
 
 export enum PlayerDropItemActionReason {
@@ -46,6 +48,14 @@ export type PlayerAttackAction = {
   type: PlayerActionType.ATTACK;
   targetPosition: number;
 };
+export type PlayerInspectInvAction = {
+  type: PlayerActionType.INSPECT_INV;
+  invSlot: InvSlot;
+};
+export type PlayerInspectEqAction = {
+  type: PlayerActionType.INSPECT_EQ;
+  eqSlot: EqSlot;
+};
 export type PlayerMoveItemAction = {
   type: PlayerActionType.MOVE_ITEM;
   fromSlot: InvSlot;
@@ -60,4 +70,6 @@ export type PlayerAction =
   | PlayerEquipItemAction
   | PlayerUnequipItemAction
   | PlayerAttackAction
-  | PlayerMoveItemAction;
+  | PlayerMoveItemAction
+  | PlayerInspectInvAction
+  | PlayerInspectEqAction;

@@ -1,7 +1,11 @@
+import type { GameState } from "../../state/state";
+import type { ActionResolution } from "../actions/types";
 import { resolveAttackAction } from "../attack/resolveAttackAction";
 import { resolvePlayerDropItemAction } from "../drop/resolvePlayerDropItemAction";
 import { resolveEquipAction } from "../eq/resolveEquipAction";
 import { resolveUnequipAction } from "../eq/resolveUnequipAction";
+import { resolveInspectEqAction } from "../inspect/resolveInspectEqAction";
+import { resolveInspectInvAction } from "../inspect/resolveInspectInvAction";
 import { resolveMoveItemAction } from "../moveItem/resolveMoveItemAction";
 import { resolveMoveAction } from "../movement/resolveMoveAction";
 import { resolvePickUpAction } from "../pickUp/resolvePickUpAction";
@@ -9,15 +13,7 @@ import { resolvePickUpUnpack } from "../pickUp/resolvePickUpUnpack";
 
 import { PlayerActionType } from "./types";
 
-type PlayerActionResolver =
-  | typeof resolveMoveAction
-  | typeof resolvePickUpAction
-  | typeof resolvePickUpUnpack
-  | typeof resolveEquipAction
-  | typeof resolveUnequipAction
-  | typeof resolveAttackAction
-  | typeof resolveMoveItemAction
-  | typeof resolvePlayerDropItemAction;
+type AnyPlayerResolver = (state: GameState, action: any) => ActionResolution;
 
 export const playerActionResolvers = {
   [PlayerActionType.MOVE]: resolveMoveAction,
@@ -28,4 +24,9 @@ export const playerActionResolvers = {
   [PlayerActionType.ATTACK]: resolveAttackAction,
   [PlayerActionType.MOVE_ITEM]: resolveMoveItemAction,
   [PlayerActionType.DROP_ITEM]: resolvePlayerDropItemAction,
-} satisfies Record<PlayerActionType, PlayerActionResolver>;
+  [PlayerActionType.INSPECT_INV]: resolveInspectInvAction,
+  [PlayerActionType.INSPECT_EQ]: resolveInspectEqAction,
+} satisfies Record<
+  PlayerActionType,
+  AnyPlayerResolver
+>;
