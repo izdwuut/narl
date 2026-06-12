@@ -12,10 +12,20 @@ export const EQ = () => {
       {eqSlots.map((slot, index) => {
         const item = getItemInSlot(slot);
         return (
-          <Slot key={slot?.id ?? `empty-${index}`} item={item} index={index + 1} />
+          <Slot
+            key={slot?.id ?? `empty-${index}`}
+            item={item}
+            index={index + 1}
+          />
         );
       })}
-      <EqStats />
+      <div
+        style={{
+          marginLeft: 16,
+        }}
+      >
+        <EqStats />
+      </div>
     </div>
   );
 };
