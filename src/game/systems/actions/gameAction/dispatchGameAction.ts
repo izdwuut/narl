@@ -26,7 +26,7 @@ export const dispatchGameAction =
       queue.push(...resolution.pendingActions);
     }
 
-    const afterWorldTurn = runWorldTurn(currentState);
+    const afterWorldTurn = consumesTurn ? runWorldTurn(currentState) : currentState;
     const afterFlushLogs = flushLogs(afterWorldTurn, pendingLogs, consumesTurn);
 
     return {
