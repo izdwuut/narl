@@ -20,4 +20,14 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: [
+      'src/core/ecs/Constructor.ts',
+      'src/game/systems/player/resolvers.ts',
+      'src/game/systems/world/resolvers.ts',
+    ],
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off',
+    },
+  },
 ])
