@@ -151,7 +151,7 @@ export const setContainerItemById = (
   id: string,
   entity: Entity,
 ): void => {
-  if (!isContainer(entity)) {
+  if (!isContainer(container)) {
     throw new Error("Entity is not a container");
   }
   replaceEntityById(container, id, entity);
