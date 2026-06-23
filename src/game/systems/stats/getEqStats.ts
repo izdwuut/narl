@@ -10,6 +10,8 @@ enum EqStat {
   DMG_MOD = "DMG MOD",
   DEF = "DEF",
 }
+
+// TODO: resolve stats based on slots/item types
 export type EqStats = Record<EqStat, number>;
 export const getEqStats = (entity: Entity): EqStats => {
   const items = getEqItems(entity);
@@ -22,10 +24,10 @@ export const getEqStats = (entity: Entity): EqStats => {
   };
   items.forEach((item) => {
     stats[EqStat.TOTAL_DMG] += getDmg(item);
-    stats[EqStat.OWN_DMG] = getOwnDmg(item);
-    stats[EqStat.CHILDREN_DMG] = getChildrenDmg(item);
-    stats[EqStat.DMG_MOD] = getDmgMod(item);
-    stats[EqStat.DEF] = getDef(item);
+    stats[EqStat.OWN_DMG] += getOwnDmg(item);
+    stats[EqStat.CHILDREN_DMG] += getChildrenDmg(item);
+    stats[EqStat.DMG_MOD] ||= getDmgMod(item);
+    stats[EqStat.DEF] += getDef(item);
   });
   return stats;
 };
