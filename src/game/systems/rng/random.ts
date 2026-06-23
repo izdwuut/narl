@@ -15,7 +15,7 @@ export class Random {
 
   constructor(private readonly context: RandomContext) {
     this.rng = seedrandom(
-      getRandomContextNamespace([this.context.seed + this.context.namespace]),
+      getRandomContextNamespace([this.context.seed, this.context.namespace]),
     );
   }
 
@@ -28,7 +28,7 @@ export class Random {
   }
 
   range(min: number, max: number): number {
-    return Math.ceil(this.random() * (max - min + 1));
+    return Math.floor(this.random() * (max - min + 1)) + min;
   }
 
   roll(): number {

@@ -2,7 +2,6 @@ import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
 import { NameComponent } from "../../components/NameComponent";
 import { ColorComponent } from "../../components/ColorComponent";
 import { GlyphComponent } from "../../components/GlyphComponent";
-import { PeacefulComponent } from "../../components/mobs/PeacefulComponent";
 
 export type MobEntityProps = {
   name: string;
@@ -15,12 +14,11 @@ export abstract class MobEntity extends Entity {
       glyph: props.glyph,
     });
     const name = new NameComponent({ name: props.name });
-    const peaceful = new PeacefulComponent();
     const color = new ColorComponent();
 
     super({
       ...props,
-      components: [...(props.components ?? []), glyph, name, peaceful, color],
+      components: [...(props.components ?? []), glyph, name, color],
     });
   }
 }

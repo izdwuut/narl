@@ -34,10 +34,6 @@ export class RageBaitEntityFactory {
   private static getBase(): RageBaitEntity {
     const rageBait = new RageBaitEntity();
 
-    const hp = new HpComponent({ hp: 10 });
-    const exp = new ExpComponent({ exp: 20 });
-    addComponents(rageBait, ...([hp, exp] as Component[]));
-
     return rageBait;
   }
 
