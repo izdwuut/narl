@@ -14,7 +14,7 @@ export const Game: React.FC = () => {
       style={{
         display: "flex",
         flexDirection: "column",
-        width: 900,
+        width: 1000,
         backgroundColor: "black",
         padding: 16,
       }}
@@ -38,7 +38,9 @@ export const Game: React.FC = () => {
           <Exp />
           <Map />
         </div>
-        <Log />
+        <div style={{ marginLeft: 16 }}>
+          <Log />
+        </div>
       </div>
       <Inv />
     </div>
