@@ -37,10 +37,10 @@ export const resolvePlayerDropItemAction = (
     let itemToDrop: ItemEntity | undefined = undefined;
 
     if (eqSlot !== undefined) {
-      itemToDrop = getContainerItemAt(source, eqSlot);
-      if (!itemToDrop) {
-        throw new Error("No item in EQ slot to drop");
-      }
+      itemToDrop = action.assert(
+        getContainerItemAt(source, eqSlot),
+        "No item in EQ slot to drop",
+      );
     } else if (invSlot !== undefined) {
       itemToDrop = getContainerItemAt(source, invSlot);
       if (!itemToDrop) {

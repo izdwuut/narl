@@ -1,12 +1,16 @@
 import type { Entity } from "../../../core/ecs/Entity";
-import { getEntitiesByType, getEntityByType } from "../../../core/ecs/queries/entities";
+import { getComponentByType } from "../../../core/ecs/queries/component";
+import {
+  getEntitiesByType,
+  getEntityByType,
+} from "../../../core/ecs/queries/entities";
+import { NameComponent } from "../../model/components/display/NameComponent";
 import { EqEntity } from "../../model/entities/eq/EqEntity";
 import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
 import type { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { getDmg } from "../attack/dmg";
 import { getContainerItemAt, getContainerItems } from "../inv/containers";
 import type { EqSlot } from "./types";
-
 
 export const getEq = (entity: Entity): EqEntity | undefined => {
   return getEntityByType(entity, EqEntity);
@@ -35,4 +39,10 @@ export const getEquippedWeaponDamage = (weapon: ItemEntity) => {
 export const getEquippedWeapon = (entity: Entity): ItemEntity | undefined => {
   const slot = getEqSlotAt(entity, 1);
   return getContainerItemAt(slot, 1);
+};
+
+export const getEqSlotName = (entity: Entity, slot: EqSlot) => {
+  const eqSlot = getEqSlots(entity)[slot - 1];
+  const name = getComponentByType(eqSlot, NameComponent)?.name;
+  return name;
 };

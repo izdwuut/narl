@@ -19,7 +19,7 @@ import {
   PlayerDropItemActionReason,
   type PlayerUnequipItemAction,
 } from "../player/types";
-import { getEqSlotAt } from "./eq";
+import { getEqSlotAt, getEqSlotName } from "./eq";
 
 export const resolveUnequipAction = (
   state: GameState,
@@ -49,13 +49,15 @@ export const resolveUnequipAction = (
     const slot = getEqSlotAt(player, eqSlotIndex);
     const item = getContainerItemAt(slot, 1);
     if (!item) {
-      return action.fail(`No item at slot ${eqSlotIndex}`);
+      return action.fail(
+        `No item at ${getEqSlotName(player, eqSlotIndex)} EQ slot`,
+      );
     }
 
     addItemToEntityBackpack(player, item);
     clearContainerItemAt(getEqSlotAt(player, eqSlotIndex), 1);
     action.success(
-      `Unequipped ${getItemName(item)} from EQ slot ${eqSlotIndex}`,
+      `Unequipped ${getItemName(item)} from ${getEqSlotName(player, eqSlotIndex)} EQ slot`,
     );
   });
 
