@@ -21,11 +21,7 @@ export class SwordEntity extends ItemEntity {
 
     super({
       ...props,
-      components: [
-        ...(props?.components ?? []),
-        glyph,
-        name,
-      ],
+      components: [...(props?.components ?? []), glyph, name],
     });
   }
 }
@@ -44,7 +40,10 @@ export class SwordEntityFactory {
     const dmg = new DmgComponent({ dmg: RNG.items.range(5, 8) });
     const pickupable = new PickupableComponent();
     const droppable = new DroppableComponent();
-    addComponents(sword, ...([mainHand, dmg, pickupable, droppable] as Component[]));
+    addComponents(
+      sword,
+      ...([mainHand, dmg, pickupable, droppable] as Component[]),
+    );
 
     return sword;
   }

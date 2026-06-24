@@ -1,6 +1,6 @@
 import type { GameState } from "../../state/state";
 import type { ActionResolution } from "../actions/types";
-import { resolveCurseItemAction } from "../curse/resolveCurseItemAction";
+import { resolveCurseItemAction } from "../curse/resolveWorldCurseItemAction";
 import { resolveMobDropItemAction } from "../drop/resolveMobDropItemAction";
 import { resolveRemoveEntityAction } from "./resolveRemoveEntityAction";
 import { WorldActionType } from "./types";

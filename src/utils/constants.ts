@@ -25,3 +25,4 @@ export const RANDOM_TOTAL_CHANCE = 100 as const;
 
 export const DEFAULT_DEF = 0;
 export const DEFAULT_APPEARANCE_COLOR = "#000000" as const;
+export const DEFAULT_INSPECTED_TIMES = 0 as const;

@@ -1,6 +1,10 @@
 import type { Component } from "../../../../core/ecs/Component";
 import { type EntityProps } from "../../../../core/ecs/Entity";
-import { addComponents } from "../../../../core/ecs/queries/component";
+import {
+  addComponents,
+  hasComponentByType,
+  upsertComponents,
+} from "../../../../core/ecs/queries/component";
 import { addEntities } from "../../../../core/ecs/queries/entities";
 import { getDummyArray } from "../../../../utils";
 import { DEFAULT_BACKPACK_SIZE } from "../../../../utils/constants";
@@ -15,6 +19,12 @@ import { PickupableComponent } from "../../components/items/PickupableComponent"
 import { SizeComponent } from "../../components/containers/SizeComponent";
 import { ItemEntity } from "./ItemEntity";
 import { PlaceholderEntity } from "./PlaceholderItemEntity";
+import { CursedComponent } from "../../components/items/CursedComponent";
+import { COLORS } from "../../../../utils/colors";
+import { ColorComponent } from "../../components/display/ColorComponent";
+import { DmgModComponent } from "../../components/items/DmgModComponent";
+import { EquippableComponent } from "../../components/eq/EquippableComponent";
+import { DmgComponent } from "../../components/items/DmgComponent";
 
 export type BackpackEntityProps = {
   size?: number;
@@ -89,5 +99,26 @@ export class BackpackEntityFactory {
     const droppable = new DroppableComponent();
     addComponents(backpack, droppable);
     return backpack;
+  }
+
+  static curse(item: BackpackEntity): boolean {
+    const wasCursed = hasComponentByType(item, CursedComponent);
+    if (wasCursed) {
+      return false;
+    }
+    const components = [
+      new CursedComponent(),
+      new ColorComponent({ color: COLORS.CURSED }),
+      new DmgModComponent({ dmgMod: 0.5 }),
+      new EquippableComponent(),
+      new DmgComponent({ dmg: RNG.items.range(1, 3) }),
+    ];
+
+    upsertComponents(item, ...components);
+    return true;
+  }
+
+  static shouldBeCursed(item: BackpackEntity): boolean {
+    return !!item;
   }
 }

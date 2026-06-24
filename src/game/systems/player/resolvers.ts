@@ -1,6 +1,7 @@
 import type { GameState } from "../../state/state";
 import type { ActionResolution } from "../actions/types";
 import { resolveAttackAction } from "../attack/resolveAttackAction";
+import { resolvePlayerCurseItemAction } from "../curse/resolvePlayerCurseItemAction";
 import { resolvePlayerDropItemAction } from "../drop/resolvePlayerDropItemAction";
 import { resolveEquipAction } from "../eq/resolveEquipAction";
 import { resolveUnequipAction } from "../eq/resolveUnequipAction";
@@ -26,7 +27,5 @@ export const playerActionResolvers = {
   [PlayerActionType.DROP_ITEM]: resolvePlayerDropItemAction,
   [PlayerActionType.INSPECT_INV]: resolveInspectInvAction,
   [PlayerActionType.INSPECT_EQ]: resolveInspectEqAction,
-} satisfies Record<
-  PlayerActionType,
-  AnyPlayerResolver
->;
+  [PlayerActionType.CURSE_ITEM]: resolvePlayerCurseItemAction,
+} satisfies Record<PlayerActionType, AnyPlayerResolver>;

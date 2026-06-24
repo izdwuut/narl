@@ -16,10 +16,20 @@ export const createKeyboardToAction = (
   ArrowRight: getMoveCommand(Direction.RIGHT),
 
   g: getPickUpCommand(),
+  G: getPickUpCommand(),
 
   i: getInspectCommand(gameState),
+  I: getInspectCommand(gameState),
+
   e: getEquipCommand(gameState),
+  E: getEquipCommand(gameState),
+
   u: getUnequipCommand(gameState),
+  U: getUnequipCommand(gameState),
+
   m: getMoveItemCommand(gameState),
+  M: getMoveItemCommand(gameState),
+
   d: getDropCommand(gameState),
+  D: getDropCommand(gameState),
 });

@@ -1,6 +1,11 @@
 import type { Entity } from "../../../core/ecs/Entity";
 import { getDef } from "../attack/def";
-import { getChildrenDmg, getDmgMod, getOwnDmg, getDmg } from "../attack/dmg";
+import {
+  getChildrenDmg,
+  getDmg,
+  getDmgMod,
+  getOwnDmg,
+} from "../attack/dmg";
 import { getEqItems } from "../eq/eq";
 
 enum EqStat {

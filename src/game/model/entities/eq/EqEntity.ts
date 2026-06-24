@@ -1,6 +1,7 @@
 import { Entity, type EntityProps } from "../../../../core/ecs/Entity";
 import { HeadSlotEntity } from "./HeadSlotEntity";
 import { MainHandSlotEntity } from "./MainHandSlotEntity";
+import { PantsSlotEntity } from "./PantsSlotEntity";
 
 export type EqEntityProps = {
   items?: Entity[];
@@ -10,9 +11,10 @@ export class EqEntity extends Entity {
   constructor(props?: EqEntityProps) {
     const mainHandSlot = new MainHandSlotEntity();
     const headSlot = new HeadSlotEntity();
+    const pantsSlot = new PantsSlotEntity();
 
     super({
-      entities: [...(props?.items ?? []), mainHandSlot, headSlot],
+      entities: [...(props?.items ?? []), mainHandSlot, headSlot, pantsSlot],
     });
   }
 }

@@ -13,11 +13,17 @@ export enum PlayerActionType {
   DROP_ITEM = "PLAYER_DROP_ITEM",
   INSPECT_INV = "INSPECT_INV",
   INSPECT_EQ = "INSPECT_EQ",
+  CURSE_ITEM = "CURSE_ITEM",
 }
 
 export enum PlayerDropItemActionReason {
   MANUAL = "MANUAL",
   BACKPACK_FULL = "BACKPACK_FULL",
+}
+
+export enum PlayerCurseItemSource {
+  INV = "INV",
+  EQ = "EQ",
 }
 
 export type PlayerDropItemAction = {
@@ -61,6 +67,11 @@ export type PlayerMoveItemAction = {
   fromSlot: InvSlot;
   toSlot: InvSlot;
 };
+export type PlayerCurseItemAction = {
+  type: PlayerActionType.CURSE_ITEM;
+  invSlot?: InvSlot;
+  eqSlot?: EqSlot;
+};
 
 export type PlayerAction =
   | PlayerDropItemAction
@@ -72,4 +83,5 @@ export type PlayerAction =
   | PlayerAttackAction
   | PlayerMoveItemAction
   | PlayerInspectInvAction
-  | PlayerInspectEqAction;
+  | PlayerInspectEqAction
+  | PlayerCurseItemAction;

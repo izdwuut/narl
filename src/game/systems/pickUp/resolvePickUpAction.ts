@@ -15,6 +15,7 @@ import type { PlayerPickUpAction } from "../player/types";
 import { WorldActionType } from "../world/types";
 import { isPickupable, pickUpItem } from "./pickUp";
 import { getVisibleTiles } from "../render/getVisibleTiles";
+import { curse } from "../curse/curse";
 
 export const resolvePickUpAction = (
   state: GameState,
@@ -22,7 +23,7 @@ export const resolvePickUpAction = (
 ): ActionResolution => {
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-    const {player, position: playerPosition} = getPlayer(draft);
+    const { player, position: playerPosition } = getPlayer(draft);
     getVisibleTiles(draft).forEach((tile) => {
       if (playerPosition !== tile.position) {
         return;
@@ -46,18 +47,12 @@ export const resolvePickUpAction = (
       if (!isPickupable(itemToPickUp)) {
         return action.fail(`${getItemName(itemToPickUp)} is not pickupable`);
       }
-      if (isContainer(itemToPickUp)) {
-        action.addPending({
-          type: WorldActionType.CURSE_ITEM,
-          itemId: itemToPickUp.id,
-        });
-      }
       addItemToEntityBackpack(player, itemToPickUp);
       removeById(tile.items, itemToPickUp.id);
       action.success(`Picked up ${getItemName(itemToPickUp)}`);
+      curse(itemToPickUp, action);
     });
   });
-  
 
   return action.resolve(nextState);
 };

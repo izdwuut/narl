@@ -9,8 +9,8 @@ import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { getEquippedWeapon, getEquippedWeaponDamage } from "../eq/eq";
 import type { PlayerAttackAction } from "../player/types";
-import { getMob, hasMobs } from "./mobs";
-import { getHp } from "./hp";
+import { getMob, hasMobs } from "../attack/mobs";
+import { getHp } from "../attack/hp";
 import { getBackpack } from "../inv/containers";
 import { WorldActionEntityType, WorldActionType } from "../world/types";
 

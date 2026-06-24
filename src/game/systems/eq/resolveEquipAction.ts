@@ -57,7 +57,7 @@ export const resolveEquipAction = (
     }
     if (!canBeEquipped(itemSlots, eqItemSlots)) {
       return action.fail(
-        `${getItemName(itemToEquip)} in ${invSlotIndex} can't be equipped in eq slot ${eqSlotIndex}`,
+        `${getItemName(itemToEquip)} from INV slot ${invSlotIndex} can't be equipped in EQ slot ${eqSlotIndex}`,
       );
     }
 

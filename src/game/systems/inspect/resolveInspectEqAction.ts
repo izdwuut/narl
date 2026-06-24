@@ -1,11 +1,12 @@
 import { produce } from "immer";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import type { PlayerInspectEqAction } from "../player/types";
-import { getPlayerEntity } from "../../state/selectors/player";
+import { curse } from "../curse/curse";
 import { getEqSlotAt } from "../eq/eq";
 import { getContainerItemAt } from "../inv/containers";
+import { type PlayerInspectEqAction } from "../player/types";
 import { getItemInspectText, increaseInspected } from "./inspect";
 
 export const resolveInspectEqAction = (
@@ -26,6 +27,7 @@ export const resolveInspectEqAction = (
     increaseInspected(item);
 
     action.info(getItemInspectText(item));
+    curse(item, action);
   });
 
   return action.resolve(nextState, false);

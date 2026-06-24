@@ -39,9 +39,7 @@ export const mapKeyboardEventToAction = (
       current: command.next(),
       history: [...(keyboardChain.current?.history ?? []), command],
     };
-    return command.message
-      ? getInternalLogAction(command.message)
-      : undefined;
+    return command.message ? getInternalLogAction(command.message) : undefined;
   }
 
   return undefined;

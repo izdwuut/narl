@@ -1,14 +1,12 @@
 import type { Entity } from "../../../core/ecs/Entity";
-import {
-  getEntitiesByType,
-  getEntityByType,
-} from "../../../core/ecs/queries/entities";
+import { getEntitiesByType, getEntityByType } from "../../../core/ecs/queries/entities";
 import { EqEntity } from "../../model/entities/eq/EqEntity";
 import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
-import { ItemEntity } from "../../model/entities/items/ItemEntity";
+import type { ItemEntity } from "../../model/entities/items/ItemEntity";
 import { getDmg } from "../attack/dmg";
 import { getContainerItemAt, getContainerItems } from "../inv/containers";
 import type { EqSlot } from "./types";
+
 
 export const getEq = (entity: Entity): EqEntity | undefined => {
   return getEntityByType(entity, EqEntity);

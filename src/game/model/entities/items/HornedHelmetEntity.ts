@@ -1,15 +1,24 @@
 import type { Component } from "../../../../core/ecs/Component";
 import type { EntityProps } from "../../../../core/ecs/Entity";
-import { addComponents } from "../../../../core/ecs/queries/component";
+import {
+  addComponents,
+  hasComponentByType,
+  upsertComponents,
+} from "../../../../core/ecs/queries/component";
+import { COLORS } from "../../../../utils/colors";
 import { RNG } from "../../../systems/rng/rng";
-import { DefComponent } from "../../components/items/DefComponent";
-import { DroppableComponent } from "../../components/items/DroppableComponent";
-import { HeadComponent } from "../../components/eq/HeadComponent";
+import { ColorComponent } from "../../components/display/ColorComponent";
 import { GlyphComponent } from "../../components/display/GlyphComponent";
 import { NameComponent } from "../../components/display/NameComponent";
-import { PickupableComponent } from "../../components/items/PickupableComponent";
-import { ItemEntity } from "./ItemEntity";
+import { HeadComponent } from "../../components/eq/HeadComponent";
+import { PantsComponent } from "../../components/eq/PantsComponent";
 import { InspectDescComponent } from "../../components/inspect/InspectDescComponent";
+import { CursedComponent } from "../../components/items/CursedComponent";
+import { DefComponent } from "../../components/items/DefComponent";
+import { DroppableComponent } from "../../components/items/DroppableComponent";
+import { PickupableComponent } from "../../components/items/PickupableComponent";
+import { getInspectedTimes } from "../../queries/inspect";
+import { ItemEntity } from "./ItemEntity";
 
 export type HornedHelmetEntityProps = EntityProps;
 
@@ -32,10 +41,10 @@ export class HornedHelmetEntityFactory {
     addComponents(
       item,
       new InspectDescComponent({ times: 5, text: "It has horns" }),
-      new InspectDescComponent({ times: 20, text: "Looks horny" }),
+      new InspectDescComponent({ times: 10, text: "Looks horny" }),
     );
   }
-  
+
   private static getBase(): HornedHelmetEntity {
     const hornedHelmet = new HornedHelmetEntity();
     this.addInspectDesc(hornedHelmet);
@@ -56,5 +65,24 @@ export class HornedHelmetEntityFactory {
     );
 
     return hornedHelmet;
+  }
+
+  static curse(item: HornedHelmetEntity): boolean {
+    const wasCursed = hasComponentByType(item, CursedComponent);
+    if (wasCursed) {
+      return false;
+    }
+    const components = [
+      new CursedComponent(),
+      new ColorComponent({ color: COLORS.CURSED }),
+      new PantsComponent(),
+    ];
+    upsertComponents(item, ...components);
+    return true;
+  }
+
+  static shouldBeCursed(item: HornedHelmetEntity): boolean {
+    const inspected = getInspectedTimes(item);
+    return inspected >= 10;
   }
 }

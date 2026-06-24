@@ -3,8 +3,9 @@ import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
+import { curse } from "../curse/curse";
 import { getBackpack, getContainerItemAt } from "../inv/containers";
-import type { PlayerInspectInvAction } from "../player/types";
+import { PlayerActionType, type PlayerInspectInvAction } from "../player/types";
 import { getItemInspectText, increaseInspected } from "./inspect";
 
 export const resolveInspectInvAction = (
@@ -29,6 +30,7 @@ export const resolveInspectInvAction = (
     increaseInspected(item);
 
     action.info(getItemInspectText(item));
+    curse(item, action);
   });
 
   return action.resolve(nextState, false);
