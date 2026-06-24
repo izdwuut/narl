@@ -1,11 +1,11 @@
 import { produce } from "immer";
+import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import type { PlayerInspectInvAction } from "../player/types";
-import { getPlayerEntity } from "../../state/selectors/player";
 import { getBackpack, getContainerItemAt } from "../inv/containers";
-import { getItemInspectText } from "./inspect";
+import type { PlayerInspectInvAction } from "../player/types";
+import { getItemInspectText, increaseInspected } from "./inspect";
 
 export const resolveInspectInvAction = (
   state: GameState,
@@ -26,8 +26,9 @@ export const resolveInspectInvAction = (
     if (!item) {
       return action.info(`INV slot ${invSlot} is empty`);
     }
+    increaseInspected(item);
 
-    action.info(getItemInspectText(item))
+    action.info(getItemInspectText(item));
   });
 
   return action.resolve(nextState, false);

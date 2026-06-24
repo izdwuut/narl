@@ -9,6 +9,7 @@ import { GlyphComponent } from "../../components/display/GlyphComponent";
 import { NameComponent } from "../../components/display/NameComponent";
 import { PickupableComponent } from "../../components/items/PickupableComponent";
 import { ItemEntity } from "./ItemEntity";
+import { InspectDescComponent } from "../../components/inspect/InspectDescComponent";
 
 export type HornedHelmetEntityProps = EntityProps;
 
@@ -27,8 +28,17 @@ export class HornedHelmetEntity extends ItemEntity {
 }
 
 export class HornedHelmetEntityFactory {
+  private static addInspectDesc(item: HornedHelmetEntity) {
+    addComponents(
+      item,
+      new InspectDescComponent({ times: 5, text: "It has horns" }),
+      new InspectDescComponent({ times: 20, text: "Looks horny" }),
+    );
+  }
+  
   private static getBase(): HornedHelmetEntity {
     const hornedHelmet = new HornedHelmetEntity();
+    this.addInspectDesc(hornedHelmet);
 
     return hornedHelmet;
   }

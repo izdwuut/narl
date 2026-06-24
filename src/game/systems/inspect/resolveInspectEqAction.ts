@@ -6,7 +6,7 @@ import type { PlayerInspectEqAction } from "../player/types";
 import { getPlayerEntity } from "../../state/selectors/player";
 import { getEqSlotAt } from "../eq/eq";
 import { getContainerItemAt } from "../inv/containers";
-import { getItemInspectText } from "./inspect";
+import { getItemInspectText, increaseInspected } from "./inspect";
 
 export const resolveInspectEqAction = (
   state: GameState,
@@ -23,6 +23,7 @@ export const resolveInspectEqAction = (
     if (!item) {
       return action.info(`EQ slot ${eqSlot} is empty`);
     }
+    increaseInspected(item);
 
     action.info(getItemInspectText(item));
   });

@@ -1,7 +1,7 @@
-import { Component } from "../../../core/ecs/Component";
+import { Component } from "../../../../core/ecs/Component";
 
 export class InspectedComponent extends Component {
-  times = 1;
+  times = 0;
 
   constructor() {
     super();
