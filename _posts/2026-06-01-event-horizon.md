@@ -1,27 +1,10 @@
 ---
 layout: post
-title: "Anal Plug"
+title: "Event Horizon"
 ---
 
-__And if you gaze long into an abyss, the abyss also gazes into you.__
+Ever wondered what's beyond ~~the Event Horizon~~ tile `2137`?
 
-Conversely, if you inspect a Horned Helmet long enough,
-the Horned Helmet starts to inspect you.
+![Nothing](/narl/assets/images/2137/event-horizon.gif)
 
-![Nothing](/narl/assets/images/anal-plug/anal-plug.gif)
-
-## Any benefits?
-
-Depending on prior usage of Cursed Ring.
-
-## I put the Cursed Ring on and now I'm dickless
-
-Luckily, Horned Helmet has 2 horns.
-
-## Fuck me
-
-DP style, yes.
-
-## Can I inspect mobs?
-
-No. You poke them instead (at your own risk).
+Nothing.
