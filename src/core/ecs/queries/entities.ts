@@ -77,14 +77,3 @@ export const patchEntityById = (
   });
   if (changed) entity.entities = nextEntities;
 };
-
-// export const upsertEntityById = (
-//   entity: Entity,
-//   nextChild: Entity
-// ): Entity => {
-//   const exists = entity.entities.some((child) => child.id === nextChild.id);
-
-//   return exists
-//     ? replaceEntityById(entity, nextChild.id, nextChild)
-//     : addEntity(entity, nextChild);
-// };

@@ -54,10 +54,10 @@ export const resolvePickUpAction = (
       }
       addItemToEntityBackpack(player, itemToPickUp);
       removeById(tile.items, itemToPickUp.id);
-
       action.success(`Picked up ${getItemName(itemToPickUp)}`);
     });
   });
+  
 
   return action.resolve(nextState);
 };

@@ -8,6 +8,7 @@ import {
   getEntityById,
   getEntityByType,
   replaceEntityById,
+  resetEntities,
 } from "../../../core/ecs/queries/entities";
 import { DEFAULT_NEST_DEPTH } from "../../../utils";
 import { ContainerComponent } from "../../model/components/ContainerComponent";
@@ -172,6 +173,16 @@ export const clearContainerItemById = (container: Entity, id: string): void => {
     throw new Error("Entity is not a container");
   }
   replaceEntityById(container, id, new PlaceholderEntity());
+};
+
+export const clearContainerItems = (container: Entity): void => {
+  if (!isContainer(container)) {
+    throw new Error("Entity is not a container");
+  }
+  const items = getContainerItems(container);
+  items.forEach((item) =>
+    replaceEntityById(container, item.id, new PlaceholderEntity()),
+  );
 };
 
 export const isPlaceholderSlot = (entity: Entity): boolean => {

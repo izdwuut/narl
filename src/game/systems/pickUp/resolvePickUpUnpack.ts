@@ -1,15 +1,14 @@
 import { produce } from "immer";
-import { getComponentByType } from "../../../core/ecs/queries/component";
-import { CursedComponent } from "../../model/components/CursedComponent";
+import { removeById } from "../../../utils/removeById";
 import { getPlayer } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
+import { isCursed } from "../curse/curse";
 import {
-  addItemToEntityBackpack,
-  clearContainerItemById,
+  clearContainerItems,
   getBackpack,
-  getFirstContainerItem,
+  getContainerItems,
   isContainer,
   isContainerFull,
 } from "../inv/containers";
@@ -46,28 +45,23 @@ export const resolvePickUpUnpack = (
         return action.fail("Can't pick up item. Backpack is full");
       }
 
-      if (isContainer(itemToPickUp)) {
-        const isCursed = getComponentByType(itemToPickUp, CursedComponent);
-        let nextItem = getFirstContainerItem(itemToPickUp);
-        if (!nextItem || isCursed) {
-          return action.addPending({
-            type: PlayerActionType.PICK_UP,
-          });
-        }
-        while (nextItem) {
-          if (isContainerFull(backpack)) {
-            return action.info(`Backpack is full`);
-          }
-          addItemToEntityBackpack(player, nextItem);
-          clearContainerItemById(itemToPickUp, nextItem.id);
-          action.success(`Picked up ${getItemName(nextItem)}`);
-          nextItem = getFirstContainerItem(itemToPickUp);
-        }
-        return;
+      if (!isContainer(itemToPickUp) || isCursed(itemToPickUp)) {
+        return action.addPending({
+          type: PlayerActionType.PICK_UP,
+        });
       }
+      const containerItems = getContainerItems(itemToPickUp);
+      clearContainerItems(itemToPickUp);
+      removeById(tile.items, itemToPickUp.id);
+      tile.items.push(...containerItems, itemToPickUp);
       action.addPending({
         type: PlayerActionType.PICK_UP,
       });
+      if (containerItems.length) {
+        return action.info(
+          `Dropped ${getItemName(itemToPickUp)} items to the floor`,
+        );
+      }
     });
   });
 
