@@ -9,6 +9,8 @@ Emergent fuckery simulator disguised as a 1D roguelike.
 
 LLM-driven design. Human-in-the-loop bonanza.
 
+[REPO](https://github.com/izdwuut/narl)
+
 ## Posts
 
 {% for post in site.posts %}
