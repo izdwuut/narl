@@ -4,8 +4,8 @@ import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { curse } from "../curse/curse";
-import { getBackpack, getContainerItemAt } from "../inv/containers";
-import { PlayerActionType, type PlayerInspectInvAction } from "../player/types";
+import { getBackpack, getContainerItemAt } from "../../model/queries/containers";
+import { type PlayerInspectInvAction } from "../player/types";
 import { getItemInspectText, increaseInspected } from "./inspect";
 
 export const resolveInspectInvAction = (

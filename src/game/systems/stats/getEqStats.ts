@@ -1,12 +1,12 @@
 import type { Entity } from "../../../core/ecs/Entity";
-import { getDef } from "../attack/def";
+import { getDef } from "../../model/queries/def";
 import {
   getChildrenDmg,
   getDmg,
   getDmgMod,
   getOwnDmg,
-} from "../attack/dmg";
-import { getEqItems } from "../eq/eq";
+} from "../../model/queries/dmg";
+import { getEqItems } from "../../model/queries/eq";
 
 enum EqStat {
   TOTAL_DMG = "TOTAL DMG",
@@ -17,6 +17,7 @@ enum EqStat {
 }
 
 // TODO: resolve stats based on slots/item types
+// TODO; remove duplication in Inspect action
 export type EqStats = Record<EqStat, number>;
 export const getEqStats = (entity: Entity): EqStats => {
   const items = getEqItems(entity);

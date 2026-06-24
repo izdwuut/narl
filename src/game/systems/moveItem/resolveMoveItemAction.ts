@@ -6,14 +6,16 @@ import type { ActionResolution } from "../actions/types";
 import {
   addItemToContainer,
   clearContainerItemById,
+} from "../inv/containers";
+import {
   getBackpack,
   getContainerItemAt,
   getMaxNestDepth,
   getNestDepth,
   isContainer,
   isContainerFull,
-} from "../inv/containers";
-import { getItemName } from "../inv/items";
+} from "../../model/queries/containers";
+import { getItemName } from "../../model/queries/items";
 import type { PlayerMoveItemAction } from "../player/types";
 
 // TODO: add swap (new resolver)

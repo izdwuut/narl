@@ -3,10 +3,11 @@ import type { GameState } from "../../state/state";
 import { WorldActionEntityType, type WorldRemoveEntityAction } from "./types";
 import type { ActionResolution } from "../actions/types";
 import { Action } from "../actions/action";
-import { getMobById, killMobById } from "../attack/mobs";
+import { getMobById } from "../../model/queries/mobs";
+import { killMobById } from "../attack/mobs";
 import { getComponentByType } from "../../../core/ecs/queries/component";
 import { NameComponent } from "../../model/components/display/NameComponent";
-import { getTile } from "./getTile";
+import { getTile } from "../../model/queries/tile";
 
 export const resolveRemoveEntityAction = (
   state: GameState,

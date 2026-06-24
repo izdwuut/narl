@@ -9,9 +9,7 @@ export const resolvePlayerCurseItemAction = (
   gameAction: PlayerCurseItemAction,
 ): ActionResolution => {
   const action: Action = new Action(gameAction);
-  const nextState = produce(state, (draft) => {
-
-  });
+  const nextState = produce(state, () => {});
 
   return action.resolve(nextState);
 };

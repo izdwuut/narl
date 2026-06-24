@@ -8,7 +8,7 @@ import { GameContext } from "../state/context";
 import { useEq, type Eq } from "./useEq";
 import { ItemEntity } from "../model/entities/items/ItemEntity";
 import { getPlayerEntity } from "../state/selectors/player";
-import { getBackpack, getContainerSize } from "../systems/inv/containers";
+import { getBackpack, getContainerSize } from "../model/queries/containers";
 import { getEntitiesByType } from "../../core/ecs/queries/entities";
 
 type Player = {

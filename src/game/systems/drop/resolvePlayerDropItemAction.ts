@@ -4,18 +4,18 @@ import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import { getEqSlotAt } from "../eq/eq";
+import { getEqSlotAt } from "../../model/queries/eq";
+import { clearContainerItemById } from "../inv/containers";
 import {
-  clearContainerItemById,
   getBackpack,
   getContainerItemAt,
-} from "../inv/containers";
-import { getItemName } from "../inv/items";
+} from "../../model/queries/containers";
+import { getItemName } from "../../model/queries/items";
 import {
   PlayerDropItemActionReason,
   type PlayerDropItemAction,
 } from "../player/types";
-import { getTile } from "../world/getTile";
+import { getTile } from "../../model/queries/tile";
 
 // TODO: drop directly from EQ
 export const resolvePlayerDropItemAction = (

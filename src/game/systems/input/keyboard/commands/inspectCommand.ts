@@ -1,8 +1,8 @@
 import { getPlayerEntity } from "../../../../state/selectors/player";
 import type { GameState } from "../../../../state/state";
-import { getEqSlots } from "../../../eq/eq";
+import { getEqSlots } from "../../../../model/queries/eq";
 import type { EqSlot } from "../../../eq/types";
-import { getBackpack, getContainerSize } from "../../../inv/containers";
+import { getBackpack, getContainerSize } from "../../../../model/queries/containers";
 import type { InvSlot } from "../../../inv/types";
 import { PlayerActionType } from "../../../player/types";
 import type { KeyboardToAction, KeyboardToActionCommand } from "../chain";

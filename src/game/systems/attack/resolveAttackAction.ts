@@ -7,11 +7,11 @@ import { getPlayerEntity } from "../../state/selectors/player";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import { getEquippedWeapon, getEquippedWeaponDamage } from "../eq/eq";
+import { getEquippedWeapon, getEquippedWeaponDamage } from "../../model/queries/eq";
 import type { PlayerAttackAction } from "../player/types";
-import { getMob, hasMobs } from "../attack/mobs";
-import { getHp } from "../attack/hp";
-import { getBackpack } from "../inv/containers";
+import { getMob, hasMobs } from "../../model/queries/mobs";
+import { getHp } from "../../model/queries/hp";
+import { getBackpack } from "../../model/queries/containers";
 import { WorldActionEntityType, WorldActionType } from "../world/types";
 
 type AttackContext =

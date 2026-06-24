@@ -4,8 +4,8 @@ import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import { curse } from "../curse/curse";
-import { getEqSlotAt } from "../eq/eq";
-import { getContainerItemAt } from "../inv/containers";
+import { getEqSlotAt } from "../../model/queries/eq";
+import { getContainerItemAt } from "../../model/queries/containers";
 import { type PlayerInspectEqAction } from "../player/types";
 import { getItemInspectText, increaseInspected } from "./inspect";
 

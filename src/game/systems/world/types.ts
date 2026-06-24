@@ -1,6 +1,3 @@
-import type { EqSlot } from "../eq/types";
-import type { InvSlot } from "../inv/types";
-
 export enum WorldActionType {
   DROP_ITEM = "WORLD_DROP_ITEM",
   REMOVE_ENTITY = "REMOVE_ENTITY",

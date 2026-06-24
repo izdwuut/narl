@@ -4,13 +4,16 @@ import {
   getEntitiesByType,
   getEntityByType,
 } from "../../../core/ecs/queries/entities";
-import { NameComponent } from "../../model/components/display/NameComponent";
-import { EqEntity } from "../../model/entities/eq/EqEntity";
-import { EqSlotEntity } from "../../model/entities/eq/EqSlotEntity";
-import type { ItemEntity } from "../../model/entities/items/ItemEntity";
-import { getDmg } from "../attack/dmg";
-import { getContainerItemAt, getContainerItems } from "../inv/containers";
-import type { EqSlot } from "./types";
+import { getDmg } from "./dmg";
+import type { EqSlot } from "../../systems/eq/types";
+import {
+  getContainerItemAt,
+  getContainerItems,
+} from "./containers";
+import { NameComponent } from "../components/display/NameComponent";
+import { EqEntity } from "../entities/eq/EqEntity";
+import { EqSlotEntity } from "../entities/eq/EqSlotEntity";
+import type { ItemEntity } from "../entities/items/ItemEntity";
 
 export const getEq = (entity: Entity): EqEntity | undefined => {
   return getEntityByType(entity, EqEntity);

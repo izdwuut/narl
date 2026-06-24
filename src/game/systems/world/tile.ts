@@ -17,16 +17,6 @@ const generateTile = (position: number): Tile => {
   return tile;
 };
 
-export const getTile = (gameState: GameState, position: number): Tile => {
-  const tile = gameState.world[position];
-
-  if (!tile) {
-    throw new Error(`Tile ${position} does not exist`);
-  }
-
-  return tile;
-};
-
 export const discoverTiles = (
   gameState: GameState,
   centerPosition: number,

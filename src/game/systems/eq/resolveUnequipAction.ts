@@ -9,17 +9,19 @@ import type { ActionResolution } from "../actions/types";
 import {
   addItemToEntityBackpack,
   clearContainerItemAt,
+} from "../inv/containers";
+import {
   getBackpack,
   getContainerItemAt,
   isContainerFull,
-} from "../inv/containers";
-import { getItemName } from "../inv/items";
+} from "../../model/queries/containers";
+import { getItemName } from "../../model/queries/items";
 import {
   PlayerActionType,
   PlayerDropItemActionReason,
   type PlayerUnequipItemAction,
 } from "../player/types";
-import { getEqSlotAt, getEqSlotName } from "./eq";
+import { getEqSlotAt, getEqSlotName } from "../../model/queries/eq";
 
 export const resolveUnequipAction = (
   state: GameState,

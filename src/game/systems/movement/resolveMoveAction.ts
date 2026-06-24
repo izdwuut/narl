@@ -8,10 +8,11 @@ import {
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import { hasMobs } from "../attack/mobs";
+import { hasMobs } from "../../model/queries/mobs";
 import { addExplorationExp } from "../exp/exp";
 import { PlayerActionType, type PlayerMoveAction } from "../player/types";
-import { discoverTiles, getTile } from "../world/getTile";
+import { getTile } from "../../model/queries/tile";
+import { discoverTiles } from "../world/tile";
 import { getNextPlayerPosition } from "./getNextPlayerPosition";
 
 const markAsVisited = (state: GameState, position: number): void => {

@@ -7,7 +7,7 @@ import { GlyphComponent } from "../../model/components/display/GlyphComponent";
 import type { PlayerEntity } from "../../model/entities/PlayerEntity";
 import { getPlayer } from "../../state/selectors/player";
 import type { GameState, Tile } from "../../state/state";
-import { pickUpItem } from "../pickUp/pickUp";
+import { pickUpItem } from "../../model/queries/pickUp";
 import { getVisibleTiles } from "./getVisibleTiles";
 import { RenderedTile } from "./types";
 

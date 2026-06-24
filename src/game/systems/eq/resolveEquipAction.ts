@@ -7,14 +7,16 @@ import type { ActionResolution } from "../actions/types";
 import {
   addItemToContainer,
   clearContainerItemById,
+} from "../inv/containers";
+import {
   getBackpack,
   getContainerItemAt,
   getFirstContainerItem,
-} from "../inv/containers";
-import { getItemSlots } from "../inv/getItemSlots";
-import { getItemName } from "../inv/items";
+} from "../../model/queries/containers";
+import { getItemSlots } from "../../model/queries/items";
+import { getItemName } from "../../model/queries/items";
 import type { PlayerEquipItemAction } from "../player/types";
-import { getEqSlotAt, getEqSlotName } from "./eq";
+import { getEqSlotAt, getEqSlotName } from "../../model/queries/eq";
 
 const canBeEquipped = (
   itemSlots: ItemSlotComponent[],

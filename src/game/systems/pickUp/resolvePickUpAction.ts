@@ -6,14 +6,14 @@ import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
 import {
   addItemToEntityBackpack,
-  getBackpack,
-  isContainer,
-  isContainerFull,
 } from "../inv/containers";
-import { getItemName } from "../inv/items";
+import {
+  getBackpack,
+  isContainerFull,
+} from "../../model/queries/containers";
+import { getItemName } from "../../model/queries/items";
 import type { PlayerPickUpAction } from "../player/types";
-import { WorldActionType } from "../world/types";
-import { isPickupable, pickUpItem } from "./pickUp";
+import { isPickupable, pickUpItem } from "../../model/queries/pickUp";
 import { getVisibleTiles } from "../render/getVisibleTiles";
 import { curse } from "../curse/curse";
 

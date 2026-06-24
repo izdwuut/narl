@@ -11,12 +11,12 @@ import { NameComponent } from "../../model/components/display/NameComponent";
 import type { GameState } from "../../state/state";
 import { Action } from "../actions/action";
 import type { ActionResolution } from "../actions/types";
-import { getMobById } from "../attack/mobs";
-import { getItemName } from "../inv/items";
-import { getTile } from "../world/getTile";
+import { getMobById } from "../../model/queries/mobs";
+import { getItemName } from "../../model/queries/items";
+import { getTile } from "../../model/queries/tile";
 import { type WorldDropItemAction } from "../world/types";
 import { DroppableComponent } from "../../model/components/items/DroppableComponent";
-import { getContainerItems } from "../inv/containers";
+import { getContainerItems } from "../../model/queries/containers";
 
 export const resolveMobDropItemAction = (
   state: GameState,

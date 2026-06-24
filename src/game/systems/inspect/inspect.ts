@@ -5,15 +5,14 @@ import {
   hasComponentByType,
   upsertComponents,
 } from "../../../core/ecs/queries/component";
-import { DEFAULT_INSPECTED_TIMES } from "../../../utils";
 import { InspectDescComponent } from "../../model/components/inspect/InspectDescComponent";
 import { InspectedComponent } from "../../model/components/inspect/InspectedComponent";
 import { DefComponent } from "../../model/components/items/DefComponent";
 import { DmgComponent } from "../../model/components/items/DmgComponent";
-import { getDef } from "../../../game/systems/attack/def";
-import { getChildrenDmg, getDmg, getDmgMod, getOwnDmg } from "../../../game/systems/attack/dmg";
-import { isContainer } from "../inv/containers";
-import { getItemName } from "../inv/items";
+import { getDef } from "../../model/queries/def";
+import { getChildrenDmg, getDmg, getDmgMod, getOwnDmg } from "../../model/queries/dmg";
+import { isContainer } from "../../model/queries/containers";
+import { getItemName } from "../../model/queries/items";
 
 const getInspectDesc = (entity: Entity) => {
   const inspected = getComponentByType(entity, InspectedComponent);
