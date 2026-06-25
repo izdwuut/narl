@@ -5,6 +5,7 @@ import { Log } from "./Log";
 import { Map } from "./Map";
 import { EQ } from "./inventory/Eq";
 import { Inv } from "./inventory/inv/Inv";
+import { PlayerStats } from "./PlayerStats";
 
 export const Game: React.FC = () => {
   useKeyboardControls();
@@ -19,7 +20,15 @@ export const Game: React.FC = () => {
         padding: 16,
       }}
     >
-      <EQ />
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <EQ />
+        <PlayerStats />
+      </div>
       <div
         style={{
           display: "flex",

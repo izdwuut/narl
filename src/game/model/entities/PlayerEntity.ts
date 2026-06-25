@@ -6,6 +6,7 @@ import { BackpackEntityFactory } from "./items/BackpackEntity";
 import { EqEntity } from "./eq/EqEntity";
 import { ColorComponent } from "../components/display/ColorComponent";
 import { NameComponent } from "../components/display/NameComponent";
+import { HpComponent } from "../components/mobs/HpComponent";
 
 export type PlayerEntityProps = EntityProps;
 
@@ -19,9 +20,10 @@ export class PlayerEntity extends Entity {
     const eq = new EqEntity();
     const color = new ColorComponent();
     const name = new NameComponent({name: 'Player'});
+    const hp = new HpComponent({hp: 20})
 
     super({
-      components: [...(props?.components ?? []), glyph, exp, color, name],
+      components: [...(props?.components ?? []), glyph, exp, color, name, hp],
       entities: [...(props?.entities ?? []), backpack, eq],
     });
   }

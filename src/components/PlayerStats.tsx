@@ -1,12 +1,12 @@
 import React from "react";
 import { useStats } from "../game/hooks/useStats";
 
-export const EqStats: React.FC = () => {
-  const { eqStats } = useStats();
+export const PlayerStats: React.FC = () => {
+  const { playerStats } = useStats();
 
   return (
     <div style={{ width: 200, height: 120, textAlign: "left" }}>
-      {Object.entries(eqStats).map(([stat, value], index) => (
+      {Object.entries(playerStats).map(([stat, value], index) => (
         <div key={index}>{`${stat}: ${value}`}</div>
       ))}
     </div>
