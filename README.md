@@ -4,4 +4,4 @@ Emergent fuckery simulator disguised as a 1D roguelike.
 
 LLM-driven design. Human-in-the loop bonanza.
 
-[Cursed Devlog](https://izdwuut.github.io/narl/)
+[Cursed Devlog](http://narl.brikolaz.pl/)
