@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { getComponentByType } from "../../core/ecs/queries/component";
 import { ExpComponent } from "../model/components/mobs/ExpComponent";
-import type { BackpackEntity } from "../model/entities/items/BackpackEntity";
+import type { BackpackEntity } from "../model/entities/items/backpack/BackpackEntity";
 import type { PlayerEntity } from "../model/entities/PlayerEntity";
 import { GameContext } from "../state/context";
 import { useEq, type Eq } from "./useEq";

@@ -9,9 +9,9 @@ import { EqEntity } from "../../eq/EqEntity";
 import { MainHandSlotEntity } from "../../eq/MainHandSlotEntity";
 import {
   BackpackEntity,
-  BackpackEntityFactory,
-} from "../../items/BackpackEntity";
-import { HornedHelmetEntityFactory } from "../../items/HornedHelmetEntity";
+} from "../../items/backpack/BackpackEntity";
+import { BackpackEntityFactory } from "../../items/backpack/BackpackEntityFactory";
+import { HornedHelmetEntityFactory } from "../../items/HelmetEntity";
 import type { ItemEntity } from "../../items/ItemEntity";
 import { SwordEntityFactory } from "../../items/SwordEntity";
 import { RageBaitEntity } from "./RageBaitEntity";
@@ -30,7 +30,7 @@ export class RageBaitEntityFactory {
       items.push(SwordEntityFactory.getDefault());
     }
     if (RNG.items.chance(50)) {
-      items.push(HornedHelmetEntityFactory.getDefault());
+      items.push(HornedHelmetEntityFactory.getHornedHelmet());
     }
     const backpack = BackpackEntityFactory.getDefault();
     if (RNG.items.chance(5)) {

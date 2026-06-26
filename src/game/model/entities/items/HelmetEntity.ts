@@ -16,18 +16,23 @@ import { CursedComponent } from "../../components/items/CursedComponent";
 import { DefComponent } from "../../components/items/DefComponent";
 import { DroppableComponent } from "../../components/items/DroppableComponent";
 import { PickupableComponent } from "../../components/items/PickupableComponent";
+import { VariantComponent } from "../../components/VariantComponent";
 import { isCursed } from "../../queries/curse";
 import { getInspectedTimes } from "../../queries/inspect";
 import { ItemEntity } from "./ItemEntity";
 
-export type HornedHelmetEntityProps = EntityProps;
+export type HelmetEntityProps = EntityProps;
+export enum HelmetEntityVariants {
+  HELMET = "Helmet",
+  HORNED_HELMET = "Horned Helmet",
+}
 
-export class HornedHelmetEntity extends ItemEntity {
-  constructor(props?: HornedHelmetEntityProps) {
+export class HelmetEntity extends ItemEntity {
+  constructor(props?: HelmetEntityProps) {
     const glyph = new GlyphComponent({
       glyph: "H" as string,
     });
-    const name = new NameComponent({ name: "Horned Helmet" });
+    const name = new NameComponent({ name: HelmetEntityVariants.HELMET });
 
     super({
       ...props,
@@ -37,7 +42,7 @@ export class HornedHelmetEntity extends ItemEntity {
 }
 
 export class HornedHelmetEntityFactory {
-  private static addInspectDesc(item: HornedHelmetEntity) {
+  private static addInspectDesc(item: HelmetEntity) {
     addComponents(
       item,
       new InspectDescComponent({ times: 5, text: "It has horns" }),
@@ -45,29 +50,42 @@ export class HornedHelmetEntityFactory {
     );
   }
 
-  private static getBase(): HornedHelmetEntity {
-    const hornedHelmet = new HornedHelmetEntity();
+  private static getBase(): HelmetEntity {
+    const hornedHelmet = new HelmetEntity();
     this.addInspectDesc(hornedHelmet);
 
     return hornedHelmet;
   }
 
-  static getDefault(): HornedHelmetEntity {
+  static getDefault(): HelmetEntity {
     const hornedHelmet = this.getBase();
 
     const head = new HeadComponent();
     const def = new DefComponent({ def: RNG.items.range(3, 4) });
     const pickupable = new PickupableComponent();
     const droppable = new DroppableComponent();
+    const variant = new VariantComponent({
+      variant: HelmetEntityVariants.HELMET,
+    });
     addComponents(
       hornedHelmet,
-      ...([head, def, pickupable, droppable] as Component[]),
+      ...([head, def, pickupable, droppable, variant] as Component[]),
     );
 
     return hornedHelmet;
   }
 
-  static curse(item: HornedHelmetEntity): boolean {
+  static getHornedHelmet() {
+    const helmet = this.getDefault();
+    const variant = new VariantComponent({
+      variant: HelmetEntityVariants.HORNED_HELMET,
+    });
+    const name = new NameComponent({ name: HelmetEntityVariants.HORNED_HELMET });
+    upsertComponents(helmet, variant, name);
+    return helmet;
+  }
+
+  static curse(item: HelmetEntity): boolean {
     const wasCursed = isCursed(item);
     if (wasCursed) {
       return false;
@@ -81,7 +99,7 @@ export class HornedHelmetEntityFactory {
     return true;
   }
 
-  static shouldBeCursed(item: HornedHelmetEntity): boolean {
+  static shouldBeCursed(item: HelmetEntity): boolean {
     const inspected = getInspectedTimes(item);
     return inspected >= 10;
   }

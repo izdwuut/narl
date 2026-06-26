@@ -1,9 +1,7 @@
 import { produce } from "immer";
-import { getMobManual } from "../../model/entities/mobs/getMobManual";
+import { getManual } from "../../model/entities/getManual";
 import { getDmg } from "../../model/queries/dmg";
-import {
-  getEquippedWeapon
-} from "../../model/queries/eq";
+import { getEquippedWeapon } from "../../model/queries/eq";
 import { getHp } from "../../model/queries/hp";
 import { getMobById } from "../../model/queries/mobs";
 import { getPlayerEntity } from "../../model/queries/player";
@@ -21,12 +19,11 @@ export const resolveWorldAttackAction = (
   const { sourcePos, mobId } = gameAction;
   const action = new Action(gameAction);
   const nextState = produce(state, (draft) => {
-  
     const sourceTile = getTile(draft, sourcePos);
     const mob = action.assert(getMobById(sourceTile, mobId), "No mob");
     const player = getPlayerEntity(draft);
     const mobWeapon =
-      getMobManual(mob)?.getEquippedWeapon?.(mob) ?? getEquippedWeapon(mob);
+      getManual(mob)?.getEquippedWeapon?.(mob) ?? getEquippedWeapon(mob);
     const mobName = getEntityName(mob);
 
     if (!mobWeapon) {

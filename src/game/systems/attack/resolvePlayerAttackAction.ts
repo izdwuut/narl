@@ -1,6 +1,6 @@
 import { produce } from "immer";
+import { getManual } from "../../model/entities/getManual";
 import type { ItemEntity } from "../../model/entities/items/ItemEntity";
-import { getMobManual } from "../../model/entities/mobs/getMobManual";
 import { getDmg } from "../../model/queries/dmg";
 import { getEquippedWeapon } from "../../model/queries/eq";
 import { getHp } from "../../model/queries/hp";
@@ -101,7 +101,7 @@ export const resolvePlayerAttackAction = (
     }
     mobHp.hp = nextHp;
     action.success(`Dealt ${dmg} dmg to ${mobName}`);
-    getMobManual(mob)?.onAfterTakeDamage?.(mob, draft, action);
+    getManual(mob)?.onAfterTakeDamage?.(mob, draft, action);
   });
 
   return action.resolve(nextState);

@@ -1,7 +1,7 @@
 import type { Constructor } from "../../../core/ecs/Constructor";
+import { getFactory } from "../../model/entities/getFactory";
 import type { MobEntity } from "../../model/entities/mobs/MobEntity";
 import { RageBaitEntity } from "../../model/entities/mobs/rageBait/RageBaitEntity";
-import { getMobFactory } from "../../model/entities/mobs/getMobFactory";
 import { RNG } from "./rng";
 import { getZone, Zone } from "./zones";
 
@@ -43,7 +43,7 @@ export const getRandomMob = (position: number): MobEntity | undefined => {
   for (const [mobClass, chance] of table) {
     current += chance;
     if (roll <= current) {
-      mob = getMobFactory(mobClass).getDefault();
+      mob = getFactory(mobClass).getDefault();
       break;
     }
   }

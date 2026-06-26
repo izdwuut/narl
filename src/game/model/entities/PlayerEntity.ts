@@ -5,7 +5,6 @@ import {
 } from "../../../utils/constants";
 import { ExpComponent } from "../components/mobs/ExpComponent";
 import { GlyphComponent } from "../components/display/GlyphComponent";
-import { BackpackEntityFactory } from "./items/BackpackEntity";
 import { EqEntity } from "./eq/EqEntity";
 import { ColorComponent } from "../components/display/ColorComponent";
 import { NameComponent } from "../components/display/NameComponent";
@@ -14,6 +13,7 @@ import { MainHandSlotEntity } from "./eq/MainHandSlotEntity";
 import { HeadSlotEntity } from "./eq/HeadSlotEntity";
 import { PantsSlotEntity } from "./eq/PantsSlotEntity";
 import { addEntities } from "../../../core/ecs/queries/entities";
+import { BackpackEntityFactory } from "./items/backpack/BackpackEntityFactory";
 
 export type PlayerEntityProps = EntityProps;
 

@@ -1,0 +1,15 @@
+import type { EntityClass } from "../../../../core/ecs/Entity";
+import type { Manual } from "../../Manual";
+import { BackpackEntity } from "./backpack/BackpackEntity";
+import { BackpackEntityManual } from "./backpack/BackpackEntityManual";
+import { HelmetEntityManual } from "./helmet/HelmetEntityManual";
+import { HelmetEntity } from "./HelmetEntity";
+import { ItemEntity } from "./ItemEntity";
+
+export const ITEM_MANUALS = new Map<
+  EntityClass<ItemEntity>,
+  Manual<ItemEntity>
+>([
+  [HelmetEntity, HelmetEntityManual],
+  [BackpackEntity, BackpackEntityManual],
+]);

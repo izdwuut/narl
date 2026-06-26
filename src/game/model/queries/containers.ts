@@ -12,7 +12,7 @@ import { ContainerComponent } from "../components/containers/ContainerComponent"
 import { NestDepthComponent } from "../components/containers/NestDepthComponent";
 import { PlaceholderComponent } from "../components/containers/PlaceholderComponent";
 import { SizeComponent } from "../components/containers/SizeComponent";
-import { BackpackEntity } from "../entities/items/BackpackEntity";
+import { BackpackEntity } from "../entities/items/backpack/BackpackEntity";
 import { ItemEntity } from "../entities/items/ItemEntity";
 import type { ContainerSlot } from "../../systems/inv/containers";
 
