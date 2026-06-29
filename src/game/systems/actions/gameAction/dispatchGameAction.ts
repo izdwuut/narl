@@ -6,22 +6,23 @@ import { increaseTurn } from "../../turn/turn";
 import type { GameAction } from "../types";
 import { resolveGameAction } from "./resolveGameAction";
 
-const drainQueue = (
+const drainAction = (
   state: GameState,
-  queue: GameAction[],
+  action: GameAction,
   pendingLogs: PendingLog[],
-) => {
-  let nextState = state;
-  let consumesTurn = false;
+): { nextState: GameState; consumesTurn: boolean } => {
+  const resolution = resolveGameAction(state, action);
 
-  while (queue.length) {
-    const currentAction = queue.shift() as GameAction;
-    const resolution = resolveGameAction(nextState, currentAction);
+  let nextState = resolution.nextState;
+  let consumesTurn = resolution.consumesTurn;
 
-    nextState = resolution.nextState;
-    consumesTurn = consumesTurn || resolution.consumesTurn;
-    pendingLogs.push(...resolution.pendingLogs);
-    queue.push(...resolution.pendingActions);
+  pendingLogs.push(...resolution.pendingLogs);
+
+  for (const pendingAction of resolution.pendingActions) {
+    const childResult = drainAction(nextState, pendingAction, pendingLogs);
+
+    nextState = childResult.nextState;
+    consumesTurn = consumesTurn || childResult.consumesTurn;
   }
 
   return { nextState, consumesTurn };
@@ -31,20 +32,22 @@ export const dispatchGameAction =
   (action: GameAction) =>
   (state: GameState): GameState => {
     let nextState = state;
-    const queue: GameAction[] = [action];
     let consumesTurn = false;
     const pendingLogs: PendingLog[] = [];
 
-    const playerResult = drainQueue(nextState, queue, pendingLogs);
+    const playerResult = drainAction(nextState, action, pendingLogs);
+
     nextState = playerResult.nextState;
     consumesTurn = consumesTurn || playerResult.consumesTurn;
 
     if (consumesTurn) {
       const worldActions = runWorldTurn(nextState);
-      for (let i = 0; i < worldActions.length; i++) {
-        queue.push(worldActions[i]);
-        const worldResult = drainQueue(nextState, queue, pendingLogs);
+
+      for (const worldAction of worldActions) {
+        const worldResult = drainAction(nextState, worldAction, pendingLogs);
+
         nextState = worldResult.nextState;
+        consumesTurn = consumesTurn || worldResult.consumesTurn;
       }
     }
 
