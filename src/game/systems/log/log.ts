@@ -2,10 +2,9 @@ import { MAX_VISIBLE_LOGS } from "../../../utils/constants";
 import type { GameState } from "../../state/state";
 import type { GameAction } from "../actions/types";
 import { InternalActionType } from "../internal/type";
+import { type PlayerAction } from "../player/types";
 import { increaseTurn } from "../turn/turn";
 import type { LogEntry, PendingLog } from "./types";
-
-
 
 const addLog = (
   gameState: GameState,
@@ -75,3 +74,19 @@ export const getInternalLogAction = (message: string): GameAction => ({
   type: InternalActionType.LOG,
   message,
 });
+
+export const recordPlayerAction = (
+  gameState: GameState,
+  action: PlayerAction,
+): GameState => {
+  return {
+    ...gameState,
+    actionLog: [
+      ...gameState.actionLog,
+      {
+        action,
+        timestamp: Date.now(),
+      },
+    ],
+  };
+};

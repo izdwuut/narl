@@ -19,11 +19,12 @@ export const resolveInternalInitAction = (
   }
 
   validateSpawnTables();
-  
+
   const nextState = produce(state, (draft) => {
     draft.world = initWorld();
     draft.turn = INITIAL_TURN;
     draft.log = [];
+    draft.actionLog = [];
     draft.initialized = true;
     draft.player = initPlayer();
     action.info("You'd rather stay dead");

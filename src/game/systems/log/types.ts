@@ -1,4 +1,5 @@
 import type { GameAction } from "../actions/types";
+import type { PlayerAction } from "../player/types";
 
 export type LogEntry = {
   message: string;
@@ -9,6 +10,11 @@ export type LogEntry = {
 export type PendingLog = {
   message: string;
   action: GameAction;
+};
+
+export type ActionLog = {
+  action: PlayerAction;
+  timestamp: number;
 };
 
 export enum PendingActionType {

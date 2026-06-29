@@ -1,8 +1,9 @@
 import type { GameState } from "../../../state/state";
-import { flushLogs } from "../../log/log";
+import { flushLogs, recordPlayerAction } from "../../log/log";
 import type { PendingLog } from "../../log/types";
-import { runWorldTurn } from "../../world/turn/runWorldTurn";
+import { isPlayerAction } from "../../player/guards";
 import { increaseTurn } from "../../turn/turn";
+import { runWorldTurn } from "../../world/turn/runWorldTurn";
 import type { GameAction } from "../types";
 import { resolveGameAction } from "./resolveGameAction";
 
@@ -35,17 +36,19 @@ export const dispatchGameAction =
     let consumesTurn = false;
     const pendingLogs: PendingLog[] = [];
 
-    const playerResult = drainAction(nextState, action, pendingLogs);
+    if (isPlayerAction(action)) {
+      nextState = recordPlayerAction(nextState, action);
+    }
 
-    nextState = playerResult.nextState;
-    consumesTurn = consumesTurn || playerResult.consumesTurn;
+    const actionResult = drainAction(nextState, action, pendingLogs);
+    nextState = actionResult.nextState;
+    consumesTurn = consumesTurn || actionResult.consumesTurn;
 
     if (consumesTurn) {
       const worldActions = runWorldTurn(nextState);
 
       for (const worldAction of worldActions) {
         const worldResult = drainAction(nextState, worldAction, pendingLogs);
-
         nextState = worldResult.nextState;
         consumesTurn = consumesTurn || worldResult.consumesTurn;
       }

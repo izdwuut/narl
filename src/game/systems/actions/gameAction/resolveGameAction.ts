@@ -1,32 +1,26 @@
 import type { GameState } from "../../../state/state";
+import { isInternalAction } from "../../internal/guards";
 import { resolveInternalAction } from "../../internal/resolveInternalAction";
-import { InternalActionType, type InternalAction } from "../../internal/type";
+import { isPlayerAction } from "../../player/guards";
 import { resolvePlayerAction } from "../../player/resolvePlayerAction";
-import { PlayerActionType, type PlayerAction } from "../../player/types";
+import { isWorldAction } from "../../world/guards";
 import { resolveWorldAction } from "../../world/resolveWorldAction";
-import { WorldActionType, type WorldAction } from "../../world/types";
 import type { ActionResolution, GameAction } from "../types";
 
 export const resolveGameAction = (
   state: GameState,
   action: GameAction,
 ): ActionResolution => {
-  if (
-    Object.values(PlayerActionType).includes(action.type as PlayerActionType)
-  ) {
-    return resolvePlayerAction(state, action as PlayerAction);
+  if (isPlayerAction(action)) {
+    return resolvePlayerAction(state, action);
   }
 
-  if (Object.values(WorldActionType).includes(action.type as WorldActionType)) {
-    return resolveWorldAction(state, action as WorldAction);
+  if (isWorldAction(action)) {
+    return resolveWorldAction(state, action);
   }
 
-  if (
-    Object.values(InternalActionType).includes(
-      action.type as InternalActionType,
-    )
-  ) {
-    return resolveInternalAction(state, action as InternalAction);
+  if (isInternalAction(action)) {
+    return resolveInternalAction(state, action);
   }
 
   throw new Error("Invalid game action");
