@@ -83,8 +83,12 @@ export const resolvePlayerAttackAction = (
     }
     const weapon = "weapon" in ctx ? ctx.weapon : undefined;
     const dmg = "dmg" in ctx ? ctx.dmg : undefined;
+    // TODO: add Poke resolver, add keybinding
     if (!weapon || !dmg) {
-      // TODO: Handle hostile mobs
+      if (getManual(mob)?.poke) {
+        getManual(mob)?.poke?.(mob, action);
+        return;
+      }
       return action.success(`Poked ${mobName}`);
     }
     const mobHp = getHp(mob);
